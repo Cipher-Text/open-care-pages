@@ -91,6 +91,8 @@ emergencyNote: "For urgent skin reactions, visit the nearest emergency room."
 socialLinks:
   - label: "LinkedIn"
     url: "https://linkedin.com"
+  - label: "Instagram"
+    url: "https://instagram.com"
 seo:
   title: Dr. Elena Garcia — Dermatology in Denver
   description: Board-certified dermatologist offering personalized care and same-week visits in Denver.

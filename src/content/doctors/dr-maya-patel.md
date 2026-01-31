@@ -5,6 +5,11 @@ specialty: Internal Medicine
 location: Austin, TX
 contact: "(512) 555-0142 · hello@opencare.com"
 headshot: "/images/doctors/maya-patel.svg"
+socialLinks:
+  - label: "LinkedIn"
+    url: "https://linkedin.com"
+  - label: "Facebook"
+    url: "https://facebook.com"
 seo:
   title: Dr. Maya Patel — Internal Medicine in Austin
   description: Compassionate internal medicine care with same-week appointments in Austin.
