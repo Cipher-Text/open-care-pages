@@ -7,9 +7,6 @@
         "title": {
           "type": "string"
         },
-        "slug": {
-          "type": "string"
-        },
         "type": {
           "type": "string",
           "const": "institute"
@@ -47,7 +44,6 @@
       },
       "required": [
         "title",
-        "slug",
         "type",
         "location",
         "contact"

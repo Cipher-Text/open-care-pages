@@ -2,7 +2,6 @@ import { defineCollection, z } from 'astro:content';
 
 const baseSchema = z.object({
   title: z.string(),
-  slug: z.string(),
   type: z.enum(['doctor', 'hospital', 'institute']),
   specialty: z.string().optional(),
   services: z.array(z.string()).optional(),

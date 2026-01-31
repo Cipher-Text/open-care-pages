@@ -1,6 +1,5 @@
 ---
 title: Harborview Medical Center
-slug: harborview-medical
 type: hospital
 services:
   - Emergency care

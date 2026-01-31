@@ -1,6 +1,5 @@
 ---
 title: Coastline Cardiac Institute
-slug: coastline-cardiac
 type: institute
 services:
   - Preventive cardiology

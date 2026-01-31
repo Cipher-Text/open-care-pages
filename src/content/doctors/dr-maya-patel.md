@@ -1,6 +1,5 @@
 ---
 title: Dr. Maya Patel
-slug: dr-maya-patel
 type: doctor
 specialty: Internal Medicine
 location: Austin, TX
