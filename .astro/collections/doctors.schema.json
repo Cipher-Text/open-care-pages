@@ -38,6 +38,266 @@
           },
           "additionalProperties": false
         },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "whatsapp": {
+          "type": "string"
+        },
+        "bookingUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "headshot": {
+          "type": "string"
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "licenseStatus": {
+          "type": "string"
+        },
+        "valueProp": {
+          "type": "string"
+        },
+        "trust": {
+          "type": "object",
+          "properties": {
+            "boardCertified": {
+              "type": "boolean"
+            },
+            "hospitalPrivileges": {
+              "type": "boolean"
+            },
+            "cme": {
+              "type": "boolean"
+            },
+            "languages": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "carePhilosophy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "focusAreas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "consultationModes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "degrees": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "institution": {
+                "type": "string"
+              },
+              "year": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "title",
+              "institution"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "affiliations": {
+          "type": "object",
+          "properties": {
+            "worksAt": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "visitsAt": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "roles": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "publications": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "awards": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "media": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "locations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "schedule": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "day": {
+                      "type": "string"
+                    },
+                    "time": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "day",
+                    "time"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "feeRange": {
+                "type": "string"
+              },
+              "remarks": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "whatsapp": {
+                "type": "string"
+              },
+              "bookingUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "mapUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "mapEmbed": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "address"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "reviewLinks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": [
+              "label",
+              "url"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "faqs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string"
+              },
+              "answer": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "question",
+              "answer"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "appointmentHours": {
+          "type": "string"
+        },
+        "emergencyNote": {
+          "type": "string"
+        },
+        "socialLinks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": [
+              "label",
+              "url"
+            ],
+            "additionalProperties": false
+          }
+        },
         "$schema": {
           "type": "string"
         }

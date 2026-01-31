@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="Open Care Pages" description="Static landing pages for Open Care providers.">
-  <main class="mx-auto w-full max-w-4xl px-6 py-12 text-ink">
+  <main class="mx-auto w-full max-w-5xl px-6 py-12 text-ink">
     <section class="space-y-6">
       <div class="space-y-2">
         <p class="text-sm font-semibold uppercase tracking-[0.2em] text-moss">Open Care</p>
@@ -11,13 +11,53 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           Add or update Markdown files in <code>src/content</code> and push to publish.
         </p>
       </div>
-      <div class="grid gap-4 rounded-2xl border border-ink/10 bg-white/70 p-6">
-        <p class="text-sm uppercase tracking-[0.2em] text-ink/60">Example routes</p>
-        <ul class="list-disc pl-5 text-base">
-          <li>/d/dr-maya-patel</li>
-          <li>/h/harborview-medical</li>
-          <li>/i/coastline-cardiac</li>
-        </ul>
+    </section>
+
+    <section class="mt-10 space-y-6">
+      <h2 class="text-2xl font-serif font-semibold">Doctors</h2>
+      <div class="grid gap-4 md:grid-cols-2">
+        <a class="rounded-2xl border border-ink/10 bg-white/70 p-6 transition hover:border-ink/20" href="/d/dr-maya-patel">
+          <p class="text-sm uppercase tracking-[0.2em] text-ink/60">Doctor</p>
+          <p class="mt-2 text-lg font-semibold">Dr. Maya Patel</p>
+          <p class="text-sm text-ink/70">Internal Medicine · Austin, TX</p>
+        </a>
+        <a class="rounded-2xl border border-ink/10 bg-white/70 p-6 transition hover:border-ink/20" href="/d/dr-elena-garcia">
+          <p class="text-sm uppercase tracking-[0.2em] text-ink/60">Doctor</p>
+          <p class="mt-2 text-lg font-semibold">Dr. Elena Garcia</p>
+          <p class="text-sm text-ink/70">Dermatology · Denver, CO</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="mt-10 space-y-6">
+      <h2 class="text-2xl font-serif font-semibold">Hospitals</h2>
+      <div class="grid gap-4 md:grid-cols-2">
+        <a class="rounded-2xl border border-ink/10 bg-white/70 p-6 transition hover:border-ink/20" href="/h/harborview-medical">
+          <p class="text-sm uppercase tracking-[0.2em] text-ink/60">Hospital</p>
+          <p class="mt-2 text-lg font-semibold">Harborview Medical Center</p>
+          <p class="text-sm text-ink/70">Seattle, WA</p>
+        </a>
+        <a class="rounded-2xl border border-ink/10 bg-white/70 p-6 transition hover:border-ink/20" href="/h/sunrise-medical-center">
+          <p class="text-sm uppercase tracking-[0.2em] text-ink/60">Hospital</p>
+          <p class="mt-2 text-lg font-semibold">Sunrise Medical Center</p>
+          <p class="text-sm text-ink/70">Phoenix, AZ</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="mt-10 space-y-6">
+      <h2 class="text-2xl font-serif font-semibold">Institutes</h2>
+      <div class="grid gap-4 md:grid-cols-2">
+        <a class="rounded-2xl border border-ink/10 bg-white/70 p-6 transition hover:border-ink/20" href="/i/coastline-cardiac">
+          <p class="text-sm uppercase tracking-[0.2em] text-ink/60">Institute</p>
+          <p class="mt-2 text-lg font-semibold">Coastline Cardiac Institute</p>
+          <p class="text-sm text-ink/70">San Diego, CA</p>
+        </a>
+        <a class="rounded-2xl border border-ink/10 bg-white/70 p-6 transition hover:border-ink/20" href="/i/evergreen-health-institute">
+          <p class="text-sm uppercase tracking-[0.2em] text-ink/60">Institute</p>
+          <p class="mt-2 text-lg font-semibold">Evergreen Health Institute</p>
+          <p class="text-sm text-ink/70">Portland, OR</p>
+        </a>
       </div>
     </section>
   </main>
