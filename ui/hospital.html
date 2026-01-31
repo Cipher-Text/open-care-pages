@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apollo Hospitals Dhaka - Leading Multi-Specialty Hospital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: #ffffff;
+        }
+        
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 500px;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            overflow: hidden;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, rgba(30, 64, 175, 0.95), rgba(59, 130, 246, 0.7));
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem 1rem;
+            color: white;
+        }
+        
+        .hospital-type {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            width: fit-content;
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero-tagline {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            max-width: 600px;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            display: inline-block;
+            background: #ef4444;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+            transition: all 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.5);
+        }
+        
+        .btn-secondary {
+            display: inline-block;
+            background: white;
+            color: #1e40af;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .btn-secondary:hover {
+            background: #f1f5f9;
+        }
+        
+        /* Emergency Banner */
+        .emergency-banner {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            color: white;
+            padding: 1.5rem 1rem;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+        
+        .emergency-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .emergency-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .emergency-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            backdrop-filter: blur(10px);
+        }
+        
+        .emergency-text h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .emergency-hours {
+            font-size: 0.9375rem;
+            opacity: 0.95;
+        }
+        
+        .emergency-phone {
+            background: white;
+            color: #dc2626;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            font-size: 1.125rem;
+            text-decoration: none;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 4rem 0;
+        }
+        
+        .section {
+            margin-bottom: 5rem;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: #1e40af;
+            margin-bottom: 0.75rem;
+        }
+        
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: #64748b;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Overview */
+        .overview-content {
+            display: grid;
+            gap: 2rem;
+            background: #f8fafc;
+            padding: 3rem 2rem;
+            border-radius: 1rem;
+        }
+        
+        .overview-text {
+            font-size: 1.0625rem;
+            color: #475569;
+            line-height: 1.8;
+        }
+        
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e40af;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9375rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+        
+        /* Departments Grid */
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .department-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .department-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1e40af, #3b82f6);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .department-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+            transform: translateY(-4px);
+        }
+        
+        .department-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .department-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .department-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .department-desc {
+            font-size: 0.9375rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        /* Facilities Grid */
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.25rem;
+        }
+        
+        .facility-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .facility-item:hover {
+            border-color: #1e40af;
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
+        }
+        
+        .facility-icon {
+            width: 44px;
+            height: 44px;
+            background: #dbeafe;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        
+        .facility-name {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+        }
+        
+        /* Diagnostics List */
+        .diagnostics-container {
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+        }
+        
+        .diagnostics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        
+        .diagnostic-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 0.5rem;
+            border-left: 3px solid #3b82f6;
+        }
+        
+        .diagnostic-check {
+            width: 24px;
+            height: 24px;
+            background: #10b981;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+        
+        .diagnostic-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.9375rem;
+        }
+        
+        /* Featured Doctors */
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .doctor-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .doctor-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 12px 28px rgba(59, 130, 246, 0.15);
+            transform: translateY(-4px);
+        }
+        
+        .doctor-image {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #3b82f6;
+        }
+        
+        .doctor-info {
+            padding: 1.5rem;
+        }
+        
+        .doctor-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.375rem;
+        }
+        
+        .doctor-specialty {
+            color: #3b82f6;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .doctor-qualification {
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        
+        .doctor-cta {
+            display: inline-block;
+            background: #1e40af;
+            color: white;
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+        
+        .doctor-cta:hover {
+            background: #1e3a8a;
+        }
+        
+        /* Branches */
+        .branches-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .branch-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 2rem;
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .branch-header {
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        
+        .branch-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+        
+        .branch-type {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.375rem 0.875rem;
+            border-radius: 1rem;
+            font-size: 0.8125rem;
+            font-weight: 700;
+        }
+        
+        .branch-address {
+            color: #475569;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .branch-contact {
+            display: grid;
+            gap: 0.75rem;
+        }
+        
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .contact-icon {
+            width: 36px;
+            height: 36px;
+            background: #f1f5f9;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e40af;
+            font-weight: 700;
+        }
+        
+        .contact-text {
+            color: #1e293b;
+            font-weight: 600;
+        }
+        
+        /* CTA Block */
+        .cta-block {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            border-radius: 1rem;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .cta-block h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-block p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Contact Card */
+        .contact-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .contact-label {
+            font-weight: 700;
+            color: #1e40af;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .contact-value {
+            color: #1e293b;
+            font-size: 1.0625rem;
+            font-weight: 600;
+        }
+        
+        /* Map Directions */
+        .map-container {
+            background: #f1f5f9;
+            border-radius: 1rem;
+            overflow: hidden;
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .map-placeholder {
+            text-align: center;
+            color: #64748b;
+        }
+        
+        .map-placeholder-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .map-placeholder-text {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        
+        .directions-link {
+            display: inline-block;
+            margin-top: 1rem;
+            background: #1e40af;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 3rem 1rem 2rem;
+            margin-top: 5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            color: white;
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .footer-link {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.9375rem;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #334155;
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+        
+        /* Responsive */
+        @media (min-width: 640px) {
+            .hero {
+                height: 550px;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 2rem;
+            }
+            
+            .overview-content {
+                padding: 4rem 3rem;
+            }
+            
+            .diagnostics-container {
+                padding: 4rem 3rem;
+            }
+            
+            .branches-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .hero {
+                height: 600px;
+            }
+            
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .emergency-content {
+                flex-wrap: nowrap;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="container">
+                <span class="hospital-type">Multi-Specialty Tertiary Care Hospital</span>
+                <h1>Apollo Hospitals Dhaka</h1>
+                <p class="hero-tagline">World-class healthcare with cutting-edge technology and compassionate care for you and your family</p>
+                <div class="hero-cta">
+                    <a href="#appointment" class="btn-primary">Book Appointment</a>
+                    <a href="#departments" class="btn-secondary">Our Services</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Banner -->
+    <section class="emergency-banner">
+        <div class="container">
+            <div class="emergency-content">
+                <div class="emergency-info">
+                    <div class="emergency-icon">🚨</div>
+                    <div class="emergency-text">
+                        <h2>24/7 Emergency Services</h2>
+                        <p class="emergency-hours">Round-the-clock emergency care with specialized trauma team</p>
+                    </div>
+                </div>
+                <a href="tel:+880255667788" class="emergency-phone">+880 2-5566-7788</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Overview Section -->
+            <section class="section">
+                <div class="overview-content">
+                    <div>
+                        <div class="section-header">
+                            <h2 class="section-title">About Apollo Hospitals Dhaka</h2>
+                        </div>
+                        <p class="overview-text">
+                            Apollo Hospitals Dhaka is a leading multi-specialty tertiary care hospital providing world-class medical services to patients from Bangladesh and across South Asia. With state-of-the-art infrastructure, advanced medical technology, and a team of internationally trained doctors, we are committed to delivering exceptional healthcare outcomes. Our 450-bed facility offers comprehensive medical services across 40+ specialties, supported by modern diagnostic and therapeutic equipment.
+                        </p>
+                    </div>
+                    <div class="overview-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">450+</div>
+                            <div class="stat-label">Beds</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">40+</div>
+                            <div class="stat-label">Specialties</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">200+</div>
+                            <div class="stat-label">Doctors</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Emergency Care</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Departments Section -->
+            <section class="section" id="departments">
+                <div class="section-header">
+                    <h2 class="section-title">Medical Departments</h2>
+                    <p class="section-subtitle">Comprehensive healthcare services across multiple specialties with expert medical teams</p>
+                </div>
+                <div class="departments-grid">
+                    <div class="department-card">
+                        <div class="department-icon">❤️</div>
+                        <h3 class="department-name">Cardiology</h3>
+                        <p class="department-desc">Advanced cardiac care including interventional cardiology, cardiac surgery, and comprehensive heart disease management</p>
+                    </div>
+                    <div class="department-card">
+                        <div class="department-icon">🧠</div>
+                        <h3 class="department-name">Neurology & Neurosurgery</h3>
+                        <p class="department-desc">Expert neurological care for stroke, brain tumors, spinal disorders, and neurological conditions</p>
+                    </div>
+                    <div class="department-card">
+                        <div class="department-icon">🦴</div>
+                        <h3 class="department-name">Orthopedics</h3>
+                        <p class="department-desc">Specialized treatment for bone, joint, and spine conditions including joint replacement and sports medicine</p>
+                    </div>
+                    <div class="department-card">
+                        <div class="department-icon">🫁</div>
+                        <h3 class="department-name">Pulmonology</h3>
+                        <p class="department-desc">Comprehensive respiratory care for asthma, COPD, lung infections, and critical pulmonary conditions</p>
+                    </div>
+                    <div class="department-card">
+                        <div class="department-icon">🩺</div>
+                        <h3 class="department-name">Oncology</h3>
+                        <p class="department-desc">Complete cancer care with chemotherapy, radiation therapy, and surgical oncology services</p>
+                    </div>
+                    <div class="department-card">
+                        <div class="department-icon">👶</div>
+                        <h3 class="department-name">Pediatrics</h3>
+                        <p class="department-desc">Specialized child healthcare including neonatal intensive care and pediatric surgery</p>
+                    </div>
+                    <div class="department-card">
+                        <div class="department-icon">🤰</div>
+                        <h3 class="department-name">Obstetrics & Gynecology</h3>
+                        <p class="department-desc">Comprehensive women's health services including maternity care and gynecological surgery</p>
+                    </div>
+                    <div class="department-card">
+                        <div class="department-icon">💉</div>
+                        <h3 class="department-name">Gastroenterology</h3>
+                        <p class="department-desc">Advanced digestive system care including endoscopy and treatment of liver diseases</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Facilities Section -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">World-Class Facilities</h2>
+                    <p class="section-subtitle">Modern infrastructure and advanced medical equipment for superior patient care</p>
+                </div>
+                <div class="facilities-grid">
+                    <div class="facility-item">
+                        <div class="facility-icon">🏥</div>
+                        <div class="facility-name">24/7 Emergency Department</div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">🔬</div>
+                        <div class="facility-name">Advanced Laboratory Services</div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">💊</div>
+                        <div class="facility-name">24-Hour Pharmacy</div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">🛏️</div>
+                        <div class="facility-name">Critical Care Units (ICU/CCU)</div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">🩻</div>
+                        <div class="facility-name">Advanced Imaging Center</div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">⚕️</div>
+                        <div class="facility-name">12 Modular Operating Theaters</div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">🚑</div>
+                        <div class="facility-name">Ambulance Services</div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">🩸</div>
+                        <div class="facility-name">Blood Bank</div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">🏨</div>
+                        <div class="facility-name">Deluxe Patient Rooms</div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">🍽️</div>
+                        <div class="facility-name">Dietary Services</div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">♿</div>
+                        <div class="facility-name">Wheelchair Accessibility</div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">🅿️</div>
+                        <div class="facility-name">Parking Facilities</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Diagnostics Section -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Diagnostic Services</h2>
+                    <p class="section-subtitle">Comprehensive diagnostic capabilities with cutting-edge technology</p>
+                </div>
+                <div class="diagnostics-container">
+                    <div class="diagnostics-grid">
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-check">✓</div>
+                            <div class="diagnostic-name">3 Tesla MRI</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-check">✓</div>
+                            <div class="diagnostic-name">128-Slice CT Scan</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-check">✓</div>
+                            <div class="diagnostic-name">Digital X-Ray</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-check">✓</div>
+                            <div class="diagnostic-name">Ultrasound & Doppler</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-check">✓</div>
+                            <div class="diagnostic-name">Echocardiography</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-check">✓</div>
+                            <div class="diagnostic-name">Mammography</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-check">✓</div>
+                            <div class="diagnostic-name">Endoscopy Services</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-check">✓</div>
+                            <div class="diagnostic-name">Cardiac Catheterization Lab</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-check">✓</div>
+                            <div class="diagnostic-name">Pathology Laboratory</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-check">✓</div>
+                            <div class="diagnostic-name">Microbiology Lab</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-check">✓</div>
+                            <div class="diagnostic-name">Molecular Diagnostics</div>
+                        </div>
+                        <div class="diagnostic-item">
+                            <div class="diagnostic-check">✓</div>
+                            <div class="diagnostic-name">EEG & EMG</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Doctors Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Our Expert Doctors</h2>
+                <p class="section-subtitle">Internationally trained specialists committed to your health and wellbeing</p>
+            </div>
+            <div class="doctors-grid">
+                <div class="doctor-card">
+                    <div class="doctor-image">👨‍⚕️</div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dr. Mahmud Hassan</h3>
+                        <p class="doctor-specialty">Consultant Cardiac Surgeon</p>
+                        <p class="doctor-qualification">MBBS, FCPS, FRCS (UK)</p>
+                        <a href="#" class="doctor-cta">View Profile</a>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <div class="doctor-image">👩‍⚕️</div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dr. Farhana Ahmed</h3>
+                        <p class="doctor-specialty">Consultant Neurologist</p>
+                        <p class="doctor-qualification">MBBS, MD, FCPS</p>
+                        <a href="#" class="doctor-cta">View Profile</a>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <div class="doctor-image">👨‍⚕️</div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dr. Rafiqul Islam</h3>
+                        <p class="doctor-specialty">Consultant Orthopedic Surgeon</p>
+                        <p class="doctor-qualification">MBBS, MS (Ortho), FRCS</p>
+                        <a href="#" class="doctor-cta">View Profile</a>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <div class="doctor-image">👩‍⚕️</div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dr. Nazma Begum</h3>
+                        <p class="doctor-specialty">Consultant Oncologist</p>
+                        <p class="doctor-qualification">MBBS, FCPS, MD (USA)</p>
+                        <a href="#" class="doctor-cta">View Profile</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Branches Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Our Locations</h2>
+                <p class="section-subtitle">Multiple branches across Dhaka for your convenience</p>
+            </div>
+            <div class="branches-grid">
+                <div class="branch-card">
+                    <div class="branch-header">
+                        <div>
+                            <h3 class="branch-name">Apollo Hospitals - Bashundhara</h3>
+                            <span class="branch-type">Main Campus</span>
+                        </div>
+                    </div>
+                    <p class="branch-address">
+                        Plot 81, Block E, Bashundhara R/A<br>
+                        Dhaka 1229, Bangladesh
+                    </p>
+                    <div class="branch-contact">
+                        <div class="contact-row">
+                            <div class="contact-icon">☎</div>
+                            <span class="contact-text">+880 2-5566-7788</span>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-icon">✉</div>
+                            <span class="contact-text">info@apollodhaka.com</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="branch-card">
+                    <div class="branch-header">
+                        <div>
+                            <h3 class="branch-name">Apollo Diagnostic Center - Dhanmondi</h3>
+                            <span class="branch-type">Diagnostic Center</span>
+                        </div>
+                    </div>
+                    <p class="branch-address">
+                        House 7, Road 4, Dhanmondi<br>
+                        Dhaka 1205, Bangladesh
+                    </p>
+                    <div class="branch-contact">
+                        <div class="contact-row">
+                            <div class="contact-icon">☎</div>
+                            <span class="contact-text">+880 2-9661234</span>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-icon">✉</div>
+                            <span class="contact-text">dhanmondi@apollodhaka.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Block -->
+        <section class="section" id="appointment">
+            <div class="cta-block">
+                <h2>Ready to Experience World-Class Healthcare?</h2>
+                <p>Book your appointment today and take the first step towards better health</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn-primary">Book Appointment Online</a>
+                    <a href="tel:+880255667788" class="btn-secondary">Call +880 2-5566-7788</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Card -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Contact Information</h2>
+            </div>
+            <div class="contact-card">
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="contact-label">Main Hotline</div>
+                        <div class="contact-value">+880 2-5566-7788</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">Emergency</div>
+                        <div class="contact-value">+880 2-5566-7799</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">info@apollodhaka.com</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">Working Hours</div>
+                        <div class="contact-value">24/7 Services Available</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Directions -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Find Us</h2>
+                <p class="section-subtitle">Conveniently located in Bashundhara R/A, Dhaka</p>
+            </div>
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <div class="map-placeholder-icon">📍</div>
+                    <div class="map-placeholder-text">Apollo Hospitals Dhaka - Main Campus</div>
+                    <a href="https://maps.google.com" target="_blank" class="directions-link">Get Directions on Google Maps</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="#" class="footer-link">Departments</a>
+                    <a href="#" class="footer-link">Find a Doctor</a>
+                    <a href="#" class="footer-link">Health Packages</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Patient Services</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Book Appointment</a>
+                    <a href="#" class="footer-link">Patient Portal</a>
+                    <a href="#" class="footer-link">Medical Records</a>
+                    <a href="#" class="footer-link">Insurance & Billing</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Health Library</a>
+                    <a href="#" class="footer-link">News & Events</a>
+                    <a href="#" class="footer-link">Careers</a>
+                    <a href="#" class="footer-link">Contact Us</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Facebook</a>
+                    <a href="#" class="footer-link">Twitter</a>
+                    <a href="#" class="footer-link">LinkedIn</a>
+                    <a href="#" class="footer-link">YouTube</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Apollo Hospitals Dhaka. All rights reserved. | A Unit of Apollo Hospitals Enterprise Ltd.</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

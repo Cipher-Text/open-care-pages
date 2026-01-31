@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Ayesha Rahman - Cardiologist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: #f8fafc;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .profile-photo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            margin: 0 auto 1.5rem;
+            object-fit: cover;
+            background: #cbd5e1;
+        }
+        
+        .hero h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .specialty {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        
+        .cta-primary {
+            display: inline-block;
+            background: #f59e0b;
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.0625rem;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+            transition: all 0.2s;
+        }
+        
+        .cta-primary:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 3rem 0;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f766e;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        /* Verification Card */
+        .verification-card {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+        }
+        
+        .verification-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .verification-badge {
+            width: 24px;
+            height: 24px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+        
+        .verification-title {
+            font-weight: 700;
+            color: #065f46;
+            font-size: 1.125rem;
+        }
+        
+        .verification-details {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        
+        .verification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .verification-label {
+            color: #047857;
+            font-weight: 600;
+            font-size: 0.9375rem;
+        }
+        
+        .verification-value {
+            color: #065f46;
+            font-weight: 700;
+            font-size: 0.9375rem;
+        }
+        
+        .status-active {
+            background: #10b981;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        /* Bio */
+        .bio-text {
+            color: #475569;
+            font-size: 1.0625rem;
+            line-height: 1.8;
+        }
+        
+        /* Degrees */
+        .degrees-list {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .degree-item {
+            padding: 1.25rem;
+            background: #f1f5f9;
+            border-radius: 0.75rem;
+            border-left: 3px solid #0d9488;
+        }
+        
+        .degree-title {
+            font-weight: 700;
+            color: #0f766e;
+            font-size: 1.0625rem;
+            margin-bottom: 0.375rem;
+        }
+        
+        .degree-institution {
+            color: #64748b;
+            font-size: 0.9375rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .degree-year {
+            color: #94a3b8;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        /* Practice Locations */
+        .locations-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .location-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.2s;
+        }
+        
+        .location-card:hover {
+            border-color: #0d9488;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.1);
+        }
+        
+        .location-name {
+            font-weight: 700;
+            color: #0f766e;
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .location-address {
+            color: #64748b;
+            font-size: 0.9375rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .schedule-title {
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 0.75rem;
+            font-size: 0.9375rem;
+        }
+        
+        .schedule-grid {
+            display: grid;
+            gap: 0.5rem;
+        }
+        
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.625rem;
+            background: #f8fafc;
+            border-radius: 0.375rem;
+            font-size: 0.9375rem;
+        }
+        
+        .schedule-day {
+            font-weight: 600;
+            color: #475569;
+        }
+        
+        .schedule-time {
+            color: #64748b;
+        }
+        
+        /* Affiliations */
+        .affiliations-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .affiliation-group h3 {
+            font-weight: 600;
+            color: #0f766e;
+            margin-bottom: 1rem;
+            font-size: 1.0625rem;
+        }
+        
+        .affiliation-list {
+            display: grid;
+            gap: 0.75rem;
+        }
+        
+        .affiliation-item {
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            border-left: 3px solid #0d9488;
+            color: #475569;
+            font-size: 0.9375rem;
+        }
+        
+        /* Focus Areas */
+        .focus-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .focus-chip {
+            background: #e0f2fe;
+            color: #075985;
+            padding: 0.625rem 1.125rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            border: 1px solid #bae6fd;
+        }
+        
+        /* CTA Block */
+        .cta-block {
+            background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: 1rem;
+        }
+        
+        .cta-block h2 {
+            font-size: 1.875rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .cta-block p {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        /* Contact Card */
+        .contact-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+        }
+        
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: #0d9488;
+            color: white;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .contact-details {
+            flex: 1;
+        }
+        
+        .contact-label {
+            font-weight: 600;
+            color: #0f766e;
+            font-size: 0.875rem;
+            margin-bottom: 0.125rem;
+        }
+        
+        .contact-value {
+            color: #475569;
+            font-size: 0.9375rem;
+        }
+        
+        /* FAQ */
+        .faq-list {
+            display: grid;
+            gap: 1.25rem;
+        }
+        
+        .faq-item {
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 0.75rem;
+        }
+        
+        .faq-question {
+            font-weight: 700;
+            color: #0f766e;
+            margin-bottom: 0.75rem;
+            font-size: 1.0625rem;
+        }
+        
+        .faq-answer {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 0.9375rem;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        /* Responsive */
+        @media (min-width: 640px) {
+            .hero {
+                padding: 4rem 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.75rem;
+            }
+            
+            .section {
+                padding: 2.5rem;
+            }
+            
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 2rem;
+            }
+            
+            .locations-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .affiliations-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .main-content {
+                padding: 4rem 0;
+            }
+            
+            .verification-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="profile-photo"></div>
+            <h1>Dr. Ayesha Rahman</h1>
+            <p class="specialty">Consultant Cardiologist & Interventional Specialist</p>
+            <a href="#contact" class="cta-primary">Book Appointment</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Verification Card -->
+            <div class="verification-card">
+                <div class="verification-header">
+                    <div class="verification-badge">✓</div>
+                    <h2 class="verification-title">Verified Medical Professional</h2>
+                </div>
+                <div class="verification-details">
+                    <div class="verification-item">
+                        <span class="verification-label">BMDC Registration</span>
+                        <span class="verification-value">A-42857</span>
+                    </div>
+                    <div class="verification-item">
+                        <span class="verification-label">License Status</span>
+                        <span class="status-active">Active</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bio Section -->
+            <section class="section">
+                <h2 class="section-title">About Dr. Rahman</h2>
+                <p class="bio-text">
+                    Dr. Ayesha Rahman is a highly experienced consultant cardiologist with over 15 years of clinical practice in cardiovascular medicine. She specializes in interventional cardiology, managing complex heart conditions with a patient-centered approach. Dr. Rahman is dedicated to providing compassionate care while utilizing the latest evidence-based treatments to help her patients achieve optimal cardiovascular health.
+                </p>
+            </section>
+
+            <!-- Degrees Section -->
+            <section class="section">
+                <h2 class="section-title">Education & Qualifications</h2>
+                <div class="degrees-list">
+                    <div class="degree-item">
+                        <div class="degree-title">MBBS (Bachelor of Medicine, Bachelor of Surgery)</div>
+                        <div class="degree-institution">Dhaka Medical College, University of Dhaka</div>
+                        <div class="degree-year">2003</div>
+                    </div>
+                    <div class="degree-item">
+                        <div class="degree-title">FCPS (Fellow of the College of Physicians and Surgeons)</div>
+                        <div class="degree-institution">Bangladesh College of Physicians and Surgeons</div>
+                        <div class="degree-year">2009</div>
+                    </div>
+                    <div class="degree-item">
+                        <div class="degree-title">MD in Cardiology</div>
+                        <div class="degree-institution">Bangabandhu Sheikh Mujib Medical University</div>
+                        <div class="degree-year">2011</div>
+                    </div>
+                    <div class="degree-item">
+                        <div class="degree-title">Fellowship in Interventional Cardiology</div>
+                        <div class="degree-institution">National Heart Foundation Hospital & Research Institute</div>
+                        <div class="degree-year">2013</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Practice Locations -->
+            <section class="section">
+                <h2 class="section-title">Practice Locations & Schedule</h2>
+                <div class="locations-grid">
+                    <div class="location-card">
+                        <h3 class="location-name">United Hospital Limited</h3>
+                        <p class="location-address">Plot 15, Road 71, Gulshan, Dhaka 1212</p>
+                        <div class="schedule-title">Weekly Schedule:</div>
+                        <div class="schedule-grid">
+                            <div class="schedule-item">
+                                <span class="schedule-day">Saturday</span>
+                                <span class="schedule-time">4:00 PM - 8:00 PM</span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-day">Monday</span>
+                                <span class="schedule-time">4:00 PM - 8:00 PM</span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-day">Wednesday</span>
+                                <span class="schedule-time">4:00 PM - 8:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="location-card">
+                        <h3 class="location-name">Square Hospital Ltd</h3>
+                        <p class="location-address">18/F Bir Uttam Qazi Nuruzzaman Sarak, Dhaka 1205</p>
+                        <div class="schedule-title">Weekly Schedule:</div>
+                        <div class="schedule-grid">
+                            <div class="schedule-item">
+                                <span class="schedule-day">Sunday</span>
+                                <span class="schedule-time">2:00 PM - 6:00 PM</span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-day">Tuesday</span>
+                                <span class="schedule-time">2:00 PM - 6:00 PM</span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-day">Thursday</span>
+                                <span class="schedule-time">2:00 PM - 6:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Affiliations -->
+            <section class="section">
+                <h2 class="section-title">Professional Affiliations</h2>
+                <div class="affiliations-grid">
+                    <div class="affiliation-group">
+                        <h3>Works At</h3>
+                        <div class="affiliation-list">
+                            <div class="affiliation-item">National Heart Foundation Hospital & Research Institute</div>
+                            <div class="affiliation-item">Ibrahim Cardiac Hospital & Research Institute</div>
+                        </div>
+                    </div>
+                    <div class="affiliation-group">
+                        <h3>Visiting Consultant At</h3>
+                        <div class="affiliation-list">
+                            <div class="affiliation-item">United Hospital Limited</div>
+                            <div class="affiliation-item">Square Hospital Ltd</div>
+                            <div class="affiliation-item">Apollo Hospitals Dhaka</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Focus Areas -->
+            <section class="section">
+                <h2 class="section-title">Areas of Expertise</h2>
+                <div class="focus-chips">
+                    <span class="focus-chip">Coronary Angioplasty</span>
+                    <span class="focus-chip">Heart Failure Management</span>
+                    <span class="focus-chip">Hypertension Treatment</span>
+                    <span class="focus-chip">Cardiac Catheterization</span>
+                    <span class="focus-chip">Echocardiography</span>
+                    <span class="focus-chip">Arrhythmia Management</span>
+                    <span class="focus-chip">Preventive Cardiology</span>
+                    <span class="focus-chip">Chest Pain Evaluation</span>
+                </div>
+            </section>
+
+            <!-- CTA Block -->
+            <div class="cta-block">
+                <h2>Ready to Take Care of Your Heart?</h2>
+                <p>Schedule your consultation with Dr. Rahman today</p>
+                <a href="#contact" class="cta-primary">Book Your Appointment</a>
+            </div>
+
+            <!-- Contact Card -->
+            <section class="section" id="contact">
+                <h2 class="section-title">Contact Information</h2>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="contact-icon">☎</div>
+                        <div class="contact-details">
+                            <div class="contact-label">Phone</div>
+                            <div class="contact-value">+880 1711-234567</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉</div>
+                        <div class="contact-details">
+                            <div class="contact-label">Email</div>
+                            <div class="contact-value">dr.ayesha.rahman@email.com</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">⏰</div>
+                        <div class="contact-details">
+                            <div class="contact-label">Appointment Hours</div>
+                            <div class="contact-value">Saturday - Thursday, 2:00 PM - 8:00 PM</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🏥</div>
+                        <div class="contact-details">
+                            <div class="contact-label">Emergency</div>
+                            <div class="contact-value">Available through hospital emergency</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="section">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <h3 class="faq-question">How do I book an appointment?</h3>
+                        <p class="faq-answer">You can book an appointment by calling the hospital directly or using their online booking system. We recommend calling ahead to confirm available time slots and to ensure Dr. Rahman will be available on your preferred date.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-question">What should I bring to my first appointment?</h3>
+                        <p class="faq-answer">Please bring any previous medical records, current medications list, recent test results (ECG, blood work, imaging), your insurance card, and a list of questions or concerns you'd like to discuss.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-question">Does Dr. Rahman accept insurance?</h3>
+                        <p class="faq-answer">Dr. Rahman works with most major insurance providers in Bangladesh. Please contact the hospital's billing department to verify if your specific insurance plan is accepted.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-question">How long is a typical consultation?</h3>
+                        <p class="faq-answer">Initial consultations typically last 30-45 minutes to allow for a thorough evaluation. Follow-up appointments are usually 15-20 minutes, though more time can be scheduled if needed for complex cases.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Dr. Ayesha Rahman. All rights reserved. | BMDC Reg: A-42857</p>
+        </div>
+    </footer>
+</body>
+</html>

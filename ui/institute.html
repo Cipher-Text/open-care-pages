@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excellence Medical Institute | Premier Medical Education</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --secondary: #0891b2;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --bg-white: #ffffff;
+            --border: #e5e7eb;
+            --accent: #059669;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-white);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 8rem 0 6rem;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none"/><path d="M0 50 Q 25 25, 50 50 T 100 50" stroke="rgba(255,255,255,0.05)" stroke-width="2" fill="none"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-type {
+            font-size: 1.25rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-alt {
+            background: var(--bg-light);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Approvals */
+        .approvals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .approval-card {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 2px solid var(--border);
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+
+        .approval-card:hover {
+            border-color: var(--primary);
+        }
+
+        .approval-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .approval-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .approval-year {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        /* Overview */
+        .overview-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-white);
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .overview-content p {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .overview-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Programs */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .program-card {
+            background: var(--bg-white);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .program-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+
+        .program-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .program-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .program-duration {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .program-body {
+            padding: 1.5rem;
+        }
+
+        .program-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .program-seats {
+            display: inline-block;
+            background: var(--bg-light);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        /* Departments */
+        .departments-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .department-item {
+            background: var(--bg-white);
+            padding: 1.25rem 1.5rem;
+            border-left: 4px solid var(--primary);
+            border-radius: 0.375rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            transition: border-color 0.2s;
+        }
+
+        .department-item:hover {
+            border-color: var(--secondary);
+        }
+
+        .department-name {
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+        }
+
+        /* Faculty */
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .faculty-card {
+            background: var(--bg-white);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .faculty-image {
+            width: 100%;
+            height: 240px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .faculty-info {
+            padding: 1.5rem;
+        }
+
+        .faculty-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .faculty-designation {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .faculty-specialization {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            font-style: italic;
+        }
+
+        /* Campuses */
+        .campuses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .campus-card {
+            background: var(--bg-white);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .campus-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .campus-detail {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .campus-label {
+            font-weight: 600;
+            min-width: 100px;
+            color: var(--text-primary);
+        }
+
+        /* Hospitals */
+        .hospitals-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .hospital-card {
+            background: var(--bg-white);
+            padding: 1.75rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .hospital-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .hospital-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .hospital-location {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .hospital-type {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* CTA Block */
+        .cta-block {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .cta-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-text {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .cta-button-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Contact */
+        .contact-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-white);
+            padding: 3rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-label {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+        }
+
+        .contact-value {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .contact-value a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .contact-value a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer p {
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 5rem 0 4rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-type {
+                font-size: 1.125rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            section {
+                padding: 3rem 0;
+            }
+
+            .cta-title {
+                font-size: 1.75rem;
+            }
+
+            .cta-text {
+                font-size: 1.125rem;
+            }
+
+            .contact-card {
+                padding: 2rem;
+            }
+
+            .programs-grid,
+            .faculty-grid,
+            .campuses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero-cta {
+                padding: 0.875rem 2rem;
+                font-size: 1rem;
+            }
+
+            .overview-content {
+                padding: 1.5rem;
+            }
+
+            .contact-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Excellence Medical Institute</h1>
+                <p class="hero-type">Tertiary Medical College & Research Center</p>
+                <a href="#contact" class="hero-cta">Apply for Admissions 2026</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Approvals Section -->
+    <section class="section-alt">
+        <div class="container">
+            <h2 class="section-title">Accreditations & Approvals</h2>
+            <p class="section-subtitle">Recognized by leading national and international medical education bodies</p>
+            <div class="approvals-grid">
+                <div class="approval-card">
+                    <div class="approval-icon">MC</div>
+                    <div class="approval-name">Medical Council</div>
+                    <div class="approval-year">Approved since 2010</div>
+                </div>
+                <div class="approval-card">
+                    <div class="approval-icon">UG</div>
+                    <div class="approval-name">University Grants Commission</div>
+                    <div class="approval-year">Approved since 2010</div>
+                </div>
+                <div class="approval-card">
+                    <div class="approval-icon">WH</div>
+                    <div class="approval-name">WHO Directory</div>
+                    <div class="approval-year">Listed since 2012</div>
+                </div>
+                <div class="approval-card">
+                    <div class="approval-icon">NB</div>
+                    <div class="approval-name">National Board of Examinations</div>
+                    <div class="approval-year">Accredited 2015</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">About Our Institute</h2>
+            <p class="section-subtitle">Shaping the future of healthcare through excellence in medical education</p>
+            <div class="overview-content">
+                <p>Excellence Medical Institute stands as a beacon of medical education, committed to nurturing compassionate physicians and advancing healthcare research. Established with a vision to create world-class medical professionals, we integrate cutting-edge technology with time-honored medical traditions.</p>
+                <p>Our institute provides a comprehensive learning environment that emphasizes clinical excellence, research innovation, and ethical medical practice. With state-of-the-art facilities, experienced faculty, and affiliations with premier healthcare institutions, we prepare our students to meet the evolving challenges of modern medicine.</p>
+                <p>We believe in holistic development, combining rigorous academic curriculum with hands-on clinical training, community engagement, and continuous professional development to produce healthcare leaders of tomorrow.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="section-alt">
+        <div class="container">
+            <h2 class="section-title">Academic Programs</h2>
+            <p class="section-subtitle">Comprehensive medical education pathways designed for excellence</p>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-header">
+                        <div class="program-title">MBBS</div>
+                        <div class="program-duration">5.5 Years (Including Internship)</div>
+                    </div>
+                    <div class="program-body">
+                        <p class="program-description">Comprehensive undergraduate medical program with integrated clinical training and research opportunities.</p>
+                        <span class="program-seats">150 Seats Available</span>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-header">
+                        <div class="program-title">MD General Medicine</div>
+                        <div class="program-duration">3 Years</div>
+                    </div>
+                    <div class="program-body">
+                        <p class="program-description">Advanced postgraduate training in internal medicine with subspecialty exposure and research focus.</p>
+                        <span class="program-seats">12 Seats Available</span>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-header">
+                        <div class="program-title">MS General Surgery</div>
+                        <div class="program-duration">3 Years</div>
+                    </div>
+                    <div class="program-body">
+                        <p class="program-description">Comprehensive surgical training with hands-on experience in modern surgical techniques and patient care.</p>
+                        <span class="program-seats">10 Seats Available</span>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-header">
+                        <div class="program-title">MD Pediatrics</div>
+                        <div class="program-duration">3 Years</div>
+                    </div>
+                    <div class="program-body">
+                        <p class="program-description">Specialized training in child healthcare, development, and pediatric emergency medicine.</p>
+                        <span class="program-seats">8 Seats Available</span>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-header">
+                        <div class="program-title">MS Orthopedics</div>
+                        <div class="program-duration">3 Years</div>
+                    </div>
+                    <div class="program-body">
+                        <p class="program-description">Advanced training in musculoskeletal disorders, trauma surgery, and joint replacement procedures.</p>
+                        <span class="program-seats">6 Seats Available</span>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-header">
+                        <div class="program-title">MD Radiology</div>
+                        <div class="program-duration">3 Years</div>
+                    </div>
+                    <div class="program-body">
+                        <p class="program-description">Comprehensive imaging training including CT, MRI, ultrasound, and interventional radiology.</p>
+                        <span class="program-seats">8 Seats Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments Section -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Clinical Departments</h2>
+            <p class="section-subtitle">Specialized departments offering comprehensive patient care and medical training</p>
+            <div class="departments-list">
+                <div class="department-item">
+                    <div class="department-name">General Medicine</div>
+                </div>
+                <div class="department-item">
+                    <div class="department-name">General Surgery</div>
+                </div>
+                <div class="department-item">
+                    <div class="department-name">Pediatrics</div>
+                </div>
+                <div class="department-item">
+                    <div class="department-name">Obstetrics & Gynecology</div>
+                </div>
+                <div class="department-item">
+                    <div class="department-name">Orthopedics</div>
+                </div>
+                <div class="department-item">
+                    <div class="department-name">Anesthesiology</div>
+                </div>
+                <div class="department-item">
+                    <div class="department-name">Radiology</div>
+                </div>
+                <div class="department-item">
+                    <div class="department-name">Pathology</div>
+                </div>
+                <div class="department-item">
+                    <div class="department-name">Cardiology</div>
+                </div>
+                <div class="department-item">
+                    <div class="department-name">Neurology</div>
+                </div>
+                <div class="department-item">
+                    <div class="department-name">Emergency Medicine</div>
+                </div>
+                <div class="department-item">
+                    <div class="department-name">Psychiatry</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Faculty Section -->
+    <section class="section-alt">
+        <div class="container">
+            <h2 class="section-title">Our Distinguished Faculty</h2>
+            <p class="section-subtitle">Learn from experienced medical professionals and renowned researchers</p>
+            <div class="faculty-grid">
+                <div class="faculty-card">
+                    <div class="faculty-image">DS</div>
+                    <div class="faculty-info">
+                        <div class="faculty-name">Dr. Sarah Mitchell</div>
+                        <div class="faculty-designation">Professor & Head, General Medicine</div>
+                        <div class="faculty-specialization">Endocrinology & Diabetes</div>
+                    </div>
+                </div>
+                <div class="faculty-card">
+                    <div class="faculty-image">DR</div>
+                    <div class="faculty-info">
+                        <div class="faculty-name">Dr. Rajesh Kumar</div>
+                        <div class="faculty-designation">Professor, General Surgery</div>
+                        <div class="faculty-specialization">Minimally Invasive Surgery</div>
+                    </div>
+                </div>
+                <div class="faculty-card">
+                    <div class="faculty-image">DA</div>
+                    <div class="faculty-info">
+                        <div class="faculty-name">Dr. Amelia Chen</div>
+                        <div class="faculty-designation">Associate Professor, Pediatrics</div>
+                        <div class="faculty-specialization">Neonatology</div>
+                    </div>
+                </div>
+                <div class="faculty-card">
+                    <div class="faculty-image">DM</div>
+                    <div class="faculty-info">
+                        <div class="faculty-name">Dr. Michael Thompson</div>
+                        <div class="faculty-designation">Professor, Orthopedics</div>
+                        <div class="faculty-specialization">Joint Replacement Surgery</div>
+                    </div>
+                </div>
+                <div class="faculty-card">
+                    <div class="faculty-image">DP</div>
+                    <div class="faculty-info">
+                        <div class="faculty-name">Dr. Priya Sharma</div>
+                        <div class="faculty-designation">Associate Professor, Radiology</div>
+                        <div class="faculty-specialization">Interventional Radiology</div>
+                    </div>
+                </div>
+                <div class="faculty-card">
+                    <div class="faculty-image">DJ</div>
+                    <div class="faculty-info">
+                        <div class="faculty-name">Dr. James Wilson</div>
+                        <div class="faculty-designation">Professor, Cardiology</div>
+                        <div class="faculty-specialization">Interventional Cardiology</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campuses Section -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Our Campuses</h2>
+            <p class="section-subtitle">Modern facilities equipped with advanced medical education resources</p>
+            <div class="campuses-grid">
+                <div class="campus-card">
+                    <div class="campus-name">Main Campus</div>
+                    <div class="campus-detail">
+                        <span class="campus-label">Location:</span>
+                        <span>Medical District, Metropolitan City</span>
+                    </div>
+                    <div class="campus-detail">
+                        <span class="campus-label">Area:</span>
+                        <span>50 Acres</span>
+                    </div>
+                    <div class="campus-detail">
+                        <span class="campus-label">Facilities:</span>
+                        <span>Teaching Hospital (800 beds), Library, Research Labs, Student Hostels</span>
+                    </div>
+                </div>
+                <div class="campus-card">
+                    <div class="campus-name">Research Campus</div>
+                    <div class="campus-detail">
+                        <span class="campus-label">Location:</span>
+                        <span>Innovation Park, Tech Quarter</span>
+                    </div>
+                    <div class="campus-detail">
+                        <span class="campus-label">Area:</span>
+                        <span>15 Acres</span>
+                    </div>
+                    <div class="campus-detail">
+                        <span class="campus-label">Facilities:</span>
+                        <span>Advanced Research Labs, Clinical Trials Unit, Biotech Incubator</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Affiliated Hospitals Section -->
+    <section class="section-alt">
+        <div class="container">
+            <h2 class="section-title">Affiliated Hospitals</h2>
+            <p class="section-subtitle">Clinical training at premier healthcare institutions</p>
+            <div class="hospitals-list">
+                <div class="hospital-card">
+                    <div class="hospital-name">Excellence General Hospital</div>
+                    <div class="hospital-location">Medical District, Metropolitan City</div>
+                    <span class="hospital-type">Primary Teaching Hospital</span>
+                </div>
+                <div class="hospital-card">
+                    <div class="hospital-name">Metropolitan Trauma Center</div>
+                    <div class="hospital-location">Central District, Metropolitan City</div>
+                    <span class="hospital-type">Associated Hospital</span>
+                </div>
+                <div class="hospital-card">
+                    <div class="hospital-name">Children's Specialty Hospital</div>
+                    <div class="hospital-location">Healthcare Quarter, Metropolitan City</div>
+                    <span class="hospital-type">Pediatric Training</span>
+                </div>
+                <div class="hospital-card">
+                    <div class="hospital-name">Regional Cancer Institute</div>
+                    <div class="hospital-location">Research Park, Metropolitan City</div>
+                    <span class="hospital-type">Oncology Training</span>
+                </div>
+                <div class="hospital-card">
+                    <div class="hospital-name">Community Health Center Network</div>
+                    <div class="hospital-location">Various Locations</div>
+                    <span class="hospital-type">Primary Care Training</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-block">
+        <div class="container">
+            <h2 class="cta-title">Join Excellence Medical Institute</h2>
+            <p class="cta-text">Embark on a transformative journey in medical education and healthcare</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="cta-button cta-button-primary">Apply Now</a>
+                <a href="#programs" class="cta-button cta-button-secondary">Explore Programs</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <p class="section-subtitle">Get in touch for admissions, inquiries, and more</p>
+            <div class="contact-card">
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="contact-label">Address</div>
+                        <div class="contact-value">123 Medical Lane, Metropolitan City, Country</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value"><a href="tel:+1234567890">+1 (234) 567-890</a></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value"><a href="mailto:info@excellencemedicalinstitute.com">info@excellencemedicalinstitute.com</a></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">Website</div>
+                        <div class="contact-value"><a href="https://www.excellencemedicalinstitute.com" target="_blank">www.excellencemedicalinstitute.com</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Excellence Medical Institute. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

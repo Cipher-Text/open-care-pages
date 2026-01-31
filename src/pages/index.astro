@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Open Care Pages" description="Static landing pages for Open Care providers.">
+  <main class="mx-auto w-full max-w-4xl px-6 py-12 text-ink">
+    <section class="space-y-6">
+      <div class="space-y-2">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-moss">Open Care</p>
+        <h1 class="text-4xl font-serif font-semibold">Landing pages made to edit like a README.</h1>
+        <p class="text-lg text-ink/70">
+          Add or update Markdown files in <code>src/content</code> and push to publish.
+        </p>
+      </div>
+      <div class="grid gap-4 rounded-2xl border border-ink/10 bg-white/70 p-6">
+        <p class="text-sm uppercase tracking-[0.2em] text-ink/60">Example routes</p>
+        <ul class="list-disc pl-5 text-base">
+          <li>/d/dr-maya-patel</li>
+          <li>/h/harborview-medical</li>
+          <li>/i/coastline-cardiac</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
