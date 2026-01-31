@@ -8,7 +8,7 @@ phone: "(303) 555-0198"
 email: "hello@opencare.com"
 whatsapp: "+13035550198"
 bookingUrl: "https://example.com/derm-booking"
-headshot: "/images/doctors/elena-garcia.jpg"
+headshot: "/images/doctors/elena-garcia.svg"
 verified: true
 licenseStatus: "Active"
 valueProp: "Personalized skin care with same-week visits and evening hours."
