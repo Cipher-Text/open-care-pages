@@ -55,6 +55,17 @@ trust:
   languages:
     - English
     - Spanish
+show:
+  trust: true
+  carePhilosophy: true
+  services: true
+  expertise: true
+  locations: true
+  reviews: true
+  faqs: true
+  qr: true
+  quickBooking: true
+  socialLinks: true
 carePhilosophy:
   - Evidence-based care with clear next steps
   - Shared decision making and patient education
@@ -125,6 +136,7 @@ Notes:
 
 - The doctor template only renders sections when data exists (except hero, about, contact, footer).
 - FAQ and reviews are optional; they render only when provided.
+- Use `show` to force sections on/off (set any key to `false`).
 
 ## Routes
 

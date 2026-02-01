@@ -33,6 +33,17 @@ contact: "Phone · email@opencare.com"
 seo:
   title: Optional SEO title
   description: Optional SEO description
+show:
+  trust: true
+  carePhilosophy: true
+  services: true
+  expertise: true
+  locations: true
+  reviews: true
+  faqs: true
+  qr: true
+  quickBooking: true
+  socialLinks: true
 ```
 
 ## How this will be replaced by Strapi

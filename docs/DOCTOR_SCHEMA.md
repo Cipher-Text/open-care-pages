@@ -45,6 +45,17 @@ trust:
   languages:
     - English
     - Spanish
+show:
+  trust: true
+  carePhilosophy: true
+  services: true
+  expertise: true
+  locations: true
+  reviews: true
+  faqs: true
+  qr: true
+  quickBooking: true
+  socialLinks: true
 ```
 
 ## About section
@@ -143,6 +154,24 @@ socialLinks:
     url: "https://linkedin.com"
   - label: "Facebook"
     url: "https://facebook.com"
+```
+
+## Section toggles
+
+Use `show` to turn sections on/off. Any key set to `false` hides the section.
+
+```yaml
+show:
+  trust: true
+  carePhilosophy: true
+  services: true
+  expertise: true
+  locations: true
+  reviews: true
+  faqs: true
+  qr: true
+  quickBooking: true
+  socialLinks: true
 ```
 
 ## Notes

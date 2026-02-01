@@ -40,6 +40,17 @@ trust:
   languages:
     - English
     - Spanish
+show:
+  trust: true
+  carePhilosophy: true
+  services: true
+  expertise: true
+  locations: true
+  reviews: true
+  faqs: true
+  qr: true
+  quickBooking: true
+  socialLinks: true
 carePhilosophy:
   - Evidence-based care with clear next steps
   - Shared decision making and patient education
@@ -96,6 +107,24 @@ socialLinks:
 seo:
   title: Custom SEO title
   description: Custom SEO description
+```
+
+### Section toggles
+
+Use `show` to turn sections on/off. Any key set to `false` hides the section.
+
+```yaml
+show:
+  trust: true
+  carePhilosophy: true
+  services: true
+  expertise: true
+  locations: true
+  reviews: true
+  faqs: true
+  qr: true
+  quickBooking: true
+  socialLinks: true
 ```
 
 ### Headshot image guidance
