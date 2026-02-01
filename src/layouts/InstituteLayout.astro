@@ -6,10 +6,10 @@ const { title, services, location, contact, seo } = entry.data;
 const description =
   seo?.description || `${title} — ${services?.[0] || 'Institute'} in ${location}.`;
 
-const contactParts = contact ? contact.split('·').map((part) => part.trim()) : [];
+const contactParts = contact ? contact.split('·').map((part: string) => part.trim()) : [];
 const phone = contactParts[0] || contact || 'Contact for admissions';
 const email = contactParts[1] || 'Contact for email details';
-const programList = services?.length ? services : ['Clinical Training', 'Research Programs', 'Continuing Education'];
+const programList = (services?.length ? services : ['Clinical Training', 'Research Programs', 'Continuing Education']) as string[];
 ---
 <BaseLayout title={seo?.title || title} description={description}>
   <style is:global>

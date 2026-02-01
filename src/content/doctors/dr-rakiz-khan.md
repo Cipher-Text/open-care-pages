@@ -1,17 +1,28 @@
 ---
-title: Dr. Rakiz
+title: Dr. Rakiz Khan
 type: doctor
 specialty: Orthopedic Surgery
+bmdcNumber: "A-67062"
 location: Dhaka, Bangladesh
-contact: "BMDC Reg. No: A-67062"
+contact: ""
 phone: ""
 email: ""
 whatsapp: ""
-headshot: "/images/doctors/dr-rakiz.jpg"
+bookingUrl: ""
+headshot: /images/doctors/dr-rakiz.png
 verified: true
-licenseStatus: "Active"
-valueProp: "Evidence-based orthopedic care focused on bone, joint, and trauma-related conditions."
+licenseStatus: Active
+valueProp:
+  Evidence-based orthopedic care focused on bone, joint, and trauma-related
+  conditions.
+appointmentHours: Schedule will be updated soon
+emergencyNote:
+  For emergency trauma or accidents, please visit the nearest emergency
+  department.
 trust:
+  boardCertified: ""
+  hospitalPrivileges: ""
+  cme: ""
   bmdcRegistered: true
   governmentCadre: true
   postgraduateTraining: true
@@ -51,51 +62,44 @@ awards: []
 media: []
 locations:
   - name: Hospital / Consultation Location
-    address: "Dhaka, Bangladesh"
+    address: Dhaka, Bangladesh
     schedule:
       - day: Saturday
-        time: "To be announced"
+        time: To be announced
       - day: Monday
-        time: "To be announced"
-    feeRange: "As per hospital policy"
-    remarks: "Appointment schedule will be updated soon"
+        time: To be announced
+    feeRange: As per hospital policy
+    remarks: Appointment schedule will be updated soon
     phone: ""
     email: ""
     whatsapp: ""
+    bookingUrl: ""
+    mapUrl: ""
+    mapEmbed: ""
 reviewLinks:
-  - label: "Facebook Reviews"
-    url: "https://www.facebook.com/Dr.Rakiz"
+  - label: Facebook Reviews
+    url: https://www.facebook.com/Dr.Rakiz
 faqs:
-  - question: "What conditions does Dr. Rakiz treat?"
-    answer: "Dr. Rakiz treats bone, joint, trauma, and musculoskeletal conditions, including fractures and sports injuries."
-    category: "General"
-  - question: "Is Dr. Rakiz BMDC registered?"
+  - question: What conditions does Dr. Rakiz treat?
+    answer:
+      Dr. Rakiz treats bone, joint, trauma, and musculoskeletal conditions, including
+      fractures and sports injuries.
+    category: General
+  - question: Is Dr. Rakiz BMDC registered?
     answer: "Yes. BMDC Registration Number: A-67062."
-    category: "Verification"
-appointmentHours: "Schedule will be updated soon"
-emergencyNote: "For emergency trauma or accidents, please visit the nearest emergency department."
+    category: Verification
 socialLinks:
-  - label: "Facebook"
-    url: "https://www.facebook.com/Dr.Rakiz"
+  - label: Facebook
+    url: https://www.facebook.com/Dr.Rakiz
 seo:
-  title: Dr. Rakiz — Orthopedic Surgeon in Bangladesh
-  description: Orthopedic Surgery specialist with MS (Orthopedics) from NITOR and BCS (Health), providing ethical and evidence-based bone and joint care.
+  title: "Dr. Rakiz - Orthopedic Surgeon in Bangladesh"
+  description:
+    Orthopedic Surgery specialist with MS (Orthopedics) from NITOR and
+    BCS (Health), providing ethical and evidence-based bone and joint care.
 ---
+
 ## About Dr. Rakiz
 
 **Dr. Rakiz** is a qualified **Orthopedic Surgery specialist** with postgraduate training from the **National Institute of Traumatology & Orthopaedic Rehabilitation (NITOR)**, the premier orthopedic institute in Bangladesh.
 
 He completed his **MBBS**, joined the **Bangladesh Civil Service (Health Cadre)**, and later earned his **MS in Orthopedic Surgery**. His clinical focus includes the diagnosis and management of bone, joint, and trauma-related conditions with a strong emphasis on patient safety and recovery.
-
-## Services
-
-- Bone and joint pain management
-- Fracture and trauma care
-- Sports injury treatment
-- Back pain and neck pain management
-- Orthopedic surgical consultation
-
-## Scheduling
-
-Consultation schedules and chamber information will be updated soon.
-For now, please follow the official Facebook page for updates.

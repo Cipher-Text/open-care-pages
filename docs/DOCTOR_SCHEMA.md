@@ -27,6 +27,14 @@ appointmentHours: "Mon–Sat, 9:00 AM–5:00 PM"
 emergencyNote: "For emergencies, call 911."
 ```
 
+### Headshot image guidance
+
+- Store files in `public/images/doctors/`
+- Recommended size: 800x800 px (square)
+- Minimum size: 400x400 px
+- Formats: JPG, PNG, or SVG
+- Reference in frontmatter as `/images/doctors/filename.ext`
+
 ## Trust strip
 
 ```yaml

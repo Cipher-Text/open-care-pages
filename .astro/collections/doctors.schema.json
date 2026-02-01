@@ -12,7 +12,15 @@
           "const": "doctor"
         },
         "specialty": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "string",
+              "const": ""
+            }
+          ]
         },
         "services": {
           "type": "array",
@@ -24,56 +32,82 @@
           "type": "string"
         },
         "contact": {
-          "type": "string"
+          "$ref": "#/definitions/doctors/properties/specialty"
         },
         "seo": {
           "type": "object",
           "properties": {
             "title": {
-              "type": "string"
+              "$ref": "#/definitions/doctors/properties/specialty"
             },
             "description": {
-              "type": "string"
+              "$ref": "#/definitions/doctors/properties/specialty"
             }
           },
           "additionalProperties": false
         },
         "phone": {
-          "type": "string"
+          "$ref": "#/definitions/doctors/properties/specialty"
+        },
+        "bmdcNumber": {
+          "$ref": "#/definitions/doctors/properties/specialty"
         },
         "email": {
-          "type": "string"
+          "$ref": "#/definitions/doctors/properties/specialty"
         },
         "whatsapp": {
-          "type": "string"
+          "$ref": "#/definitions/doctors/properties/specialty"
         },
         "bookingUrl": {
-          "type": "string",
-          "format": "uri"
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri"
+            },
+            {
+              "$ref": "#/definitions/doctors/properties/specialty/anyOf/1"
+            }
+          ]
         },
         "headshot": {
-          "type": "string"
+          "$ref": "#/definitions/doctors/properties/specialty"
         },
         "verified": {
-          "type": "boolean"
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/doctors/properties/specialty/anyOf/1"
+            }
+          ]
         },
         "licenseStatus": {
-          "type": "string"
+          "$ref": "#/definitions/doctors/properties/specialty"
         },
         "valueProp": {
-          "type": "string"
+          "$ref": "#/definitions/doctors/properties/specialty"
         },
         "trust": {
           "type": "object",
           "properties": {
             "boardCertified": {
-              "type": "boolean"
+              "$ref": "#/definitions/doctors/properties/verified"
             },
             "hospitalPrivileges": {
-              "type": "boolean"
+              "$ref": "#/definitions/doctors/properties/verified"
             },
             "cme": {
-              "type": "boolean"
+              "$ref": "#/definitions/doctors/properties/verified"
+            },
+            "bmdcRegistered": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            },
+            "governmentCadre": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            },
+            "postgraduateTraining": {
+              "$ref": "#/definitions/doctors/properties/verified"
             },
             "languages": {
               "type": "array",
@@ -111,15 +145,14 @@
                 "type": "string"
               },
               "institution": {
-                "type": "string"
+                "$ref": "#/definitions/doctors/properties/specialty"
               },
               "year": {
-                "type": "string"
+                "$ref": "#/definitions/doctors/properties/specialty"
               }
             },
             "required": [
-              "title",
-              "institution"
+              "title"
             ],
             "additionalProperties": false
           }
@@ -197,30 +230,28 @@
                 }
               },
               "feeRange": {
-                "type": "string"
+                "$ref": "#/definitions/doctors/properties/specialty"
               },
               "remarks": {
-                "type": "string"
+                "$ref": "#/definitions/doctors/properties/specialty"
               },
               "phone": {
-                "type": "string"
+                "$ref": "#/definitions/doctors/properties/specialty"
               },
               "email": {
-                "type": "string"
+                "$ref": "#/definitions/doctors/properties/specialty"
               },
               "whatsapp": {
-                "type": "string"
+                "$ref": "#/definitions/doctors/properties/specialty"
               },
               "bookingUrl": {
-                "type": "string",
-                "format": "uri"
+                "$ref": "#/definitions/doctors/properties/bookingUrl"
               },
               "mapUrl": {
-                "type": "string",
-                "format": "uri"
+                "$ref": "#/definitions/doctors/properties/bookingUrl"
               },
               "mapEmbed": {
-                "type": "string"
+                "$ref": "#/definitions/doctors/properties/specialty"
               }
             },
             "required": [
@@ -239,8 +270,15 @@
                 "type": "string"
               },
               "url": {
-                "type": "string",
-                "format": "uri"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  {
+                    "$ref": "#/definitions/doctors/properties/specialty/anyOf/1"
+                  }
+                ]
               }
             },
             "required": [
@@ -262,7 +300,7 @@
                 "type": "string"
               },
               "category": {
-                "type": "string"
+                "$ref": "#/definitions/doctors/properties/specialty"
               }
             },
             "required": [
@@ -273,10 +311,10 @@
           }
         },
         "appointmentHours": {
-          "type": "string"
+          "$ref": "#/definitions/doctors/properties/specialty"
         },
         "emergencyNote": {
-          "type": "string"
+          "$ref": "#/definitions/doctors/properties/specialty"
         },
         "socialLinks": {
           "type": "array",
@@ -287,8 +325,15 @@
                 "type": "string"
               },
               "url": {
-                "type": "string",
-                "format": "uri"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  {
+                    "$ref": "#/definitions/doctors/properties/specialty/anyOf/1"
+                  }
+                ]
               }
             },
             "required": [
@@ -305,8 +350,7 @@
       "required": [
         "title",
         "type",
-        "location",
-        "contact"
+        "location"
       ],
       "additionalProperties": false
     }

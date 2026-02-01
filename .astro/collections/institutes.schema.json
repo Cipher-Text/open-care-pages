@@ -12,7 +12,15 @@
           "const": "institute"
         },
         "specialty": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "string",
+              "const": ""
+            }
+          ]
         },
         "services": {
           "type": "array",
@@ -24,16 +32,16 @@
           "type": "string"
         },
         "contact": {
-          "type": "string"
+          "$ref": "#/definitions/institutes/properties/specialty"
         },
         "seo": {
           "type": "object",
           "properties": {
             "title": {
-              "type": "string"
+              "$ref": "#/definitions/institutes/properties/specialty"
             },
             "description": {
-              "type": "string"
+              "$ref": "#/definitions/institutes/properties/specialty"
             }
           },
           "additionalProperties": false
@@ -45,8 +53,7 @@
       "required": [
         "title",
         "type",
-        "location",
-        "contact"
+        "location"
       ],
       "additionalProperties": false
     }

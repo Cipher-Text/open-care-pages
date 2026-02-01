@@ -98,6 +98,14 @@ seo:
   description: Custom SEO description
 ```
 
+### Headshot image guidance
+
+- Store files in `public/images/doctors/`
+- Recommended size: 800x800 px (square)
+- Minimum size: 400x400 px
+- Formats: JPG, PNG, or SVG
+- Reference in frontmatter as `/images/doctors/filename.ext`
+
 Optional fields (hospital/institute pages):
 
 ```yaml

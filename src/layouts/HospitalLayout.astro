@@ -6,13 +6,13 @@ const { title, services, location, contact, seo } = entry.data;
 const description =
   seo?.description || `${title} — ${services?.[0] || 'Hospital'} in ${location}.`;
 
-const contactParts = contact ? contact.split('·').map((part) => part.trim()) : [];
+const contactParts = contact ? contact.split('·').map((part: string) => part.trim()) : [];
 const phone = contactParts[0] || contact || 'Call for appointments';
 const email = contactParts[1] || 'Contact for email details';
 const serviceIcons = ['❤️', '🧠', '🦴', '🫁', '🩺', '👶', '💉', '🤰'];
-const serviceList = services?.length
+const serviceList = (services?.length
   ? services
-  : ['Emergency Care', 'Specialty Clinics', 'Diagnostic Services'];
+  : ['Emergency Care', 'Specialty Clinics', 'Diagnostic Services']) as string[];
 const heroTagline = seo?.description || `Comprehensive healthcare services in ${location}.`;
 ---
 <BaseLayout title={seo?.title || title} description={description}>
