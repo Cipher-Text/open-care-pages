@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import QRCode from '../components/QRCode.astro';
 
 type Degree = {
   title: string;
@@ -65,6 +66,7 @@ const {
   licenseStatus,
   valueProp,
   trust,
+  show,
   carePhilosophy,
   focusAreas,
   consultationModes,
@@ -96,6 +98,19 @@ const whatsappLink = derivedWhatsApp
 const heroValueProp = valueProp || description;
 const primaryLocation = location;
 const bookingHref = bookingUrl || '#contact';
+const pageUrl = Astro.url?.href || '';
+const showFlags = {
+  trust: show?.trust !== false,
+  carePhilosophy: show?.carePhilosophy !== false,
+  services: show?.services !== false,
+  expertise: show?.expertise !== false,
+  locations: show?.locations !== false,
+  reviews: show?.reviews !== false,
+  faqs: show?.faqs !== false,
+  qr: show?.qr !== false,
+  quickBooking: show?.quickBooking !== false,
+  socialLinks: show?.socialLinks !== false
+};
 
 const trustChips = [];
 if (trust?.boardCertified) trustChips.push('Board certified');
@@ -147,9 +162,9 @@ const groupedFaqs = faqList.reduce((acc: Record<string, FaqItem[]>, item: FaqIte
 const social = (socialLinks?.length ? socialLinks : []) as SocialLink[];
 const year = new Date().getFullYear();
 
-const hasServices = servicesList.length > 0;
-const hasLocations = locationCards.length > 0;
-const hasFaqs = faqList.length > 0;
+const hasServices = showFlags.services && servicesList.length > 0;
+const hasLocations = showFlags.locations && locationCards.length > 0;
+const hasFaqs = showFlags.faqs && faqList.length > 0;
 ---
 <BaseLayout title={seo?.title || title} description={description}>
   <style is:global>
@@ -265,7 +280,7 @@ const hasFaqs = faqList.length > 0;
       </div>
     </section>
 
-    {trustChips.length > 0 && (
+    {showFlags.trust && trustChips.length > 0 && (
       <section class="mx-auto w-full max-w-6xl px-4 pb-10" aria-label="Trust">
         <div class="flex flex-wrap gap-2">
           {trustChips.map((chip) => (
@@ -285,7 +300,7 @@ const hasFaqs = faqList.length > 0;
             <slot />
           </article>
         </div>
-        {carePhilosophy?.length && (
+        {showFlags.carePhilosophy && carePhilosophy?.length && (
           <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
             <h3 class="text-lg font-semibold">Care philosophy</h3>
             <ul class="mt-4 space-y-3 text-sm text-slate-600">
@@ -325,7 +340,7 @@ const hasFaqs = faqList.length > 0;
       </section>
     )}
 
-    {hasExpertise && (
+    {showFlags.expertise && hasExpertise && (
       <section id="expertise" class="mx-auto w-full max-w-6xl px-4 py-12">
         <h2 class="text-2xl font-semibold">Expertise & Credentials</h2>
         <div class="mt-6 grid gap-6 lg:grid-cols-2">
@@ -418,7 +433,7 @@ const hasFaqs = faqList.length > 0;
       </section>
     )}
 
-    {hasLocations && (
+    {showFlags.locations && hasLocations && (
       <section id="locations" class="mx-auto w-full max-w-6xl px-4 py-12">
         <h2 class="text-2xl font-semibold">Practice Locations & Schedule</h2>
         <div class="mt-6 space-y-6">
@@ -518,6 +533,7 @@ const hasFaqs = faqList.length > 0;
       </section>
     )}
 
+    {showFlags.reviews && (
     <section class="mx-auto w-full max-w-6xl px-4 py-12" aria-label="Reviews">
       <h2 class="text-2xl font-semibold">Reviews</h2>
       {reviews.length > 0 ? (
@@ -537,8 +553,9 @@ const hasFaqs = faqList.length > 0;
         <p class="mt-4 text-sm text-slate-600">Reviews coming soon.</p>
       )}
     </section>
+    )}
 
-    {hasFaqs && (
+    {showFlags.faqs && hasFaqs && (
       <section id="faq" class="mx-auto w-full max-w-6xl px-4 py-12">
         <h2 class="text-2xl font-semibold">Frequently Asked Questions</h2>
         <div class="mt-6 space-y-6">
@@ -592,6 +609,7 @@ const hasFaqs = faqList.length > 0;
             )}
           </div>
         </div>
+        {showFlags.quickBooking && (
         <div class="rounded-2xl border border-emerald-200 bg-emerald-50 p-6">
           <h3 class="text-lg font-semibold">Quick booking</h3>
           <p class="mt-2 text-sm text-emerald-700">Reserve a visit in just a few steps.</p>
@@ -619,7 +637,14 @@ const hasFaqs = faqList.length > 0;
               </a>
             )}
           </div>
+          {showFlags.qr && (
+            <div class="mt-6">
+              <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700">Share via QR</p>
+              <QRCode value={bookingUrl || pageUrl} label="Doctor QR code" downloadName="doctor-qr" size={180} />
+            </div>
+          )}
         </div>
+        )}
       </div>
     </section>
   </main>
@@ -630,7 +655,7 @@ const hasFaqs = faqList.length > 0;
         Medical information is provided for general education only and is not a substitute for professional medical advice,
         diagnosis, or treatment. Always seek the advice of your physician or qualified health provider with any questions.
       </p>
-      {social.length > 0 && (
+      {showFlags.socialLinks && social.length > 0 && (
         <div class="mt-4 flex flex-wrap gap-3">
           {social.map((item) => (
             <a

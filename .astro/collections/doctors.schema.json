@@ -118,6 +118,42 @@
           },
           "additionalProperties": false
         },
+        "show": {
+          "type": "object",
+          "properties": {
+            "trust": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            },
+            "carePhilosophy": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            },
+            "services": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            },
+            "expertise": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            },
+            "locations": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            },
+            "reviews": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            },
+            "faqs": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            },
+            "qr": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            },
+            "quickBooking": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            },
+            "socialLinks": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            }
+          },
+          "additionalProperties": false
+        },
         "carePhilosophy": {
           "type": "array",
           "items": {

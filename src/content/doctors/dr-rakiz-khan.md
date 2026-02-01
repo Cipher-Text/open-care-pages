@@ -29,6 +29,17 @@ trust:
   languages:
     - Bangla
     - English
+show:
+  trust: true
+  carePhilosophy: true
+  services: true
+  expertise: true
+  locations: true
+  reviews: true
+  faqs: true
+  qr: true
+  quickBooking: true
+  socialLinks: true
 carePhilosophy:
   - Ethical and patient-centered orthopedic care
   - Clear diagnosis with practical treatment planning

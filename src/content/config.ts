@@ -44,6 +44,20 @@ const doctors = defineCollection({
         languages: z.array(z.string()).optional()
       })
       .optional(),
+    show: z
+      .object({
+        trust: optionalBool,
+        carePhilosophy: optionalBool,
+        services: optionalBool,
+        expertise: optionalBool,
+        locations: optionalBool,
+        reviews: optionalBool,
+        faqs: optionalBool,
+        qr: optionalBool,
+        quickBooking: optionalBool,
+        socialLinks: optionalBool
+      })
+      .optional(),
     carePhilosophy: z.array(z.string()).optional(),
     focusAreas: z.array(z.string()).optional(),
     consultationModes: z.array(z.string()).optional(),

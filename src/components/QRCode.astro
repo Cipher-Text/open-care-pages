@@ -1,0 +1,133 @@
+---
+const {
+  value = '',
+  label = 'QR Code',
+  size = 180,
+  downloadName = 'open-care-qr'
+} = Astro.props;
+
+const uid = `qr-${Math.random().toString(36).slice(2, 9)}`;
+---
+<div
+  id={uid}
+  class="qr-card"
+  data-qr-root="true"
+  data-qr-value={value}
+  data-qr-size={size}
+  data-qr-name={downloadName}
+>
+  <div class="qr-preview">
+    <canvas width={size} height={size} aria-label={label}></canvas>
+  </div>
+  <div class="qr-actions">
+    <a href="#" class="qr-action" data-qr-download="png">Download PNG</a>
+    <a href="#" class="qr-action" data-qr-download="svg">Download SVG</a>
+  </div>
+</div>
+
+<script type="module">
+  import { qrcodegen } from '../utils/qrcodegen.js';
+
+  const roots = document.querySelectorAll('[data-qr-root="true"]');
+  roots.forEach((root) => {
+    const value = root.dataset.qrValue || window.location.href;
+    if (!value) return;
+    const size = Number(root.dataset.qrSize || 180);
+    const name = root.dataset.qrName || 'open-care-qr';
+    const canvas = root.querySelector('canvas');
+
+    const qr = qrcodegen.QrCode.encodeText(value, qrcodegen.QrCode.Ecc.MEDIUM);
+    const border = 4;
+    const scale = Math.max(1, Math.floor(size / (qr.size + border * 2)));
+    const actualSize = (qr.size + border * 2) * scale;
+
+    if (canvas) {
+      canvas.width = actualSize;
+      canvas.height = actualSize;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, actualSize, actualSize);
+        ctx.fillStyle = '#000000';
+        for (let y = 0; y < qr.size; y++) {
+          for (let x = 0; x < qr.size; x++) {
+            if (qr.getModule(x, y)) {
+              ctx.fillRect((x + border) * scale, (y + border) * scale, scale, scale);
+            }
+          }
+        }
+      }
+    }
+
+    const svg = qr.toSvgString(border);
+
+    const downloadLinks = root.querySelectorAll('[data-qr-download]');
+    downloadLinks.forEach((link) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const format = link.getAttribute('data-qr-download');
+        if (format === 'png' && canvas) {
+          const dataUrl = canvas.toDataURL('image/png');
+          triggerDownload(`${name}.png`, dataUrl);
+        }
+        if (format === 'svg') {
+          const blob = new Blob([svg], { type: 'image/svg+xml' });
+          const url = URL.createObjectURL(blob);
+          triggerDownload(`${name}.svg`, url, () => URL.revokeObjectURL(url));
+        }
+      });
+    });
+
+    function triggerDownload(filename, href, cleanup) {
+      const a = document.createElement('a');
+      a.href = href;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      if (cleanup) cleanup();
+    }
+  });
+</script>
+
+<style is:global>
+  .qr-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .qr-preview {
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 0.75rem;
+    background: #ffffff;
+  }
+
+  .qr-preview canvas {
+    display: block;
+  }
+
+  .qr-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .qr-action {
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #0f172a;
+    text-decoration: none;
+  }
+
+  .qr-action:hover {
+    border-color: #cbd5f5;
+  }
+</style>
