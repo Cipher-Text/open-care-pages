@@ -130,7 +130,7 @@ show:
 ```
 
 QR codes are already implemented. Keep `show.qr: true` to render the QR card, and it will link to `bookingUrl` if provided (otherwise it falls back to the page URL).
-vCards are also implemented. Keep `show.vcard: true` to enable a downloadable `.vcf` contact file.
+vCards are also implemented. Keep `show.vcard: true` to enable a downloadable `.vcf` contact file. The vCard pulls from `title`, `specialty`, `phone`, `email`, `bookingUrl` (or page URL), `location`, `bmdcNumber`, and the first `affiliations.worksAt` entry.
 
 ### Headshot image guidance
 
