@@ -54,6 +54,7 @@ const doctors = defineCollection({
         reviews: optionalBool,
         faqs: optionalBool,
         qr: optionalBool,
+        vcard: optionalBool,
         quickBooking: optionalBool,
         socialLinks: optionalBool
       })

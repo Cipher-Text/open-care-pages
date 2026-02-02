@@ -54,6 +54,7 @@ show:
   reviews: true
   faqs: true
   qr: true
+  vcard: true
   quickBooking: true
   socialLinks: true
 ```
@@ -170,6 +171,7 @@ show:
   reviews: true
   faqs: true
   qr: true
+  vcard: true
   quickBooking: true
   socialLinks: true
 ```
@@ -179,3 +181,4 @@ show:
 - Sections only render when data exists (except hero, about, contact, footer).
 - WhatsApp supports either a full URL or a raw phone number.
 - The filename slug determines the URL: `src/content/doctors/dr-maya-patel.md` → `/d/dr-maya-patel`.
+- vCard downloads are enabled when `show.vcard` is not set to `false`.

@@ -49,6 +49,7 @@ show:
   reviews: true
   faqs: true
   qr: true
+  vcard: true
   quickBooking: true
   socialLinks: true
 carePhilosophy:
@@ -123,9 +124,13 @@ show:
   reviews: true
   faqs: true
   qr: true
+  vcard: true
   quickBooking: true
   socialLinks: true
 ```
+
+QR codes are already implemented. Keep `show.qr: true` to render the QR card, and it will link to `bookingUrl` if provided (otherwise it falls back to the page URL).
+vCards are also implemented. Keep `show.vcard: true` to enable a downloadable `.vcf` contact file.
 
 ### Headshot image guidance
 

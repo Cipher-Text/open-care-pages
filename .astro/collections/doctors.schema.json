@@ -145,6 +145,9 @@
             "qr": {
               "$ref": "#/definitions/doctors/properties/verified"
             },
+            "vcard": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            },
             "quickBooking": {
               "$ref": "#/definitions/doctors/properties/verified"
             },

@@ -92,7 +92,32 @@ Improves patient conversion without backend logic.
 
 ---
 
-## 6. Practice Locations & Schedule Rendering ✅
+## 6. QR Code Generation ✅
+
+- Renders a profile QR code (booking URL fallback to page URL)
+- Downloadable PNG from the UI
+- Controlled via frontmatter `show.qr`
+
+**Implementation**
+
+- UI: `src/components/QRCode.astro`
+- Render hook: `src/layouts/DoctorLayout.astro`
+
+---
+
+## 7. Digital Visiting Card (vCard) ✅
+
+- Generates a downloadable `.vcf` contact card
+- Pulls from doctor frontmatter (name, phone, email, location, booking URL)
+- Controlled via frontmatter `show.vcard`
+
+**Implementation**
+
+- Render hook: `src/layouts/DoctorLayout.astro`
+
+---
+
+## 8. Practice Locations & Schedule Rendering ✅
 
 - Multiple locations supported
 - Day-wise schedule display
@@ -103,7 +128,7 @@ Graceful fallback when schedules are not yet available.
 
 ---
 
-## 7. SEO Basics Implemented ✅
+## 9. SEO Basics Implemented ✅
 
 - Page-level SEO title & description
 - Clean semantic HTML
@@ -112,7 +137,7 @@ Graceful fallback when schedules are not yet available.
 
 ---
 
-## 8. Safe Handling of Incomplete Data ✅
+## 10. Safe Handling of Incomplete Data ✅
 
 Real-world BD data often lacks:
 
@@ -128,7 +153,7 @@ System:
 
 ---
 
-## 9. Ready for Scale ✅
+## 11. Ready for Scale ✅
 
 Designed to support:
 

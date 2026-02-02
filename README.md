@@ -42,6 +42,7 @@ show:
   reviews: true
   faqs: true
   qr: true
+  vcard: true
   quickBooking: true
   socialLinks: true
 ```

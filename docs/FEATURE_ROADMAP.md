@@ -10,47 +10,16 @@ Priority is based on:
 
 ---
 
+## ✅ Implemented (Astro-only)
+
+- QR Code Generation (see `docs/FEATURES_IMPLEMENTED.md`)
+- Digital Visiting Card (vCard) (see `docs/FEATURES_IMPLEMENTED.md`)
+
+---
+
 ## 🔥 Priority 1 – Immediate (High ROI, Low Effort)
 
-### 1. QR Code Generation
-
-**Purpose**
-
-- Link to doctor profile / WhatsApp / Google Maps
-- Used on visiting cards, chambers, Facebook posts
-
-**Astro scope**
-
-- Client-side JS only
-- Downloadable PNG/SVG
-
-**Why priority**
-
-- Extremely sellable
-- Very popular in Bangladesh medical practices
-
----
-
-### 2. Digital Visiting Card (vCard `.vcf`)
-
-**Purpose**
-
-- One-click “Save Doctor Contact”
-- Works on Android & iOS
-
-**Astro scope**
-
-- Static `.vcf` file generation
-- Download button
-
-**Sales value**
-
-- Premium professional feature
-- Easy upsell
-
----
-
-### 3. WhatsApp Pre-filled Message
+### 1. WhatsApp Pre-filled Message
 
 **Purpose**
 
@@ -69,7 +38,7 @@ Example message:
 
 ## ⭐ Priority 2 – Sales Booster Features
 
-### 4. Printable Visiting Card (PDF)
+### 2. Printable Visiting Card (PDF)
 
 **Purpose**
 
@@ -87,7 +56,7 @@ Example message:
 
 ---
 
-### 5. Shareable Profile Poster
+### 3. Shareable Profile Poster
 
 **Purpose**
 
@@ -106,7 +75,7 @@ Includes:
 
 ---
 
-### 6. Feature Tier Gating
+### 4. Feature Tier Gating
 
 **Purpose**
 
@@ -123,7 +92,7 @@ No backend required.
 
 ## 🚀 Priority 3 – Trust & Growth Enhancements
 
-### 7. Doctor JSON-LD (Structured Data)
+### 5. Doctor JSON-LD (Structured Data)
 
 **Purpose**
 
@@ -136,7 +105,7 @@ No backend required.
 
 ---
 
-### 8. “Download Profile” PDF (One-pager)
+### 6. “Download Profile” PDF (One-pager)
 
 **Purpose**
 
@@ -153,7 +122,7 @@ Includes:
 
 ---
 
-### 9. Google Maps Direction Button
+### 7. Google Maps Direction Button
 
 **Purpose**
 
@@ -168,17 +137,17 @@ Includes:
 
 ## 🧠 Priority 4 – Nice-to-have (Still Astro-only)
 
-### 10. Language Toggle (EN / BN)
+### 8. Language Toggle (EN / BN)
 
 - Static bilingual pages
 - SEO-friendly
 
-### 11. Accessibility Improvements
+### 9. Accessibility Improvements
 
 - Font scaling
 - Contrast modes
 
-### 12. Analytics Hooks (Later)
+### 10. Analytics Hooks (Later)
 
 - Click tracking hooks (CTA only)
 - Can be wired to GA / Plausible later
