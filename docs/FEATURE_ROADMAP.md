@@ -14,31 +14,14 @@ Priority is based on:
 
 - QR Code Generation (see `docs/FEATURES_IMPLEMENTED.md`)
 - Digital Visiting Card (vCard) (see `docs/FEATURES_IMPLEMENTED.md`)
-
----
-
-## 🔥 Priority 1 – Immediate (High ROI, Low Effort)
-
-### 1. WhatsApp Pre-filled Message
-
-**Purpose**
-
-- Reduces friction for patients
-- Standardizes appointment requests
-
-Example message:
-
-> Hello Doctor, I found your profile on Open Care and would like to book an appointment.
-
-**Astro scope**
-
-- URL generation only
+- WhatsApp Pre-filled Message (see `docs/FEATURES_IMPLEMENTED.md`)
+- Language Toggle (EN / BN) (see `docs/FEATURES_IMPLEMENTED.md`)
 
 ---
 
 ## ⭐ Priority 2 – Sales Booster Features
 
-### 2. Printable Visiting Card (PDF)
+### 1. Printable Visiting Card (PDF)
 
 **Purpose**
 
@@ -56,7 +39,7 @@ Example message:
 
 ---
 
-### 3. Shareable Profile Poster
+### 2. Shareable Profile Poster
 
 **Purpose**
 
@@ -75,7 +58,7 @@ Includes:
 
 ---
 
-### 4. Feature Tier Gating
+### 3. Feature Tier Gating
 
 **Purpose**
 
@@ -92,7 +75,7 @@ No backend required.
 
 ## 🚀 Priority 3 – Trust & Growth Enhancements
 
-### 5. Doctor JSON-LD (Structured Data)
+### 4. Doctor JSON-LD (Structured Data)
 
 **Purpose**
 
@@ -105,7 +88,7 @@ No backend required.
 
 ---
 
-### 6. “Download Profile” PDF (One-pager)
+### 5. “Download Profile” PDF (One-pager)
 
 **Purpose**
 
@@ -122,7 +105,7 @@ Includes:
 
 ---
 
-### 7. Google Maps Direction Button
+### 6. Google Maps Direction Button
 
 **Purpose**
 
@@ -137,17 +120,12 @@ Includes:
 
 ## 🧠 Priority 4 – Nice-to-have (Still Astro-only)
 
-### 8. Language Toggle (EN / BN)
-
-- Static bilingual pages
-- SEO-friendly
-
-### 9. Accessibility Improvements
+### 7. Accessibility Improvements
 
 - Font scaling
 - Contrast modes
 
-### 10. Analytics Hooks (Later)
+### 8. Analytics Hooks (Later)
 
 - Click tracking hooks (CTA only)
 - Can be wired to GA / Plausible later

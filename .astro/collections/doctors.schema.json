@@ -153,6 +153,156 @@
             },
             "socialLinks": {
               "$ref": "#/definitions/doctors/properties/verified"
+            },
+            "languageToggle": {
+              "$ref": "#/definitions/doctors/properties/verified"
+            }
+          },
+          "additionalProperties": false
+        },
+        "localization": {
+          "type": "object",
+          "properties": {
+            "defaultLocale": {
+              "$ref": "#/definitions/doctors/properties/specialty"
+            },
+            "locales": {
+              "type": "object",
+              "properties": {
+                "bn": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "$ref": "#/definitions/doctors/properties/specialty"
+                    },
+                    "specialty": {
+                      "$ref": "#/definitions/doctors/properties/specialty"
+                    },
+                    "location": {
+                      "$ref": "#/definitions/doctors/properties/specialty"
+                    },
+                    "contact": {
+                      "$ref": "#/definitions/doctors/properties/specialty"
+                    },
+                    "valueProp": {
+                      "$ref": "#/definitions/doctors/properties/specialty"
+                    },
+                    "about": {
+                      "$ref": "#/definitions/doctors/properties/specialty"
+                    },
+                    "carePhilosophy": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "focusAreas": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "consultationModes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "appointmentHours": {
+                      "$ref": "#/definitions/doctors/properties/specialty"
+                    },
+                    "emergencyNote": {
+                      "$ref": "#/definitions/doctors/properties/specialty"
+                    },
+                    "faqs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "question": {
+                            "type": "string"
+                          },
+                          "answer": {
+                            "type": "string"
+                          },
+                          "category": {
+                            "$ref": "#/definitions/doctors/properties/specialty"
+                          }
+                        },
+                        "required": [
+                          "question",
+                          "answer"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "locations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "schedule": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "day": {
+                                  "type": "string"
+                                },
+                                "time": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "day",
+                                "time"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "feeRange": {
+                            "$ref": "#/definitions/doctors/properties/specialty"
+                          },
+                          "remarks": {
+                            "$ref": "#/definitions/doctors/properties/specialty"
+                          },
+                          "phone": {
+                            "$ref": "#/definitions/doctors/properties/specialty"
+                          },
+                          "email": {
+                            "$ref": "#/definitions/doctors/properties/specialty"
+                          },
+                          "whatsapp": {
+                            "$ref": "#/definitions/doctors/properties/specialty"
+                          },
+                          "bookingUrl": {
+                            "$ref": "#/definitions/doctors/properties/bookingUrl"
+                          },
+                          "mapUrl": {
+                            "$ref": "#/definitions/doctors/properties/bookingUrl"
+                          },
+                          "mapEmbed": {
+                            "$ref": "#/definitions/doctors/properties/specialty"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "address"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
             }
           },
           "additionalProperties": false

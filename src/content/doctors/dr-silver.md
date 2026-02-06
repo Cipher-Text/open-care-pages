@@ -1,5 +1,5 @@
 ---
-title: Dr. Maya Patel
+title: Dr. Silver
 type: doctor
 specialty: Internal Medicine
 bmdcNumber: ''
@@ -9,7 +9,7 @@ phone: "(512) 555-0142"
 email: "hello@opencare.com"
 whatsapp: ''
 bookingUrl: ''
-headshot: /images/doctors/maya-patel.svg
+headshot: /images/doctors/dr-silver.svg
 verified: ''
 licenseStatus: ''
 valueProp: ''
@@ -54,9 +54,9 @@ socialLinks:
 - label: Facebook
   url: https://facebook.com
 seo:
-  title: "Dr. Maya Patel - Internal Medicine in Austin"
+  title: "Dr. Silver - Internal Medicine in Austin"
   description: Compassionate internal medicine care with same-week appointments in
     Austin.
 ---
-## About Dr. Patel
-Dr. Patel focuses on preventive care, chronic condition management, and building long-term patient relationships.
+## About Dr. Silver
+Dr. Silver focuses on preventive care, chronic condition management, and building long-term patient relationships.

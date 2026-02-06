@@ -8,6 +8,6 @@
   <rect width="800" height="800" fill="url(#bg)" />
   <circle cx="400" cy="320" r="140" fill="#ffffff" opacity="0.9" />
   <rect x="220" y="460" width="360" height="200" rx="100" fill="#ffffff" opacity="0.9" />
-  <text x="50%" y="54%" text-anchor="middle" font-family="Inter, Arial" font-size="36" fill="#92400e">Dr. Elena Garcia</text>
+  <text x="50%" y="54%" text-anchor="middle" font-family="Inter, Arial" font-size="36" fill="#92400e">Dr. Gold</text>
   <text x="50%" y="60%" text-anchor="middle" font-family="Inter, Arial" font-size="22" fill="#a16207">Dermatology</text>
 </svg>

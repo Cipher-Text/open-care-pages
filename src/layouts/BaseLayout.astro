@@ -1,13 +1,13 @@
 ---
 import '../styles/global.css';
 
-const { title, description } = Astro.props;
+const { title, description, lang = 'en', dataLang = 'en' } = Astro.props;
 const pageTitle = title ? `${title} | Open Care` : 'Open Care';
 const pageDescription =
   description || 'Open Care landing pages for doctors, hospitals, and institutes.';
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang} data-lang={dataLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -5,7 +5,7 @@ This reference lists all supported frontmatter fields for doctor pages and how t
 ## Required
 
 ```yaml
-title: Dr. Maya Patel
+title: Dr. Silver
 type: doctor
 location: Austin, TX
 contact: "(512) 555-0142 · hello@opencare.com"
@@ -57,6 +57,7 @@ show:
   vcard: true
   quickBooking: true
   socialLinks: true
+  languageToggle: true
 ```
 
 ## About section
@@ -174,11 +175,52 @@ show:
   vcard: true
   quickBooking: true
   socialLinks: true
+  languageToggle: true
+
+## Localization (optional)
+
+Add Bengali content under `localization.locales.bn`. Any missing field falls back to English.
+
+```yaml
+localization:
+  defaultLocale: "en"
+  locales:
+    bn:
+      title: "ডা. মায়া প্যাটেল"
+      specialty: "ইন্টারনাল মেডিসিন"
+      location: "অস্টিন, টেক্সাস"
+      valueProp: "প্রিভেন্টিভ কেয়ারের জন্য দ্রুত অ্যাপয়েন্টমেন্ট।"
+      about: |
+        অভিজ্ঞ ইন্টারনাল মেডিসিন চিকিৎসক।
+
+        রোগী-কেন্দ্রিক সেবা ও স্পষ্ট পরামর্শ প্রদান।
+      carePhilosophy:
+        - প্রমাণভিত্তিক চিকিৎসা
+        - রোগী শিক্ষা ও পরামর্শ
+      focusAreas:
+        - ডায়াবেটিস কেয়ার
+        - উচ্চ রক্তচাপ ব্যবস্থাপনা
+      consultationModes:
+        - সরাসরি
+        - অনলাইন
+      appointmentHours: "সোম–শনিবার, সকাল ৯টা–বিকেল ৫টা"
+      emergencyNote: "জরুরি অবস্থায় ৯১১ কল করুন।"
+      faqs:
+        - question: "আপনি কি ইন্স্যুরেন্স গ্রহণ করেন?"
+          answer: "হ্যাঁ, বেশিরভাগ প্রধান প্ল্যান।"
+          category: "বিলিং"
+      locations:
+        - name: "ডাউনটাউন ক্লিনিক"
+          address: "১২৩ মেইন স্ট্রিট, অস্টিন, টেক্সাস"
+          remarks: "সিরিয়াল প্রয়োজন"
+```
 ```
 
 ## Notes
 
 - Sections only render when data exists (except hero, about, contact, footer).
 - WhatsApp supports either a full URL or a raw phone number.
-- The filename slug determines the URL: `src/content/doctors/dr-maya-patel.md` → `/d/dr-maya-patel`.
+- WhatsApp links automatically include a prefilled appointment request message unless the URL already provides a `text` query param.
+- Language toggle appears only when `show.languageToggle` is not `false` and Bengali localization is provided.
+- The filename slug determines the URL: `src/content/doctors/dr-silver.md` → `/d/dr-silver`.
 - vCard downloads are enabled when `show.vcard` is not set to `false`.

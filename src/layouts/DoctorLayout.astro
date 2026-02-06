@@ -49,6 +49,47 @@ type SocialLink = {
   url: string;
 };
 
+type LocalizedFaq = {
+  question: string;
+  answer: string;
+  category?: string;
+};
+
+type LocalizedLocation = {
+  name: string;
+  address: string;
+  schedule?: LocationSchedule[];
+  feeRange?: string;
+  remarks?: string;
+  phone?: string;
+  email?: string;
+  whatsapp?: string;
+  bookingUrl?: string;
+  mapUrl?: string;
+  mapEmbed?: string;
+};
+
+type Localization = {
+  defaultLocale?: string;
+  locales?: {
+    bn?: {
+      title?: string;
+      specialty?: string;
+      location?: string;
+      contact?: string;
+      valueProp?: string;
+      about?: string;
+      carePhilosophy?: string[];
+      focusAreas?: string[];
+      consultationModes?: string[];
+      appointmentHours?: string;
+      emergencyNote?: string;
+      faqs?: LocalizedFaq[];
+      locations?: LocalizedLocation[];
+    };
+  };
+};
+
 const { entry } = Astro.props;
 const {
   title,
@@ -80,20 +121,40 @@ const {
   faqs,
   appointmentHours,
   emergencyNote,
-  socialLinks
+  socialLinks,
+  localization
 } = entry.data;
 
 const description = seo?.description || `${title} — ${specialty || 'Doctor'} in ${location}.`;
 
-const contactParts = (contact ? contact.split('·').map((part: string) => part.trim()) : []) as string[];
+const localizationData = (localization || {}) as Localization;
+const localizedBn = localizationData.locales?.bn || {};
+const hasLocalizedBn = Object.keys(localizedBn || {}).length > 0;
+const defaultLocale = localizationData.defaultLocale === 'bn' ? 'bn' : 'en';
+
+const contactValue = contact || '';
+const contactParts = (contactValue ? contactValue.split('·').map((part: string) => part.trim()) : []) as string[];
 const derivedPhone = phone || contactParts[0] || '';
 const derivedEmail = email || contactParts[1] || '';
 const derivedWhatsApp = whatsapp || '';
-const whatsappLink = derivedWhatsApp
-  ? derivedWhatsApp.startsWith('http')
-    ? derivedWhatsApp
-    : `https://wa.me/${derivedWhatsApp.replace(/[^0-9]/g, '')}`
-  : '';
+const whatsappPrefillMessage = 'Hello Doctor, I found your profile on Open Care and would like to book an appointment.';
+const getWhatsAppLink = (raw = '') => {
+  if (!raw) return '';
+  if (raw.startsWith('http')) {
+    try {
+      const url = new URL(raw);
+      if (!url.searchParams.get('text')) {
+        url.searchParams.set('text', whatsappPrefillMessage);
+      }
+      return url.toString();
+    } catch {
+      return raw;
+    }
+  }
+  const digits = raw.replace(/[^0-9]/g, '');
+  return digits ? `https://wa.me/${digits}?text=${encodeURIComponent(whatsappPrefillMessage)}` : '';
+};
+const whatsappLink = getWhatsAppLink(derivedWhatsApp);
 const escapeVCardValue = (value = '') => value
   .replace(/\\/g, '\\\\')
   .replace(/\n/g, '\\n')
@@ -106,8 +167,19 @@ const firstName = nameParts.length > 1 ? nameParts.slice(0, -1).join(' ') : '';
 const organization = affiliations?.worksAt?.[0] || '';
 
 const heroValueProp = valueProp || description;
+const heroValuePropBn = localizedBn.valueProp || heroValueProp;
 const primaryLocation = location;
+const primaryLocationBn = localizedBn.location || primaryLocation;
+const titleBn = localizedBn.title || title;
+const specialtyBn = localizedBn.specialty || specialty;
+const specialtyFallbackEn = specialty || 'Doctor';
+const specialtyFallbackBn = specialtyBn || 'ডাক্তার';
+const appointmentHoursBn = localizedBn.appointmentHours || appointmentHours;
+const emergencyNoteBn = localizedBn.emergencyNote || emergencyNote;
+const carePhilosophyBn = localizedBn.carePhilosophy || carePhilosophy;
 const bookingHref = bookingUrl || '#contact';
+const primaryCtaHref = whatsappLink || bookingHref;
+const primaryCtaIsWhatsApp = Boolean(whatsappLink);
 const pageUrl = Astro.url?.href || '';
 const showFlags = {
   trust: show?.trust !== false,
@@ -120,21 +192,49 @@ const showFlags = {
   qr: show?.qr !== false,
   vcard: show?.vcard !== false,
   quickBooking: show?.quickBooking !== false,
-  socialLinks: show?.socialLinks !== false
+  socialLinks: show?.socialLinks !== false,
+  languageToggle: show?.languageToggle !== false
 };
 
-const trustChips = [];
-if (trust?.boardCertified) trustChips.push('Board certified');
-if (verified) trustChips.push('Verified');
-if (trust?.hospitalPrivileges) trustChips.push('Hospital privileges');
-if (trust?.cme) trustChips.push('Ongoing CME');
-if (trust?.bmdcRegistered) trustChips.push('BMDC registered');
-if (trust?.governmentCadre) trustChips.push('BCS (Health)');
-if (trust?.postgraduateTraining) trustChips.push('Postgraduate training');
-if (trust?.languages?.length) trustChips.push(`Languages: ${trust.languages.join(', ')}`);
+const trustChipsEn = [];
+const trustChipsBn = [];
+if (trust?.boardCertified) {
+  trustChipsEn.push('Board certified');
+  trustChipsBn.push('বোর্ড সার্টিফায়েড');
+}
+if (verified) {
+  trustChipsEn.push('Verified');
+  trustChipsBn.push('ভেরিফায়েড');
+}
+if (trust?.hospitalPrivileges) {
+  trustChipsEn.push('Hospital privileges');
+  trustChipsBn.push('হাসপাতাল অনুমোদন');
+}
+if (trust?.cme) {
+  trustChipsEn.push('Ongoing CME');
+  trustChipsBn.push('নিয়মিত সিএমই');
+}
+if (trust?.bmdcRegistered) {
+  trustChipsEn.push('BMDC registered');
+  trustChipsBn.push('বিএমডিসি নিবন্ধিত');
+}
+if (trust?.governmentCadre) {
+  trustChipsEn.push('BCS (Health)');
+  trustChipsBn.push('বিসিএস (স্বাস্থ্য)');
+}
+if (trust?.postgraduateTraining) {
+  trustChipsEn.push('Postgraduate training');
+  trustChipsBn.push('পোস্টগ্র্যাজুয়েট প্রশিক্ষণ');
+}
+if (trust?.languages?.length) {
+  trustChipsEn.push(`Languages: ${trust.languages.join(', ')}`);
+  trustChipsBn.push(`ভাষা: ${trust.languages.join(', ')}`);
+}
 
 const servicesList = ((focusAreas?.length ? focusAreas : []) as string[]).slice(0, 12);
+const servicesListBn = ((localizedBn.focusAreas?.length ? localizedBn.focusAreas : servicesList) as string[]).slice(0, 12);
 const modes = (consultationModes?.length ? consultationModes : []) as string[];
+const modesBn = (localizedBn.consultationModes?.length ? localizedBn.consultationModes : modes) as string[];
 
 const publicationsList = (publications?.length ? publications : []) as string[];
 const awardsList = (awards?.length ? awards : []) as string[];
@@ -159,11 +259,21 @@ const locationCards = (locations?.length
         bookingUrl
       }]
     : []) as LocationCard[];
+const localizedLocationCards = (localizedBn.locations?.length
+  ? localizedBn.locations
+  : locationCards) as LocalizedLocation[];
 
 const reviews = (reviewLinks?.length ? reviewLinks : []) as ReviewLink[];
 const faqList = (faqs?.length ? faqs : []) as FaqItem[];
+const faqListBn = (localizedBn.faqs?.length ? localizedBn.faqs : faqList) as LocalizedFaq[];
 
 const groupedFaqs = faqList.reduce((acc: Record<string, FaqItem[]>, item: FaqItem) => {
+  const category = item.category || 'General';
+  if (!acc[category]) acc[category] = [];
+  acc[category].push(item);
+  return acc;
+}, {});
+const groupedFaqsBn = faqListBn.reduce((acc: Record<string, LocalizedFaq[]>, item: LocalizedFaq) => {
   const category = item.category || 'General';
   if (!acc[category]) acc[category] = [];
   acc[category].push(item);
@@ -173,9 +283,10 @@ const groupedFaqs = faqList.reduce((acc: Record<string, FaqItem[]>, item: FaqIte
 const social = (socialLinks?.length ? socialLinks : []) as SocialLink[];
 const year = new Date().getFullYear();
 
-const hasServices = showFlags.services && servicesList.length > 0;
-const hasLocations = showFlags.locations && locationCards.length > 0;
-const hasFaqs = showFlags.faqs && faqList.length > 0;
+const hasServices = showFlags.services && (servicesList.length > 0 || servicesListBn.length > 0);
+const hasLocations = showFlags.locations && (locationCards.length > 0 || localizedLocationCards.length > 0);
+const hasFaqs = showFlags.faqs && (faqList.length > 0 || faqListBn.length > 0);
+const hasLocalization = showFlags.languageToggle && hasLocalizedBn;
 const vcardLines = [
   'BEGIN:VCARD',
   'VERSION:3.0',
@@ -192,8 +303,129 @@ const vcardLines = [
 ].filter(Boolean);
 const vcardHref = `data:text/vcard;charset=utf-8,${encodeURIComponent(vcardLines.join('\r\n'))}`;
 const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
+
+const localeLabels = {
+  en: {
+    navAbout: 'About',
+    navServices: 'Services',
+    navExpertise: 'Expertise',
+    navLocations: 'Locations',
+    navFaq: 'FAQ',
+    navContact: 'Contact',
+    verified: 'Verified Doctor',
+    trusted: 'Trusted Care',
+    heroSpecialtyFallback: 'Medical Specialist',
+    primaryPractice: 'Primary practice',
+    acceptingNewPatients: 'Accepting new patients',
+    bookAppointment: 'Book Appointment',
+    chatOnWhatsApp: 'Chat on WhatsApp',
+    bookOnline: 'Book Online',
+    call: 'Call',
+    email: 'Email',
+    about: 'About',
+    carePhilosophy: 'Care philosophy',
+    servicesTitle: 'Services & Conditions',
+    expertiseTitle: 'Expertise & Credentials',
+    educationTraining: 'Education & Training',
+    affiliationsTitle: 'Affiliations',
+    worksAt: 'Works at',
+    visitsAt: 'Visits at',
+    instituteRoles: 'Institute roles',
+    publications: 'Publications',
+    awards: 'Awards',
+    media: 'Media',
+    locationsTitle: 'Practice Locations',
+    locationsScheduleTitle: 'Practice Locations & Schedule',
+    reviewsTitle: 'Reviews & Links',
+    reviewsEmpty: 'Reviews coming soon.',
+    faqTitle: 'FAQ',
+    faqHeading: 'Frequently Asked Questions',
+    contactTitle: 'Contact & Booking',
+    quickBooking: 'Quick booking',
+    quickBookingDesc: 'Reserve a visit in just a few steps.',
+    shareQr: 'Share via QR',
+    saveContact: 'Save contact',
+    scheduleFallback: 'Schedule available by appointment.',
+    feeRange: 'Fee range',
+    remarks: 'Remarks',
+    phone: 'Phone',
+    whatsapp: 'WhatsApp',
+    hours: 'Hours',
+    emergencyNote: 'Emergency',
+    locationsDay: 'Day',
+    locationsTime: 'Time',
+    map: 'Map',
+    downloadVcard: 'Download vCard',
+    callOffice: 'Call Office',
+    bookAppointmentOnline: 'Book Appointment',
+    reviews: 'Reviews'
+  },
+  bn: {
+    navAbout: 'পরিচিতি',
+    navServices: 'সেবা',
+    navExpertise: 'দক্ষতা',
+    navLocations: 'চেম্বার',
+    navFaq: 'প্রশ্নোত্তর',
+    navContact: 'যোগাযোগ',
+    verified: 'ভেরিফায়েড ডাক্তার',
+    trusted: 'বিশ্বস্ত সেবা',
+    heroSpecialtyFallback: 'মেডিক্যাল স্পেশালিস্ট',
+    primaryPractice: 'প্রধান চেম্বার',
+    acceptingNewPatients: 'নতুন রোগী নেওয়া হচ্ছে',
+    bookAppointment: 'অ্যাপয়েন্টমেন্ট বুক করুন',
+    chatOnWhatsApp: 'হোয়াটসঅ্যাপে কথা বলুন',
+    bookOnline: 'অনলাইনে বুক করুন',
+    call: 'কল করুন',
+    email: 'ইমেইল',
+    about: 'পরিচিতি',
+    carePhilosophy: 'চিকিৎসা দর্শন',
+    servicesTitle: 'সেবা ও সমস্যা',
+    expertiseTitle: 'দক্ষতা ও ক্রেডেনশিয়াল',
+    educationTraining: 'শিক্ষা ও প্রশিক্ষণ',
+    affiliationsTitle: 'সংযুক্তি',
+    worksAt: 'কর্মস্থল',
+    visitsAt: 'চেম্বার',
+    instituteRoles: 'প্রতিষ্ঠানের ভূমিকা',
+    publications: 'প্রকাশনা',
+    awards: 'পুরস্কার',
+    media: 'মিডিয়া',
+    locationsTitle: 'চেম্বারসমূহ',
+    locationsScheduleTitle: 'চেম্বার ও সময়সূচি',
+    reviewsTitle: 'রিভিউ ও লিংক',
+    reviewsEmpty: 'রিভিউ শিগগিরই আসছে।',
+    faqTitle: 'প্রশ্নোত্তর',
+    faqHeading: 'সাধারণ প্রশ্ন',
+    contactTitle: 'যোগাযোগ ও বুকিং',
+    quickBooking: 'দ্রুত বুকিং',
+    quickBookingDesc: 'কয়েক ধাপে সাক্ষাৎ সংরক্ষণ করুন।',
+    shareQr: 'কিউআর দিয়ে শেয়ার',
+    saveContact: 'কন্ট্যাক্ট সেভ করুন',
+    scheduleFallback: 'সময়সূচি অ্যাপয়েন্টমেন্ট অনুযায়ী।',
+    feeRange: 'ফি',
+    remarks: 'মন্তব্য',
+    phone: 'ফোন',
+    whatsapp: 'হোয়াটসঅ্যাপ',
+    hours: 'সময়',
+    emergencyNote: 'জরুরি',
+    locationsDay: 'দিন',
+    locationsTime: 'সময়',
+    map: 'ম্যাপ',
+    downloadVcard: 'ভিকার্ড ডাউনলোড',
+    callOffice: 'অফিসে কল করুন',
+    bookAppointmentOnline: 'অ্যাপয়েন্টমেন্ট বুক করুন',
+    reviews: 'রিভিউ'
+  }
+};
+
+const getParagraphs = (text = '') => text
+  .split(/\n{2,}/)
+  .map((paragraph) => paragraph.trim())
+  .filter(Boolean);
+
+const primaryCtaLabelEn = primaryCtaIsWhatsApp ? localeLabels.en.chatOnWhatsApp : localeLabels.en.bookAppointment;
+const primaryCtaLabelBn = primaryCtaIsWhatsApp ? localeLabels.bn.chatOnWhatsApp : localeLabels.bn.bookAppointment;
 ---
-<BaseLayout title={seo?.title || title} description={description}>
+<BaseLayout title={seo?.title || title} description={description} lang={defaultLocale} dataLang={defaultLocale}>
   <style is:global>
     html {
       scroll-behavior: smooth;
@@ -202,74 +434,153 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
     details summary::-webkit-details-marker {
       display: none;
     }
+
+    .lang-toggle {
+      border: 1px solid #e2e8f0;
+      padding: 0.35rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #475569;
+      background: #fff;
+    }
+
+    .lang-toggle.is-active {
+      border-color: #a7f3d0;
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    html[data-lang='en'] .lang.bn,
+    html[data-lang='bn'] .lang.en {
+      display: none !important;
+    }
+
+    html[data-lang='en'] [data-lang-toggle='en'],
+    html[data-lang='bn'] [data-lang-toggle='bn'] {
+      display: none !important;
+    }
   </style>
 
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
     <div class="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3">
       <div>
         <p class="text-sm font-semibold text-slate-600">
-          {specialty || 'Doctor'}
-          {bmdcNumber && <span> · BMDC: {bmdcNumber}</span>}
+          <span class="lang en">
+            {specialtyFallbackEn}
+            {bmdcNumber && <span> · BMDC: {bmdcNumber}</span>}
+          </span>
+          <span class="lang bn">
+            {specialtyFallbackBn}
+            {bmdcNumber && <span> · বিএমডিসি: {bmdcNumber}</span>}
+          </span>
         </p>
-        <p class="text-lg font-semibold text-slate-900">{title}</p>
+        <p class="text-lg font-semibold text-slate-900">
+          <span class="lang en">{title}</span>
+          <span class="lang bn">{titleBn}</span>
+        </p>
       </div>
       <nav class="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex" aria-label="Primary">
-        <a href="#about" class="hover:text-slate-900">About</a>
-        {hasServices && <a href="#services" class="hover:text-slate-900">Services</a>}
-        {hasExpertise && <a href="#expertise" class="hover:text-slate-900">Expertise</a>}
-        {hasLocations && <a href="#locations" class="hover:text-slate-900">Locations</a>}
-        {hasFaqs && <a href="#faq" class="hover:text-slate-900">FAQ</a>}
-        <a href="#contact" class="hover:text-slate-900">Contact</a>
+        <a href="#about" class="hover:text-slate-900">
+          <span class="lang en">{localeLabels.en.navAbout}</span>
+          <span class="lang bn">{localeLabels.bn.navAbout}</span>
+        </a>
+        {hasServices && (
+          <a href="#services" class="hover:text-slate-900">
+            <span class="lang en">{localeLabels.en.navServices}</span>
+            <span class="lang bn">{localeLabels.bn.navServices}</span>
+          </a>
+        )}
+        {hasExpertise && (
+          <a href="#expertise" class="hover:text-slate-900">
+            <span class="lang en">{localeLabels.en.navExpertise}</span>
+            <span class="lang bn">{localeLabels.bn.navExpertise}</span>
+          </a>
+        )}
+        {hasLocations && (
+          <a href="#locations" class="hover:text-slate-900">
+            <span class="lang en">{localeLabels.en.navLocations}</span>
+            <span class="lang bn">{localeLabels.bn.navLocations}</span>
+          </a>
+        )}
+        {hasFaqs && (
+          <a href="#faq" class="hover:text-slate-900">
+            <span class="lang en">{localeLabels.en.navFaq}</span>
+            <span class="lang bn">{localeLabels.bn.navFaq}</span>
+          </a>
+        )}
+        <a href="#contact" class="hover:text-slate-900">
+          <span class="lang en">{localeLabels.en.navContact}</span>
+          <span class="lang bn">{localeLabels.bn.navContact}</span>
+        </a>
       </nav>
-      <a
-        href={bookingHref}
-        class="hidden rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 md:inline-flex"
-      >
-        Book Appointment
-      </a>
+      {hasLocalization && (
+        <div class="hidden items-center gap-2 md:flex" data-lang-toggle-group>
+          <button type="button" class="lang-toggle" data-lang-toggle="en">English</button>
+          <button type="button" class="lang-toggle" data-lang-toggle="bn">বাংলা</button>
+        </div>
+      )}
     </div>
   </header>
 
-  <main class="bg-white text-slate-900">
+  <main class="bg-white text-slate-900 pb-20 md:pb-0">
     <section class="mx-auto w-full max-w-6xl px-4 pb-12 pt-10" aria-label="Hero">
       <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div class="space-y-6">
           <div class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700">
-            {verified ? 'Verified Doctor' : 'Trusted Care'}
+            <span class="lang en">{verified ? localeLabels.en.verified : localeLabels.en.trusted}</span>
+            <span class="lang bn">{verified ? localeLabels.bn.verified : localeLabels.bn.trusted}</span>
             {licenseStatus && (
               <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] text-emerald-700">{licenseStatus}</span>
             )}
           </div>
-          <h1 class="text-3xl font-semibold leading-tight sm:text-4xl">{title}</h1>
+          <h1 class="text-3xl font-semibold leading-tight sm:text-4xl">
+            <span class="lang en">{title}</span>
+            <span class="lang bn">{titleBn}</span>
+          </h1>
           <p class="text-lg text-slate-600">
-            {specialty || 'Medical Specialist'}
-            {bmdcNumber && <span> · BMDC: {bmdcNumber}</span>}
-            {primaryLocation && <span> · {primaryLocation}</span>}
+            <span class="lang en">
+              {specialty || localeLabels.en.heroSpecialtyFallback}
+              {bmdcNumber && <span> · BMDC: {bmdcNumber}</span>}
+              {primaryLocation && <span> · {primaryLocation}</span>}
+            </span>
+            <span class="lang bn">
+              {specialtyBn || localeLabels.bn.heroSpecialtyFallback}
+              {bmdcNumber && <span> · বিএমডিসি: {bmdcNumber}</span>}
+              {primaryLocationBn && <span> · {primaryLocationBn}</span>}
+            </span>
           </p>
-          <p class="text-base text-slate-700">{heroValueProp}</p>
+          <p class="text-base text-slate-700">
+            <span class="lang en">{heroValueProp}</span>
+            <span class="lang bn">{heroValuePropBn}</span>
+          </p>
           <div class="flex flex-wrap gap-3">
             <a
-              href={bookingHref}
+              href={primaryCtaHref}
               class="rounded-full bg-emerald-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700"
             >
-              Book Appointment
+              <span class="lang en">{primaryCtaLabelEn}</span>
+              <span class="lang bn">{primaryCtaLabelBn}</span>
             </a>
+            {whatsappLink && (
+              <a
+                href={bookingHref}
+                class="rounded-full border border-emerald-200 px-5 py-2 text-sm font-semibold text-emerald-700 hover:border-emerald-300"
+              >
+                <span class="lang en">{localeLabels.en.bookAppointment}</span>
+                <span class="lang bn">{localeLabels.bn.bookAppointment}</span>
+              </a>
+            )}
             {derivedPhone && (
               <a
                 href={`tel:${derivedPhone}`}
                 class="rounded-full border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
                 aria-label="Call"
               >
-                Call
-              </a>
-            )}
-            {whatsappLink && (
-              <a
-                href={whatsappLink}
-                class="rounded-full border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
-                aria-label="WhatsApp"
-              >
-                WhatsApp
+                <span class="lang en">{localeLabels.en.call}</span>
+                <span class="lang bn">{localeLabels.bn.call}</span>
               </a>
             )}
             {derivedEmail && (
@@ -278,10 +589,17 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
                 class="rounded-full border border-slate-200 px-5 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300"
                 aria-label="Email"
               >
-                Email
+                <span class="lang en">{localeLabels.en.email}</span>
+                <span class="lang bn">{localeLabels.bn.email}</span>
               </a>
             )}
           </div>
+          {hasLocalization && (
+            <div class="flex items-center gap-2 md:hidden" data-lang-toggle-group>
+              <button type="button" class="lang-toggle" data-lang-toggle="en">English</button>
+              <button type="button" class="lang-toggle" data-lang-toggle="bn">বাংলা</button>
+            </div>
+          )}
         </div>
         <div class="flex justify-center lg:justify-end">
           <div class="flex w-full max-w-sm flex-col items-center gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
@@ -295,22 +613,36 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
               loading="lazy"
             />
             <div class="text-center">
-              <p class="text-sm font-semibold text-slate-800">Primary practice</p>
-              <p class="text-sm text-slate-600">{primaryLocation}</p>
+              <p class="text-sm font-semibold text-slate-800">
+                <span class="lang en">{localeLabels.en.primaryPractice}</span>
+                <span class="lang bn">{localeLabels.bn.primaryPractice}</span>
+              </p>
+              <p class="text-sm text-slate-600">
+                <span class="lang en">{primaryLocation}</span>
+                <span class="lang bn">{primaryLocationBn}</span>
+              </p>
             </div>
             <div class="flex items-center gap-2 text-xs text-slate-500">
               <span class="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
-              Accepting new patients
+              <span class="lang en">{localeLabels.en.acceptingNewPatients}</span>
+              <span class="lang bn">{localeLabels.bn.acceptingNewPatients}</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    {showFlags.trust && trustChips.length > 0 && (
+    {showFlags.trust && trustChipsEn.length > 0 && (
       <section class="mx-auto w-full max-w-6xl px-4 pb-10" aria-label="Trust">
-        <div class="flex flex-wrap gap-2">
-          {trustChips.map((chip) => (
+        <div class="flex flex-wrap gap-2 lang en">
+          {trustChipsEn.map((chip) => (
+            <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600">
+              {chip}
+            </span>
+          ))}
+        </div>
+        <div class="flex flex-wrap gap-2 lang bn">
+          {trustChipsBn.map((chip) => (
             <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600">
               {chip}
             </span>
@@ -322,16 +654,39 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
     <section id="about" class="mx-auto w-full max-w-6xl px-4 py-12">
       <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
         <div class="space-y-4">
-          <h2 class="text-2xl font-semibold">About</h2>
+          <h2 class="text-2xl font-semibold">
+            <span class="lang en">{localeLabels.en.about}</span>
+            <span class="lang bn">{localeLabels.bn.about}</span>
+          </h2>
           <article class="prose max-w-none text-slate-700">
-            <slot />
+            <div class="lang en">
+              <slot />
+            </div>
+            <div class="lang bn">
+              {localizedBn.about
+                ? getParagraphs(localizedBn.about).map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))
+                : <slot />}
+            </div>
           </article>
         </div>
-        {showFlags.carePhilosophy && carePhilosophy?.length && (
+        {showFlags.carePhilosophy && (carePhilosophy?.length || carePhilosophyBn?.length) && (
           <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
-            <h3 class="text-lg font-semibold">Care philosophy</h3>
-            <ul class="mt-4 space-y-3 text-sm text-slate-600">
+            <h3 class="text-lg font-semibold">
+              <span class="lang en">{localeLabels.en.carePhilosophy}</span>
+              <span class="lang bn">{localeLabels.bn.carePhilosophy}</span>
+            </h3>
+            <ul class="mt-4 space-y-3 text-sm text-slate-600 lang en">
               {((carePhilosophy?.length ? carePhilosophy : []) as string[]).slice(0, 3).map((item) => (
+                <li class="flex gap-2">
+                  <span class="mt-1 h-2 w-2 rounded-full bg-emerald-500"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <ul class="mt-4 space-y-3 text-sm text-slate-600 lang bn">
+              {((carePhilosophyBn?.length ? carePhilosophyBn : (carePhilosophy || [])) as string[]).slice(0, 3).map((item) => (
                 <li class="flex gap-2">
                   <span class="mt-1 h-2 w-2 rounded-full bg-emerald-500"></span>
                   <span>{item}</span>
@@ -346,19 +701,38 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
     {hasServices && (
       <section id="services" class="mx-auto w-full max-w-6xl px-4 py-12">
         <div class="flex flex-wrap items-center justify-between gap-4">
-          <h2 class="text-2xl font-semibold">Services & Conditions</h2>
+          <h2 class="text-2xl font-semibold">
+            <span class="lang en">{localeLabels.en.servicesTitle}</span>
+            <span class="lang bn">{localeLabels.bn.servicesTitle}</span>
+          </h2>
           {modes.length > 0 && (
-            <div class="flex flex-wrap gap-2">
-              {modes.map((mode) => (
-                <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
-                  {mode}
-                </span>
-              ))}
-            </div>
+            <>
+              <div class="flex flex-wrap gap-2 lang en">
+                {modes.map((mode) => (
+                  <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                    {mode}
+                  </span>
+                ))}
+              </div>
+              <div class="flex flex-wrap gap-2 lang bn">
+                {modesBn.map((mode) => (
+                  <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                    {mode}
+                  </span>
+                ))}
+              </div>
+            </>
           )}
         </div>
-        <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lang en">
           {servicesList.map((service) => (
+            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <p class="text-sm font-semibold text-slate-900">{service}</p>
+            </div>
+          ))}
+        </div>
+        <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lang bn">
+          {servicesListBn.map((service) => (
             <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
               <p class="text-sm font-semibold text-slate-900">{service}</p>
             </div>
@@ -369,11 +743,17 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
 
     {showFlags.expertise && hasExpertise && (
       <section id="expertise" class="mx-auto w-full max-w-6xl px-4 py-12">
-        <h2 class="text-2xl font-semibold">Expertise & Credentials</h2>
+        <h2 class="text-2xl font-semibold">
+          <span class="lang en">{localeLabels.en.expertiseTitle}</span>
+          <span class="lang bn">{localeLabels.bn.expertiseTitle}</span>
+        </h2>
         <div class="mt-6 grid gap-6 lg:grid-cols-2">
           {degreesList.length ? (
             <div class="rounded-2xl border border-slate-200 bg-white p-6">
-              <h3 class="text-lg font-semibold">Education & Training</h3>
+              <h3 class="text-lg font-semibold">
+                <span class="lang en">{localeLabels.en.educationTraining}</span>
+                <span class="lang bn">{localeLabels.bn.educationTraining}</span>
+              </h3>
               <ul class="mt-4 space-y-3 text-sm text-slate-600">
                 {degreesList.map((degree) => (
                   <li>
@@ -387,11 +767,17 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
           ) : null}
           {affiliationsData.worksAt?.length || affiliationsData.visitsAt?.length || affiliationsData.roles?.length ? (
             <div class="rounded-2xl border border-slate-200 bg-white p-6">
-              <h3 class="text-lg font-semibold">Affiliations</h3>
+              <h3 class="text-lg font-semibold">
+                <span class="lang en">{localeLabels.en.affiliationsTitle}</span>
+                <span class="lang bn">{localeLabels.bn.affiliationsTitle}</span>
+              </h3>
               <div class="mt-4 space-y-4 text-sm text-slate-600">
                 {affiliationsData.worksAt?.length ? (
                   <div>
-                    <p class="font-semibold text-slate-800">Works at</p>
+                    <p class="font-semibold text-slate-800">
+                      <span class="lang en">{localeLabels.en.worksAt}</span>
+                      <span class="lang bn">{localeLabels.bn.worksAt}</span>
+                    </p>
                     <ul class="mt-2 space-y-1">
                       {affiliationsData.worksAt.map((item) => (
                         <li>{item}</li>
@@ -401,7 +787,10 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
                 ) : null}
                 {affiliationsData.visitsAt?.length ? (
                   <div>
-                    <p class="font-semibold text-slate-800">Visits at</p>
+                    <p class="font-semibold text-slate-800">
+                      <span class="lang en">{localeLabels.en.visitsAt}</span>
+                      <span class="lang bn">{localeLabels.bn.visitsAt}</span>
+                    </p>
                     <ul class="mt-2 space-y-1">
                       {affiliationsData.visitsAt.map((item) => (
                         <li>{item}</li>
@@ -411,7 +800,10 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
                 ) : null}
                 {affiliationsData.roles?.length ? (
                   <div>
-                    <p class="font-semibold text-slate-800">Institute roles</p>
+                    <p class="font-semibold text-slate-800">
+                      <span class="lang en">{localeLabels.en.instituteRoles}</span>
+                      <span class="lang bn">{localeLabels.bn.instituteRoles}</span>
+                    </p>
                     <ul class="mt-2 space-y-1">
                       {affiliationsData.roles.map((item) => (
                         <li>{item}</li>
@@ -427,7 +819,10 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
           <div class="mt-6 grid gap-6 lg:grid-cols-3">
             {publicationsList.length > 0 && (
               <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
-                <h3 class="text-lg font-semibold">Publications</h3>
+                <h3 class="text-lg font-semibold">
+                  <span class="lang en">{localeLabels.en.publications}</span>
+                  <span class="lang bn">{localeLabels.bn.publications}</span>
+                </h3>
                 <ul class="mt-4 space-y-2 text-sm text-slate-600">
                   {publicationsList.map((item) => (
                     <li>{item}</li>
@@ -437,7 +832,10 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
             )}
             {awardsList.length > 0 && (
               <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
-                <h3 class="text-lg font-semibold">Awards</h3>
+                <h3 class="text-lg font-semibold">
+                  <span class="lang en">{localeLabels.en.awards}</span>
+                  <span class="lang bn">{localeLabels.bn.awards}</span>
+                </h3>
                 <ul class="mt-4 space-y-2 text-sm text-slate-600">
                   {awardsList.map((item) => (
                     <li>{item}</li>
@@ -447,7 +845,10 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
             )}
             {mediaList.length > 0 && (
               <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
-                <h3 class="text-lg font-semibold">Media</h3>
+                <h3 class="text-lg font-semibold">
+                  <span class="lang en">{localeLabels.en.media}</span>
+                  <span class="lang bn">{localeLabels.bn.media}</span>
+                </h3>
                 <ul class="mt-4 space-y-2 text-sm text-slate-600">
                   {mediaList.map((item) => (
                     <li>{item}</li>
@@ -462,8 +863,11 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
 
     {showFlags.locations && hasLocations && (
       <section id="locations" class="mx-auto w-full max-w-6xl px-4 py-12">
-        <h2 class="text-2xl font-semibold">Practice Locations & Schedule</h2>
-        <div class="mt-6 space-y-6">
+        <h2 class="text-2xl font-semibold">
+          <span class="lang en">{localeLabels.en.locationsScheduleTitle}</span>
+          <span class="lang bn">{localeLabels.bn.locationsScheduleTitle}</span>
+        </h2>
+        <div class="mt-6 space-y-6 lang en">
           {locationCards.map((loc, index) => (
             <div class="rounded-2xl border border-slate-200 bg-white p-6">
               <div class="flex flex-wrap items-start justify-between gap-4">
@@ -481,8 +885,8 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
                 <table class="mt-4 w-full text-left text-sm text-slate-600">
                   <thead>
                     <tr class="text-xs uppercase text-slate-400">
-                      <th class="py-2">Day</th>
-                      <th class="py-2">Time</th>
+                      <th class="py-2">{localeLabels.en.locationsDay}</th>
+                      <th class="py-2">{localeLabels.en.locationsTime}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -495,7 +899,7 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
                   </tbody>
                 </table>
               ) : (
-                <p class="mt-4 text-sm text-slate-600">Schedule available by appointment.</p>
+                <p class="mt-4 text-sm text-slate-600">{localeLabels.en.scheduleFallback}</p>
               )}
               {loc.remarks && <p class="mt-3 text-sm text-slate-500">{loc.remarks}</p>}
               <div class="mt-4 flex flex-wrap gap-2">
@@ -505,16 +909,16 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
                     class="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-700"
                     aria-label="Call"
                   >
-                    Call
+                    {localeLabels.en.call}
                   </a>
                 )}
                 {loc.whatsapp && (
                   <a
-                    href={loc.whatsapp.startsWith('http') ? loc.whatsapp : `https://wa.me/${loc.whatsapp.replace(/[^0-9]/g, '')}`}
+                    href={getWhatsAppLink(loc.whatsapp)}
                     class="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-700"
                     aria-label="WhatsApp"
                   >
-                    WhatsApp
+                    {localeLabels.en.whatsapp}
                   </a>
                 )}
                 {loc.email && (
@@ -523,7 +927,7 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
                     class="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-700"
                     aria-label="Email"
                   >
-                    Email
+                    {localeLabels.en.email}
                   </a>
                 )}
                 {loc.bookingUrl && (
@@ -531,7 +935,7 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
                     href={loc.bookingUrl}
                     class="rounded-full bg-emerald-600 px-4 py-2 text-xs font-semibold text-white"
                   >
-                    Book Online
+                    {localeLabels.en.bookOnline}
                   </a>
                 )}
                 <a
@@ -541,7 +945,101 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
                   rel="noreferrer"
                   aria-label="Open map"
                 >
-                  Map
+                  {localeLabels.en.map}
+                </a>
+              </div>
+              {index === 0 && loc.mapEmbed && (
+                <div class="mt-4 overflow-hidden rounded-2xl border border-slate-200">
+                  <iframe
+                    src={loc.mapEmbed}
+                    title={`Map of ${loc.name}`}
+                    class="h-64 w-full"
+                    loading="lazy"
+                  ></iframe>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+        <div class="mt-6 space-y-6 lang bn">
+          {localizedLocationCards.map((loc, index) => (
+            <div class="rounded-2xl border border-slate-200 bg-white p-6">
+              <div class="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <h3 class="text-lg font-semibold text-slate-900">{loc.name}</h3>
+                  <p class="text-sm text-slate-600">{loc.address}</p>
+                </div>
+                {loc.feeRange && (
+                  <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+                    {loc.feeRange}
+                  </span>
+                )}
+              </div>
+              {loc.schedule?.length ? (
+                <table class="mt-4 w-full text-left text-sm text-slate-600">
+                  <thead>
+                    <tr class="text-xs uppercase text-slate-400">
+                      <th class="py-2">{localeLabels.bn.locationsDay}</th>
+                      <th class="py-2">{localeLabels.bn.locationsTime}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {loc.schedule.map((slot) => (
+                      <tr class="border-t border-slate-100">
+                        <td class="py-2 font-medium text-slate-700">{slot.day}</td>
+                        <td class="py-2">{slot.time}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p class="mt-4 text-sm text-slate-600">{localeLabels.bn.scheduleFallback}</p>
+              )}
+              {loc.remarks && <p class="mt-3 text-sm text-slate-500">{loc.remarks}</p>}
+              <div class="mt-4 flex flex-wrap gap-2">
+                {loc.phone && (
+                  <a
+                    href={`tel:${loc.phone}`}
+                    class="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-700"
+                    aria-label="Call"
+                  >
+                    {localeLabels.bn.call}
+                  </a>
+                )}
+                {loc.whatsapp && (
+                  <a
+                    href={getWhatsAppLink(loc.whatsapp)}
+                    class="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-700"
+                    aria-label="WhatsApp"
+                  >
+                    {localeLabels.bn.whatsapp}
+                  </a>
+                )}
+                {loc.email && (
+                  <a
+                    href={`mailto:${loc.email}`}
+                    class="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-700"
+                    aria-label="Email"
+                  >
+                    {localeLabels.bn.email}
+                  </a>
+                )}
+                {loc.bookingUrl && (
+                  <a
+                    href={loc.bookingUrl}
+                    class="rounded-full bg-emerald-600 px-4 py-2 text-xs font-semibold text-white"
+                  >
+                    {localeLabels.bn.bookOnline}
+                  </a>
+                )}
+                <a
+                  href={loc.mapUrl || 'https://maps.google.com'}
+                  class="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-700"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open map"
+                >
+                  {localeLabels.bn.map}
                 </a>
               </div>
               {index === 0 && loc.mapEmbed && (
@@ -562,7 +1060,10 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
 
     {showFlags.reviews && (
     <section class="mx-auto w-full max-w-6xl px-4 py-12" aria-label="Reviews">
-      <h2 class="text-2xl font-semibold">Reviews</h2>
+      <h2 class="text-2xl font-semibold">
+        <span class="lang en">{localeLabels.en.reviews}</span>
+        <span class="lang bn">{localeLabels.bn.reviews}</span>
+      </h2>
       {reviews.length > 0 ? (
         <div class="mt-4 flex flex-wrap gap-3">
           {reviews.map((review) => (
@@ -577,16 +1078,40 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
           ))}
         </div>
       ) : (
-        <p class="mt-4 text-sm text-slate-600">Reviews coming soon.</p>
+        <p class="mt-4 text-sm text-slate-600">
+          <span class="lang en">{localeLabels.en.reviewsEmpty}</span>
+          <span class="lang bn">{localeLabels.bn.reviewsEmpty}</span>
+        </p>
       )}
     </section>
     )}
 
     {showFlags.faqs && hasFaqs && (
       <section id="faq" class="mx-auto w-full max-w-6xl px-4 py-12">
-        <h2 class="text-2xl font-semibold">Frequently Asked Questions</h2>
-        <div class="mt-6 space-y-6">
+        <h2 class="text-2xl font-semibold">
+          <span class="lang en">{localeLabels.en.faqHeading}</span>
+          <span class="lang bn">{localeLabels.bn.faqHeading}</span>
+        </h2>
+        <div class="mt-6 space-y-6 lang en">
           {Object.entries(groupedFaqs).map(([category, items]: [string, FaqItem[]]) => (
+            <div>
+              <h3 class="text-lg font-semibold text-slate-800">{category}</h3>
+              <div class="mt-3 space-y-3">
+                {items.map((item) => (
+                  <details class="group rounded-2xl border border-slate-200 bg-white p-4">
+                    <summary class="flex cursor-pointer items-center justify-between gap-4 text-sm font-semibold text-slate-800">
+                      {item.question}
+                      <span class="text-slate-400 group-open:rotate-45">+</span>
+                    </summary>
+                    <p class="mt-3 text-sm text-slate-600">{item.answer}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="mt-6 space-y-6 lang bn">
+          {Object.entries(groupedFaqsBn).map(([category, items]: [string, LocalizedFaq[]]) => (
             <div>
               <h3 class="text-lg font-semibold text-slate-800">{category}</h3>
               <div class="mt-3 space-y-3">
@@ -609,62 +1134,117 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
     <section id="contact" class="mx-auto w-full max-w-6xl px-4 py-12">
       <div class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
         <div class="rounded-2xl border border-slate-200 bg-white p-6">
-          <h2 class="text-2xl font-semibold">Contact & Booking</h2>
+          <h2 class="text-2xl font-semibold">
+            <span class="lang en">{localeLabels.en.contactTitle}</span>
+            <span class="lang bn">{localeLabels.bn.contactTitle}</span>
+          </h2>
           <div class="mt-4 space-y-3 text-sm text-slate-600">
             {derivedPhone && (
               <p>
-                <span class="font-semibold text-slate-800">Phone:</span> {derivedPhone}
+                <span class="font-semibold text-slate-800">
+                  <span class="lang en">{localeLabels.en.phone}:</span>
+                  <span class="lang bn">{localeLabels.bn.phone}:</span>
+                </span>{' '}
+                {derivedPhone}
               </p>
             )}
             {derivedEmail && (
               <p>
-                <span class="font-semibold text-slate-800">Email:</span> {derivedEmail}
+                <span class="font-semibold text-slate-800">
+                  <span class="lang en">{localeLabels.en.email}:</span>
+                  <span class="lang bn">{localeLabels.bn.email}:</span>
+                </span>{' '}
+                {derivedEmail}
               </p>
             )}
             {whatsappLink && (
               <p>
-                <span class="font-semibold text-slate-800">WhatsApp:</span> {derivedWhatsApp}
+                <span class="font-semibold text-slate-800">
+                  <span class="lang en">{localeLabels.en.whatsapp}:</span>
+                  <span class="lang bn">{localeLabels.bn.whatsapp}:</span>
+                </span>{' '}
+                {derivedWhatsApp}
               </p>
             )}
-            {appointmentHours && (
+            {(appointmentHours || appointmentHoursBn) && (
               <p>
-                <span class="font-semibold text-slate-800">Hours:</span> {appointmentHours}
+                <span class="font-semibold text-slate-800">
+                  <span class="lang en">{localeLabels.en.hours}:</span>
+                  <span class="lang bn">{localeLabels.bn.hours}:</span>
+                </span>{' '}
+                <span class="lang en">{appointmentHours}</span>
+                <span class="lang bn">{appointmentHoursBn || appointmentHours}</span>
               </p>
             )}
-            {emergencyNote && (
-              <p class="text-xs text-slate-500">{emergencyNote}</p>
+            {(emergencyNote || emergencyNoteBn) && (
+              <p class="text-xs text-slate-500">
+                <span class="lang en">{emergencyNote}</span>
+                <span class="lang bn">{emergencyNoteBn || emergencyNote}</span>
+              </p>
             )}
           </div>
+          {whatsappLink && (
+            <div class="mt-5">
+              <a
+                href={whatsappLink}
+                class="inline-flex rounded-full border border-emerald-200 px-4 py-2 text-xs font-semibold text-emerald-700 hover:border-emerald-300"
+              >
+                <span class="lang en">{localeLabels.en.chatOnWhatsApp}</span>
+                <span class="lang bn">{localeLabels.bn.chatOnWhatsApp}</span>
+              </a>
+            </div>
+          )}
           {showFlags.vcard && (
             <div class="mt-5">
-              <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Save contact</p>
+              <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                <span class="lang en">{localeLabels.en.saveContact}</span>
+                <span class="lang bn">{localeLabels.bn.saveContact}</span>
+              </p>
               <a
                 href={vcardHref}
                 download={`${vcardFileBase}.vcf`}
                 class="mt-2 inline-flex rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-700 hover:border-slate-300"
               >
-                Download vCard
+                <span class="lang en">{localeLabels.en.downloadVcard}</span>
+                <span class="lang bn">{localeLabels.bn.downloadVcard}</span>
               </a>
             </div>
           )}
         </div>
         {showFlags.quickBooking && (
         <div class="rounded-2xl border border-emerald-200 bg-emerald-50 p-6">
-          <h3 class="text-lg font-semibold">Quick booking</h3>
-          <p class="mt-2 text-sm text-emerald-700">Reserve a visit in just a few steps.</p>
+          <h3 class="text-lg font-semibold">
+            <span class="lang en">{localeLabels.en.quickBooking}</span>
+            <span class="lang bn">{localeLabels.bn.quickBooking}</span>
+          </h3>
+          <p class="mt-2 text-sm text-emerald-700">
+            <span class="lang en">{localeLabels.en.quickBookingDesc}</span>
+            <span class="lang bn">{localeLabels.bn.quickBookingDesc}</span>
+          </p>
           <div class="mt-4 flex flex-col gap-3">
             <a
               href={bookingHref}
               class="rounded-full bg-emerald-600 px-5 py-2 text-sm font-semibold text-white text-center"
             >
-              Book Appointment
+              <span class="lang en">{localeLabels.en.bookAppointment}</span>
+              <span class="lang bn">{localeLabels.bn.bookAppointment}</span>
             </a>
+            {whatsappLink && (
+              <a
+                href={whatsappLink}
+                class="rounded-full border border-emerald-200 px-5 py-2 text-sm font-semibold text-emerald-700 text-center"
+              >
+                <span class="lang en">{localeLabels.en.chatOnWhatsApp}</span>
+                <span class="lang bn">{localeLabels.bn.chatOnWhatsApp}</span>
+              </a>
+            )}
             {bookingUrl && (
               <a
                 href={bookingUrl}
                 class="rounded-full border border-emerald-200 px-5 py-2 text-sm font-semibold text-emerald-700 text-center"
               >
-                Book Online
+                <span class="lang en">{localeLabels.en.bookOnline}</span>
+                <span class="lang bn">{localeLabels.bn.bookOnline}</span>
               </a>
             )}
             {derivedPhone && (
@@ -672,25 +1252,33 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
                 href={`tel:${derivedPhone}`}
                 class="rounded-full border border-emerald-200 px-5 py-2 text-sm font-semibold text-emerald-700 text-center"
               >
-                Call Office
+                <span class="lang en">{localeLabels.en.callOffice}</span>
+                <span class="lang bn">{localeLabels.bn.callOffice}</span>
               </a>
             )}
           </div>
           {showFlags.qr && (
             <div class="mt-6">
-              <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700">Share via QR</p>
+              <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700">
+                <span class="lang en">{localeLabels.en.shareQr}</span>
+                <span class="lang bn">{localeLabels.bn.shareQr}</span>
+              </p>
               <QRCode value={bookingUrl || pageUrl} label="Doctor QR code" downloadName="doctor-qr" size={180} />
             </div>
           )}
           {showFlags.vcard && (
             <div class="mt-6">
-              <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700">Save contact</p>
+              <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700">
+                <span class="lang en">{localeLabels.en.saveContact}</span>
+                <span class="lang bn">{localeLabels.bn.saveContact}</span>
+              </p>
               <a
                 href={vcardHref}
                 download={`${vcardFileBase}.vcf`}
                 class="mt-2 inline-flex rounded-full border border-emerald-200 px-4 py-2 text-xs font-semibold text-emerald-700 hover:border-emerald-300"
               >
-                Download vCard
+                <span class="lang en">{localeLabels.en.downloadVcard}</span>
+                <span class="lang bn">{localeLabels.bn.downloadVcard}</span>
               </a>
             </div>
           )}
@@ -699,6 +1287,17 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
       </div>
     </section>
   </main>
+  {whatsappLink && (
+    <div class="fixed inset-x-0 bottom-0 z-50 border-t border-emerald-200 bg-white/95 px-4 py-3 shadow-lg backdrop-blur md:hidden">
+      <a
+        href={whatsappLink}
+        class="flex w-full items-center justify-center rounded-full bg-emerald-600 px-4 py-3 text-sm font-semibold text-white"
+      >
+        <span class="lang en">{localeLabels.en.chatOnWhatsApp}</span>
+        <span class="lang bn">{localeLabels.bn.chatOnWhatsApp}</span>
+      </a>
+    </div>
+  )}
 
   <footer class="border-t border-slate-200 bg-slate-50">
     <div class="mx-auto w-full max-w-6xl px-4 py-10 text-sm text-slate-600">
@@ -724,12 +1323,44 @@ const vcardFileBase = entry.slug ? `${entry.slug}-contact` : 'doctor-contact';
     </div>
   </footer>
 
-  <div class="fixed bottom-4 left-4 right-4 z-40 md:hidden">
-    <a
-      href={bookingHref}
-      class="flex w-full items-center justify-center rounded-full bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-lg"
-    >
-      Book Appointment
-    </a>
-  </div>
+  {!whatsappLink && (
+    <div class="fixed bottom-4 left-4 right-4 z-40 md:hidden">
+      <a
+        href={bookingHref}
+        class="flex w-full items-center justify-center rounded-full bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-lg"
+      >
+        <span class="lang en">{localeLabels.en.bookAppointment}</span>
+        <span class="lang bn">{localeLabels.bn.bookAppointment}</span>
+      </a>
+    </div>
+  )}
+  {hasLocalization && (
+    <script is:inline define:vars={{ defaultLocale }}>
+      (() => {
+        const storageKey = 'oc-lang';
+        const defaultLang = defaultLocale;
+        const root = document.documentElement;
+        const buttons = Array.from(document.querySelectorAll('[data-lang-toggle]'));
+        if (!buttons.length) return;
+        const applyLang = (lang) => {
+          root.dataset.lang = lang;
+          root.setAttribute('lang', lang);
+          buttons.forEach((btn) => {
+            btn.classList.toggle('is-active', btn.getAttribute('data-lang-toggle') === lang);
+          });
+          try {
+            localStorage.setItem(storageKey, lang);
+          } catch {}
+        };
+        let saved = null;
+        try {
+          saved = localStorage.getItem(storageKey);
+        } catch {}
+        applyLang(saved || defaultLang);
+        buttons.forEach((btn) => {
+          btn.addEventListener('click', () => applyLang(btn.getAttribute('data-lang-toggle')));
+        });
+      })();
+    </script>
+  )}
 </BaseLayout>

@@ -67,6 +67,7 @@ show:
   vcard: true
   quickBooking: true
   socialLinks: true
+  languageToggle: true
 carePhilosophy:
   - Evidence-based care with clear next steps
   - Shared decision making and patient education
@@ -138,12 +139,50 @@ Notes:
 - The doctor template only renders sections when data exists (except hero, about, contact, footer).
 - FAQ and reviews are optional; they render only when provided.
 - Use `show` to force sections on/off (set any key to `false`).
+- WhatsApp links automatically include a prefilled appointment request message unless the URL already provides a `text` query param.
+- Language toggle appears only when `show.languageToggle` is not `false` and Bengali localization is provided.
+
+Localization (optional):
+
+```yaml
+localization:
+  defaultLocale: "en"
+  locales:
+    bn:
+      title: "ডা. মায়া প্যাটেল"
+      specialty: "ইন্টারনাল মেডিসিন"
+      location: "অস্টিন, টেক্সাস"
+      valueProp: "প্রিভেন্টিভ কেয়ারের জন্য দ্রুত অ্যাপয়েন্টমেন্ট।"
+      about: |
+        অভিজ্ঞ ইন্টারনাল মেডিসিন চিকিৎসক।
+
+        রোগী-কেন্দ্রিক সেবা ও স্পষ্ট পরামর্শ প্রদান।
+      carePhilosophy:
+        - প্রমাণভিত্তিক চিকিৎসা
+        - রোগী শিক্ষা ও পরামর্শ
+      focusAreas:
+        - ডায়াবেটিস কেয়ার
+        - উচ্চ রক্তচাপ ব্যবস্থাপনা
+      consultationModes:
+        - সরাসরি
+        - অনলাইন
+      appointmentHours: "সোম–শনিবার, সকাল ৯টা–বিকেল ৫টা"
+      emergencyNote: "জরুরি অবস্থায় ৯১১ কল করুন।"
+      faqs:
+        - question: "আপনি কি ইন্স্যুরেন্স গ্রহণ করেন?"
+          answer: "হ্যাঁ, বেশিরভাগ প্রধান প্ল্যান।"
+          category: "বিলিং"
+      locations:
+        - name: "ডাউনটাউন ক্লিনিক"
+          address: "১২৩ মেইন স্ট্রিট, অস্টিন, টেক্সাস"
+          remarks: "সিরিয়াল প্রয়োজন"
+```
 
 ## Routes
 
 Routes are generated from the filename:
 
-- `src/content/doctors/dr-maya-patel.md` → `/d/dr-maya-patel`
+- `src/content/doctors/dr-silver.md` → `/d/dr-silver`
 - `src/content/hospitals/harborview-medical.md` → `/h/harborview-medical`
 - `src/content/institutes/coastline-cardiac.md` → `/i/coastline-cardiac`
 

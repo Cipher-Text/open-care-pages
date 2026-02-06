@@ -81,18 +81,34 @@ Sections:
 
 ## 5. Smart Booking CTA Logic ✅
 
-CTA buttons automatically resolve to:
+Primary CTA behavior:
 
-1. `bookingUrl` (if provided)
-2. WhatsApp (if available)
-3. Phone call
-4. Contact section fallback
+- WhatsApp if a number/link is available
+- Otherwise `bookingUrl` (if provided)
+- Otherwise contact section fallback
 
-Improves patient conversion without backend logic.
+Additional CTAs expose call, email, and booking as available.
 
 ---
 
-## 6. QR Code Generation ✅
+## 6. WhatsApp Pre-filled Message ✅
+
+- WhatsApp links include a prefilled appointment request message
+- Supports raw numbers or full WhatsApp URLs
+- If a provided WhatsApp URL already includes a `text` query param, it is preserved
+
+---
+
+## 7. Language Toggle (EN / BN) ✅
+
+- Optional EN/BN toggle for doctor pages
+- Controlled via `show.languageToggle`
+- Localized copy can be provided in frontmatter via `localization.locales.bn`
+- Uses English as fallback when Bengali text is missing
+
+---
+
+## 8. QR Code Generation ✅
 
 - Renders a profile QR code (booking URL fallback to page URL)
 - Downloadable PNG from the UI
@@ -105,7 +121,7 @@ Improves patient conversion without backend logic.
 
 ---
 
-## 7. Digital Visiting Card (vCard) ✅
+## 9. Digital Visiting Card (vCard) ✅
 
 - Generates a downloadable `.vcf` contact card
 - Pulls from doctor frontmatter (name, phone, email, location, booking URL)
@@ -117,7 +133,7 @@ Improves patient conversion without backend logic.
 
 ---
 
-## 8. Practice Locations & Schedule Rendering ✅
+## 10. Practice Locations & Schedule Rendering ✅
 
 - Multiple locations supported
 - Day-wise schedule display
@@ -128,7 +144,7 @@ Graceful fallback when schedules are not yet available.
 
 ---
 
-## 9. SEO Basics Implemented ✅
+## 11. SEO Basics Implemented ✅
 
 - Page-level SEO title & description
 - Clean semantic HTML
@@ -137,7 +153,7 @@ Graceful fallback when schedules are not yet available.
 
 ---
 
-## 10. Safe Handling of Incomplete Data ✅
+## 12. Safe Handling of Incomplete Data ✅
 
 Real-world BD data often lacks:
 
@@ -153,7 +169,7 @@ System:
 
 ---
 
-## 11. Ready for Scale ✅
+## 13. Ready for Scale ✅
 
 Designed to support:
 

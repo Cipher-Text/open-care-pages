@@ -56,7 +56,65 @@ const doctors = defineCollection({
         qr: optionalBool,
         vcard: optionalBool,
         quickBooking: optionalBool,
-        socialLinks: optionalBool
+        socialLinks: optionalBool,
+        languageToggle: optionalBool
+      })
+      .optional(),
+    localization: z
+      .object({
+        defaultLocale: optionalString,
+        locales: z
+          .object({
+            bn: z
+              .object({
+                title: optionalString,
+                specialty: optionalString,
+                location: optionalString,
+                contact: optionalString,
+                valueProp: optionalString,
+                about: optionalString,
+                carePhilosophy: z.array(z.string()).optional(),
+                focusAreas: z.array(z.string()).optional(),
+                consultationModes: z.array(z.string()).optional(),
+                appointmentHours: optionalString,
+                emergencyNote: optionalString,
+                faqs: z
+                  .array(
+                    z.object({
+                      question: z.string(),
+                      answer: z.string(),
+                      category: optionalString
+                    })
+                  )
+                  .optional(),
+                locations: z
+                  .array(
+                    z.object({
+                      name: z.string(),
+                      address: z.string(),
+                      schedule: z
+                        .array(
+                          z.object({
+                            day: z.string(),
+                            time: z.string()
+                          })
+                        )
+                        .optional(),
+                      feeRange: optionalString,
+                      remarks: optionalString,
+                      phone: optionalString,
+                      email: optionalString,
+                      whatsapp: optionalString,
+                      bookingUrl: optionalUrl,
+                      mapUrl: optionalUrl,
+                      mapEmbed: optionalString
+                    })
+                  )
+                  .optional()
+              })
+              .optional()
+          })
+          .optional()
       })
       .optional(),
     carePhilosophy: z.array(z.string()).optional(),
