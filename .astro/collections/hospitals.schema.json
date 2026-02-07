@@ -46,6 +46,209 @@
           },
           "additionalProperties": false
         },
+        "tagline": {
+          "$ref": "#/definitions/hospitals/properties/specialty"
+        },
+        "phone": {
+          "$ref": "#/definitions/hospitals/properties/specialty"
+        },
+        "email": {
+          "$ref": "#/definitions/hospitals/properties/specialty"
+        },
+        "appointmentPhone": {
+          "$ref": "#/definitions/hospitals/properties/specialty"
+        },
+        "emergencyPhone": {
+          "$ref": "#/definitions/hospitals/properties/specialty"
+        },
+        "visitingHours": {
+          "$ref": "#/definitions/hospitals/properties/specialty"
+        },
+        "bookingUrl": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri"
+            },
+            {
+              "$ref": "#/definitions/hospitals/properties/specialty/anyOf/1"
+            }
+          ]
+        },
+        "mapUrl": {
+          "$ref": "#/definitions/hospitals/properties/bookingUrl"
+        },
+        "mapEmbed": {
+          "$ref": "#/definitions/hospitals/properties/specialty"
+        },
+        "departments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "summary": {
+                "$ref": "#/definitions/hospitals/properties/specialty"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "facilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "insurance": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "accreditations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stats": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "featuredDoctors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "specialty": {
+                "type": "string"
+              },
+              "credentials": {
+                "$ref": "#/definitions/hospitals/properties/specialty"
+              },
+              "profileUrl": {
+                "$ref": "#/definitions/hospitals/properties/specialty"
+              },
+              "photo": {
+                "$ref": "#/definitions/hospitals/properties/specialty"
+              }
+            },
+            "required": [
+              "name",
+              "specialty"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "show": {
+          "type": "object",
+          "properties": {
+            "hero": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "$ref": "#/definitions/hospitals/properties/specialty/anyOf/1"
+                }
+              ]
+            },
+            "emergency": {
+              "$ref": "#/definitions/hospitals/properties/show/properties/hero"
+            },
+            "overview": {
+              "$ref": "#/definitions/hospitals/properties/show/properties/hero"
+            },
+            "departments": {
+              "$ref": "#/definitions/hospitals/properties/show/properties/hero"
+            },
+            "facilities": {
+              "$ref": "#/definitions/hospitals/properties/show/properties/hero"
+            },
+            "diagnostics": {
+              "$ref": "#/definitions/hospitals/properties/show/properties/hero"
+            },
+            "insurance": {
+              "$ref": "#/definitions/hospitals/properties/show/properties/hero"
+            },
+            "accreditations": {
+              "$ref": "#/definitions/hospitals/properties/show/properties/hero"
+            },
+            "doctors": {
+              "$ref": "#/definitions/hospitals/properties/show/properties/hero"
+            },
+            "contact": {
+              "$ref": "#/definitions/hospitals/properties/show/properties/hero"
+            },
+            "map": {
+              "$ref": "#/definitions/hospitals/properties/show/properties/hero"
+            },
+            "cta": {
+              "$ref": "#/definitions/hospitals/properties/show/properties/hero"
+            },
+            "footer": {
+              "$ref": "#/definitions/hospitals/properties/show/properties/hero"
+            }
+          },
+          "additionalProperties": false
+        },
+        "socialLinks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "url": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  {
+                    "$ref": "#/definitions/hospitals/properties/specialty/anyOf/1"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "url"
+            ],
+            "additionalProperties": false
+          }
+        },
         "$schema": {
           "type": "string"
         }

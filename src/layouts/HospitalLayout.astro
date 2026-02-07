@@ -2,21 +2,89 @@
 import BaseLayout from './BaseLayout.astro';
 
 const { entry } = Astro.props;
-const { title, services, location, contact, seo } = entry.data;
-const description =
-  seo?.description || `${title} — ${services?.[0] || 'Hospital'} in ${location}.`;
+const {
+  title,
+  services,
+  location,
+  contact,
+  seo,
+  tagline,
+  phone,
+  email,
+  appointmentPhone,
+  emergencyPhone,
+  visitingHours,
+  bookingUrl,
+  mapUrl,
+  mapEmbed,
+  departments,
+  facilities,
+  diagnostics,
+  insurance,
+  accreditations,
+  stats,
+  featuredDoctors,
+  show,
+  socialLinks
+} = entry.data;
 
-const contactParts = contact ? contact.split('·').map((part: string) => part.trim()) : [];
-const phone = contactParts[0] || contact || 'Call for appointments';
-const email = contactParts[1] || 'Contact for email details';
-const serviceIcons = ['❤️', '🧠', '🦴', '🫁', '🩺', '👶', '💉', '🤰'];
-const serviceList = (services?.length
-  ? services
-  : ['Emergency Care', 'Specialty Clinics', 'Diagnostic Services']) as string[];
-const heroTagline = seo?.description || `Comprehensive healthcare services in ${location}.`;
+const description = seo?.description || `${title} - ${services?.[0] || 'Hospital'} in ${location}.`;
+const contactParts = contact ? contact.split(/\u00b7|\/|\|/).map((part: string) => part.trim()) : [];
+const displayPhone = phone || appointmentPhone || contactParts[0] || 'Call for appointments';
+const displayEmail = email || contactParts[1] || 'Contact for email details';
+const heroTagline = tagline || seo?.description || `Comprehensive care in ${location}.`;
+
+const departmentList = departments?.length
+  ? departments
+  : (services || []).map((service) => ({
+      name: service,
+      summary: `Comprehensive ${service.toLowerCase()} services with dedicated teams.`
+    }));
+
+const statsList = stats || [];
+const facilityList = facilities || [];
+const diagnosticsList = diagnostics || [];
+const insuranceList = insurance || [];
+const accreditationList = accreditations || [];
+const socialList = socialLinks || [];
+
+const primaryCtaHref = bookingUrl || '#contact';
+const secondaryCtaHref = mapUrl || '#find-us';
+const emergencyLine = emergencyPhone || '';
+const hoursValue = visitingHours || '24/7 emergency and inpatient care';
+const mapCtaHref = mapUrl || '#contact';
+const sectionEnabled = (flag: boolean | '' | undefined) => flag !== false;
+const showHero = sectionEnabled(show?.hero);
+const showEmergency = sectionEnabled(show?.emergency);
+const showOverview = sectionEnabled(show?.overview);
+const showDepartments = sectionEnabled(show?.departments);
+const showFacilities = sectionEnabled(show?.facilities);
+const showDiagnostics = sectionEnabled(show?.diagnostics);
+const showInsurance = sectionEnabled(show?.insurance);
+const showAccreditations = sectionEnabled(show?.accreditations);
+const showDoctors = sectionEnabled(show?.doctors);
+const showContact = sectionEnabled(show?.contact);
+const showMap = sectionEnabled(show?.map);
+const showCta = sectionEnabled(show?.cta);
+const showFooter = sectionEnabled(show?.footer);
 ---
 <BaseLayout title={seo?.title || title} description={description}>
   <style is:global>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Sora:wght@500;600;700&display=swap');
+
+    :root {
+      color-scheme: light;
+      --ink: #0f172a;
+      --text: #1f2937;
+      --muted: #64748b;
+      --soft: #e2e8f0;
+      --surface: #f8fafc;
+      --accent: #0f766e;
+      --accent-strong: #0f4c5c;
+      --accent-soft: #ccfbf1;
+      --highlight: #fbbf24;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -24,1057 +92,766 @@ const heroTagline = seo?.description || `Comprehensive healthcare services in ${
     }
 
     body {
-      font-family: 'Inter', 'Fraunces', 'Segoe UI', sans-serif;
+      font-family: 'Outfit', system-ui, sans-serif;
       line-height: 1.6;
-      color: #1e293b;
-      background: #ffffff;
+      color: var(--text);
+      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Sora', system-ui, sans-serif;
+      color: var(--ink);
+    }
+
+    a {
+      color: inherit;
     }
 
     .container {
-      max-width: 1280px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    /* Hero Section */
-    .hero {
-      position: relative;
-      height: 500px;
-      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-      overflow: hidden;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(to right, rgba(30, 64, 175, 0.95), rgba(59, 130, 246, 0.7));
-      z-index: 1;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 2rem 1rem;
-      color: white;
-    }
-
-    .hospital-type {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 0.5rem 1rem;
-      border-radius: 2rem;
-      font-size: 0.875rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      width: fit-content;
-      backdrop-filter: blur(10px);
-    }
-
-    .hero h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-
-    .hero-tagline {
-      font-size: 1.25rem;
-      margin-bottom: 2rem;
-      opacity: 0.95;
-      max-width: 600px;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      display: inline-block;
-      background: #ef4444;
-      color: white;
-      padding: 1rem 2rem;
-      border-radius: 0.5rem;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1rem;
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-      transition: all 0.2s;
-    }
-
-    .btn-primary:hover {
-      background: #dc2626;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(239, 68, 68, 0.5);
-    }
-
-    .btn-secondary {
-      display: inline-block;
-      background: white;
-      color: #1e40af;
-      padding: 1rem 2rem;
-      border-radius: 0.5rem;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1rem;
-      transition: all 0.2s;
-    }
-
-    .btn-secondary:hover {
-      background: #f1f5f9;
-    }
-
-    /* Emergency Banner */
-    .emergency-banner {
-      background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
-      color: white;
-      padding: 1.5rem 1rem;
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-    }
-
-    .emergency-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .emergency-info {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .emergency-icon {
-      width: 48px;
-      height: 48px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: 700;
-      backdrop-filter: blur(10px);
-    }
-
-    .emergency-text h2 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
-
-    .emergency-hours {
-      font-size: 0.9375rem;
-      opacity: 0.95;
-    }
-
-    .emergency-phone {
-      background: white;
-      color: #dc2626;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.5rem;
-      font-weight: 700;
-      font-size: 1.125rem;
-      text-decoration: none;
-    }
-
-    /* Main Content */
-    .main-content {
-      padding: 4rem 0;
+      padding: 0 1.25rem;
     }
 
     .section {
-      margin-bottom: 5rem;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 3rem;
+      padding: 4.5rem 0;
     }
 
     .section-title {
-      font-size: 2.25rem;
-      font-weight: 800;
-      color: #1e40af;
+      font-size: 2.4rem;
       margin-bottom: 0.75rem;
     }
 
     .section-subtitle {
-      font-size: 1.125rem;
-      color: #64748b;
-      max-width: 700px;
-      margin: 0 auto;
+      color: var(--muted);
+      max-width: 680px;
+      font-size: 1.05rem;
     }
 
-    /* Overview */
-    .overview-content {
+    .stack {
       display: grid;
       gap: 2rem;
-      background: #f8fafc;
-      padding: 3rem 2rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--soft);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 14px 30px rgba(15, 118, 110, 0.35);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--accent-strong);
+      border: 1px solid rgba(15, 118, 110, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(15, 118, 110, 0.2);
+    }
+
+    .hero {
+      position: relative;
+      padding: 6rem 0 5rem;
+      background: radial-gradient(circle at top left, #ccfbf1 0%, rgba(204, 251, 241, 0) 55%),
+        radial-gradient(circle at top right, rgba(15, 118, 110, 0.2) 0%, rgba(15, 118, 110, 0) 55%),
+        linear-gradient(130deg, #0f172a 0%, #0f4c5c 100%);
+      color: #ffffff;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -120px;
+      top: -120px;
+      width: 320px;
+      height: 320px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 2.5rem;
+    }
+
+    .hero h1 {
+      font-size: 3.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 560px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .hero-cards {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.12);
       border-radius: 1rem;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
     }
 
-    .overview-text {
-      font-size: 1.0625rem;
-      color: #475569;
-      line-height: 1.8;
+    .hero-card h3 {
+      font-size: 1rem;
+      color: #ffffff;
+      margin-bottom: 0.35rem;
     }
 
-    .overview-text h2,
-    .overview-text h3 {
-      color: #1e40af;
-      margin-bottom: 0.75rem;
+    .hero-card p {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
     }
 
-    .overview-text ul,
-    .overview-text ol {
+    .alert {
+      background: linear-gradient(90deg, #991b1b, #dc2626);
+      color: #ffffff;
+      padding: 1rem 0;
+    }
+
+    .alert-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-weight: 600;
+    }
+
+    .alert a {
+      color: #ffffff;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 0.55rem 1.2rem;
+      border-radius: 999px;
+    }
+
+    .overview {
+      display: grid;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .overview-body :global(h2),
+    .overview-body :global(h3) {
+      margin-top: 1.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .overview-body :global(p) {
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .overview-body :global(ul),
+    .overview-body :global(ol) {
       margin-left: 1.25rem;
       margin-bottom: 1rem;
     }
 
-    .overview-stats {
+    .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
+      gap: 1rem;
     }
 
-    .stat-item {
-      text-align: center;
+    .stat-tile {
+      padding: 1.4rem;
+      border-radius: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--soft);
     }
 
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #1e40af;
-      line-height: 1;
-      margin-bottom: 0.5rem;
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent-strong);
+      margin-bottom: 0.35rem;
     }
 
     .stat-label {
-      font-size: 0.9375rem;
-      color: #64748b;
-      font-weight: 600;
+      color: var(--muted);
+      font-weight: 500;
     }
 
-    /* Departments Grid */
-    .departments-grid {
+    .grid-3 {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.5rem;
     }
 
-    .department-card {
-      background: white;
-      border: 2px solid #e2e8f0;
-      border-radius: 1rem;
-      padding: 2rem;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .department-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #1e40af, #3b82f6);
-      transform: scaleX(0);
-      transition: transform 0.3s;
-    }
-
-    .department-card:hover {
-      border-color: #3b82f6;
-      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
-      transform: translateY(-4px);
-    }
-
-    .department-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .department-icon {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-      border-radius: 0.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.75rem;
-      margin-bottom: 1rem;
-    }
-
-    .department-name {
-      font-size: 1.125rem;
-      font-weight: 700;
-      color: #1e293b;
-      margin-bottom: 0.5rem;
-    }
-
-    .department-desc {
-      font-size: 0.9375rem;
-      color: #64748b;
-      line-height: 1.6;
-    }
-
-    /* Facilities Grid */
-    .facilities-grid {
+    .grid-2 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.25rem;
+      gap: 1.5rem;
     }
 
-    .facility-item {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 0.75rem;
+    .tile {
+      border-radius: 1rem;
+      border: 1px solid var(--soft);
       padding: 1.5rem;
-      display: flex;
-      align-items: start;
-      gap: 1rem;
-      transition: all 0.2s;
+      background: #ffffff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .facility-item:hover {
-      border-color: #1e40af;
-      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
+    .tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.12);
     }
 
-    .facility-icon {
-      width: 44px;
-      height: 44px;
-      background: #dbeafe;
-      border-radius: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      flex-shrink: 0;
-    }
-
-    .facility-name {
-      font-weight: 700;
-      color: #1e293b;
-      font-size: 1rem;
-    }
-
-    /* Diagnostics List */
-    .diagnostics-container {
-      background: #f8fafc;
-      border-radius: 1rem;
-      padding: 3rem 2rem;
-    }
-
-    .diagnostics-grid {
+    .doctor-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-
-    .diagnostic-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 1rem;
-      background: white;
-      border-radius: 0.5rem;
-      border-left: 3px solid #3b82f6;
-    }
-
-    .diagnostic-check {
-      width: 24px;
-      height: 24px;
-      background: #10b981;
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.75rem;
-      flex-shrink: 0;
-    }
-
-    .diagnostic-name {
-      font-weight: 600;
-      color: #1e293b;
-      font-size: 0.9375rem;
-    }
-
-    /* Featured Doctors */
-    .doctors-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     .doctor-card {
-      background: white;
-      border: 2px solid #e2e8f0;
       border-radius: 1rem;
+      border: 1px solid var(--soft);
+      background: #ffffff;
       overflow: hidden;
-      transition: all 0.3s;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
     }
 
-    .doctor-card:hover {
-      border-color: #3b82f6;
-      box-shadow: 0 12px 28px rgba(59, 130, 246, 0.15);
-      transform: translateY(-4px);
-    }
-
-    .doctor-image {
+    .doctor-photo {
       width: 100%;
-      height: 280px;
-      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      height: 220px;
+      background: linear-gradient(135deg, #ccfbf1, #e0f2fe);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 4rem;
-      color: #3b82f6;
+      font-size: 2.5rem;
+      color: var(--accent);
     }
 
-    .doctor-info {
+    .doctor-details {
       padding: 1.5rem;
+      display: grid;
+      gap: 0.5rem;
     }
 
-    .doctor-name {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #1e293b;
-      margin-bottom: 0.375rem;
+    .doctor-details h3 {
+      font-size: 1.15rem;
     }
 
     .doctor-specialty {
-      color: #3b82f6;
+      color: var(--accent);
       font-weight: 600;
-      font-size: 0.9375rem;
-      margin-bottom: 0.5rem;
     }
 
-    .doctor-qualification {
-      color: #64748b;
-      font-size: 0.875rem;
-      margin-bottom: 1rem;
+    .doctor-credentials {
+      color: var(--muted);
+      font-size: 0.95rem;
     }
 
-    .doctor-cta {
-      display: inline-block;
-      background: #1e40af;
-      color: white;
-      padding: 0.625rem 1.25rem;
-      border-radius: 0.375rem;
+    .doctor-link {
+      margin-top: 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--accent-strong);
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.875rem;
-      transition: background 0.2s;
     }
 
-    .doctor-cta:hover {
-      background: #1e3a8a;
-    }
-
-    /* Branches */
-    .branches-grid {
-      display: grid;
-      gap: 1.5rem;
-    }
-
-    .branch-card {
-      background: white;
-      border: 2px solid #e2e8f0;
-      border-radius: 1rem;
-      padding: 2rem;
-      display: grid;
-      gap: 1.5rem;
-    }
-
-    .branch-header {
-      display: flex;
-      align-items: start;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .branch-name {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #1e40af;
+    .tile h3 {
+      font-size: 1.1rem;
       margin-bottom: 0.5rem;
     }
 
-    .branch-type {
-      display: inline-block;
-      background: #dbeafe;
-      color: #1e40af;
-      padding: 0.375rem 0.875rem;
-      border-radius: 1rem;
-      font-size: 0.8125rem;
-      font-weight: 700;
+    .tile p {
+      color: var(--muted);
+      font-size: 0.95rem;
     }
 
-    .branch-address {
-      color: #475569;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
-    .branch-contact {
-      display: grid;
-      gap: 0.75rem;
-    }
-
-    .contact-row {
+    .tag-list {
       display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .contact-icon {
-      width: 36px;
-      height: 36px;
-      background: #f1f5f9;
-      border-radius: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #1e40af;
-      font-weight: 700;
-    }
-
-    .contact-text {
-      color: #1e293b;
-      font-weight: 600;
-    }
-
-    /* CTA Block */
-    .cta-block {
-      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-      color: white;
-      border-radius: 1rem;
-      padding: 4rem 2rem;
-      text-align: center;
-    }
-
-    .cta-block h2 {
-      font-size: 2.25rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-    }
-
-    .cta-block p {
-      font-size: 1.25rem;
-      margin-bottom: 2rem;
-      opacity: 0.95;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .cta-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
       flex-wrap: wrap;
+      gap: 0.6rem;
     }
 
-    /* Contact Card */
-    .contact-card {
-      background: white;
-      border: 2px solid #e2e8f0;
-      border-radius: 1rem;
-      padding: 3rem 2rem;
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-    }
-
-    .contact-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .contact-label {
-      font-weight: 700;
-      color: #1e40af;
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .contact-value {
-      color: #1e293b;
-      font-size: 1.0625rem;
+    .tag {
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
       font-weight: 600;
+      font-size: 0.9rem;
     }
 
-    /* Map Directions */
-    .map-container {
-      background: #f1f5f9;
+    .info-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .info-card {
       border-radius: 1rem;
+      border: 1px solid var(--soft);
+      padding: 1.5rem;
+      background: #ffffff;
+    }
+
+    .info-card h3 {
+      font-size: 1rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+
+    .info-card p {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .map-frame {
+      border-radius: 1.25rem;
       overflow: hidden;
-      height: 450px;
+      border: 1px solid var(--soft);
+      background: var(--surface);
+      min-height: 320px;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-    }
-
-    .map-placeholder {
       text-align: center;
-      color: #64748b;
+      padding: 2rem;
+      color: var(--muted);
     }
 
-    .map-placeholder-icon {
-      font-size: 4rem;
-      margin-bottom: 1rem;
+    .cta {
+      border-radius: 1.5rem;
+      padding: 3.5rem 2.5rem;
+      background: linear-gradient(130deg, rgba(15, 118, 110, 0.1), rgba(15, 76, 92, 0.2));
+      border: 1px solid rgba(15, 118, 110, 0.2);
+      text-align: center;
     }
 
-    .map-placeholder-text {
-      font-size: 1.125rem;
-      font-weight: 600;
+    .cta h2 {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
     }
 
-    .directions-link {
-      display: inline-block;
-      margin-top: 1rem;
-      background: #1e40af;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.5rem;
-      text-decoration: none;
-      font-weight: 600;
+    .cta p {
+      max-width: 560px;
+      margin: 0 auto 1.8rem;
+      color: var(--muted);
+      font-size: 1.05rem;
     }
 
-    /* Footer */
     .footer {
-      background: #0f172a;
-      color: #cbd5e1;
-      padding: 3rem 1rem 2rem;
-      margin-top: 5rem;
+      padding: 2.5rem 0 3rem;
+      border-top: 1px solid var(--soft);
+      color: var(--muted);
     }
 
-    .footer-content {
+    .footer-grid {
       display: grid;
-      gap: 2rem;
-      margin-bottom: 2rem;
+      gap: 1.5rem;
     }
 
-    .footer-section h3 {
-      color: white;
-      font-size: 1.125rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
+    .footer h4 {
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
     }
 
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .footer-link {
-      color: #cbd5e1;
+    .footer a {
+      color: var(--muted);
       text-decoration: none;
-      font-size: 0.9375rem;
+      font-size: 0.95rem;
     }
 
-    .footer-link:hover {
-      color: white;
+    .footer a:hover {
+      color: var(--accent);
     }
 
-    .footer-bottom {
-      border-top: 1px solid #334155;
-      padding-top: 2rem;
-      text-align: center;
-      font-size: 0.875rem;
+    .reveal {
+      animation: fadeUp 0.6s ease both;
     }
 
-    /* Responsive */
-    @media (min-width: 640px) {
-      .hero {
-        height: 550px;
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
       }
-
-      .hero h1 {
-        font-size: 3rem;
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
     @media (min-width: 768px) {
-      .container {
-        padding: 0 2rem;
+      .hero-grid {
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+        align-items: center;
       }
 
-      .overview-content {
-        padding: 4rem 3rem;
+      .overview {
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
       }
 
-      .diagnostics-container {
-        padding: 4rem 3rem;
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .branches-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .hero {
-        height: 600px;
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
-      .hero h1 {
-        font-size: 3.5rem;
+      .doctor-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
-      .emergency-content {
-        flex-wrap: nowrap;
+      .info-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .footer-content {
-        grid-template-columns: repeat(4, 1fr);
+      .footer-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
   </style>
 
-  <section class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
+  {showHero && (
+    <section class="hero">
       <div class="container">
-        <span class="hospital-type">Multi-Specialty Hospital</span>
-        <h1>{title}</h1>
-        <p class="hero-tagline">{heroTagline}</p>
-        <div class="hero-cta">
-          <a href="#appointment" class="btn-primary">Book Appointment</a>
-          <a href="#departments" class="btn-secondary">Our Services</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="emergency-banner">
-    <div class="container">
-      <div class="emergency-content">
-        <div class="emergency-info">
-          <div class="emergency-icon">🚨</div>
-          <div class="emergency-text">
-            <h2>24/7 Emergency Services</h2>
-            <p class="emergency-hours">Round-the-clock emergency care with specialized trauma team</p>
-          </div>
-        </div>
-        <a href="#contact" class="emergency-phone">{phone}</a>
-      </div>
-    </div>
-  </section>
-
-  <main class="main-content">
-    <div class="container">
-      <section class="section">
-        <div class="overview-content">
+        <div class="hero-grid">
           <div>
-            <div class="section-header">
-              <h2 class="section-title">About {title}</h2>
-            </div>
-            <div class="overview-text">
-              <slot />
+            <span class="pill">Regional Medical Center</span>
+            <h1>{title}</h1>
+            <p>{heroTagline}</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href={primaryCtaHref}>Book Appointment</a>
+              <a class="btn btn-secondary" href={secondaryCtaHref}>Get Directions</a>
             </div>
           </div>
-          <div class="overview-stats">
-            <div class="stat-item">
-              <div class="stat-number">24/7</div>
-              <div class="stat-label">Emergency Care</div>
+          <div class="hero-cards">
+            <div class="hero-card reveal" style="animation-delay: 80ms;">
+              <h3>Call us</h3>
+              <p>{displayPhone}</p>
             </div>
-            <div class="stat-item">
-              <div class="stat-number">100%</div>
-              <div class="stat-label">Patient Focus</div>
+            <div class="hero-card reveal" style="animation-delay: 160ms;">
+              <h3>Location</h3>
+              <p>{location}</p>
             </div>
-            <div class="stat-item">
-              <div class="stat-number">50+</div>
-              <div class="stat-label">Care Teams</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-number">Top</div>
-              <div class="stat-label">Specialists</div>
+            <div class="hero-card reveal" style="animation-delay: 240ms;">
+              <h3>Visiting hours</h3>
+              <p>{hoursValue}</p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  )}
 
+  {showEmergency && emergencyLine && (
+    <section class="alert">
+      <div class="container">
+        <div class="alert-inner">
+          <span>Emergency care available 24/7</span>
+          <a href="#contact">Emergency line: {emergencyLine}</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <main>
+    {showOverview && (
+      <section class="section">
+      <div class="container">
+        <div class="overview">
+          <div class="overview-body card reveal">
+            <h2 class="section-title">About {title}</h2>
+            <slot />
+          </div>
+          {statsList.length > 0 && (
+            <div class="stats-grid">
+              {statsList.map((item, index) => (
+                <div class="stat-tile reveal" style={`animation-delay: ${index * 120}ms`}>
+                  <div class="stat-value">{item.value}</div>
+                  <div class="stat-label">{item.label}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+      </section>
+    )}
+
+    {showDepartments && departmentList.length > 0 && (
       <section class="section" id="departments">
-        <div class="section-header">
-          <h2 class="section-title">Medical Departments</h2>
-          <p class="section-subtitle">Comprehensive healthcare services across multiple specialties with expert medical teams</p>
-        </div>
-        <div class="departments-grid">
-          {serviceList.map((service, index) => (
-            <div class="department-card">
-              <div class="department-icon">{serviceIcons[index % serviceIcons.length]}</div>
-              <h3 class="department-name">{service}</h3>
-              <p class="department-desc">Comprehensive {service.toLowerCase()} services with dedicated care teams.</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-header">
-          <h2 class="section-title">World-Class Facilities</h2>
-          <p class="section-subtitle">Modern infrastructure and advanced medical equipment for superior patient care</p>
-        </div>
-        <div class="facilities-grid">
-          <div class="facility-item">
-            <div class="facility-icon">🏥</div>
-            <div class="facility-name">24/7 Emergency Department</div>
+        <div class="container stack">
+          <div>
+            <h2 class="section-title">Departments and services</h2>
+            <p class="section-subtitle">Specialty care teams with clear referral pathways and coordinated follow up.</p>
           </div>
-          <div class="facility-item">
-            <div class="facility-icon">🔬</div>
-            <div class="facility-name">Advanced Laboratory Services</div>
-          </div>
-          <div class="facility-item">
-            <div class="facility-icon">💊</div>
-            <div class="facility-name">24-Hour Pharmacy</div>
-          </div>
-          <div class="facility-item">
-            <div class="facility-icon">🛏️</div>
-            <div class="facility-name">Critical Care Units (ICU/CCU)</div>
-          </div>
-          <div class="facility-item">
-            <div class="facility-icon">🩻</div>
-            <div class="facility-name">Advanced Imaging Center</div>
-          </div>
-          <div class="facility-item">
-            <div class="facility-icon">⚕️</div>
-            <div class="facility-name">Modern Operating Theaters</div>
-          </div>
-          <div class="facility-item">
-            <div class="facility-icon">🚑</div>
-            <div class="facility-name">Ambulance Services</div>
-          </div>
-          <div class="facility-item">
-            <div class="facility-icon">🩸</div>
-            <div class="facility-name">Blood Bank</div>
+          <div class="grid-3">
+            {departmentList.map((dept, index) => (
+              <div class="tile reveal" style={`animation-delay: ${index * 100}ms`}>
+                <h3>{dept.name}</h3>
+                {dept.summary && <p>{dept.summary}</p>}
+              </div>
+            ))}
           </div>
         </div>
       </section>
+    )}
 
+    {showFacilities && facilityList.length > 0 && (
       <section class="section">
-        <div class="section-header">
-          <h2 class="section-title">Diagnostic Services</h2>
-          <p class="section-subtitle">Comprehensive diagnostic capabilities with cutting-edge technology</p>
-        </div>
-        <div class="diagnostics-container">
-          <div class="diagnostics-grid">
-            <div class="diagnostic-item">
-              <div class="diagnostic-check">✓</div>
-              <div class="diagnostic-name">MRI & CT Imaging</div>
-            </div>
-            <div class="diagnostic-item">
-              <div class="diagnostic-check">✓</div>
-              <div class="diagnostic-name">Digital X-Ray</div>
-            </div>
-            <div class="diagnostic-item">
-              <div class="diagnostic-check">✓</div>
-              <div class="diagnostic-name">Ultrasound & Doppler</div>
-            </div>
-            <div class="diagnostic-item">
-              <div class="diagnostic-check">✓</div>
-              <div class="diagnostic-name">Echocardiography</div>
-            </div>
-            <div class="diagnostic-item">
-              <div class="diagnostic-check">✓</div>
-              <div class="diagnostic-name">Endoscopy Services</div>
-            </div>
-            <div class="diagnostic-item">
-              <div class="diagnostic-check">✓</div>
-              <div class="diagnostic-name">Pathology Laboratory</div>
-            </div>
+        <div class="container stack">
+          <div>
+            <h2 class="section-title">Facilities</h2>
+            <p class="section-subtitle">Modern infrastructure designed for safe, efficient patient care.</p>
+          </div>
+          <div class="grid-3">
+            {facilityList.map((item, index) => (
+              <div class="tile reveal" style={`animation-delay: ${index * 90}ms`}>
+                <h3>{item}</h3>
+                <p>High quality clinical and patient support services.</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
+    )}
 
+    {showDiagnostics && diagnosticsList.length > 0 && (
       <section class="section">
-        <div class="section-header">
-          <h2 class="section-title">Our Expert Doctors</h2>
-          <p class="section-subtitle">Specialists committed to your health and wellbeing</p>
-        </div>
-        <div class="doctors-grid">
-          <div class="doctor-card">
-            <div class="doctor-image">👩‍⚕️</div>
-            <div class="doctor-info">
-              <h3 class="doctor-name">Dr. Avery Morgan</h3>
-              <p class="doctor-specialty">Consultant Physician</p>
-              <p class="doctor-qualification">Board Certified, Internal Medicine</p>
-              <a href="#" class="doctor-cta">View Profile</a>
-            </div>
+        <div class="container stack">
+          <div>
+            <h2 class="section-title">Diagnostics</h2>
+            <p class="section-subtitle">Integrated imaging and laboratory services for faster clinical decisions.</p>
           </div>
-          <div class="doctor-card">
-            <div class="doctor-image">👨‍⚕️</div>
-            <div class="doctor-info">
-              <h3 class="doctor-name">Dr. Jordan Lee</h3>
-              <p class="doctor-specialty">Consultant Surgeon</p>
-              <p class="doctor-qualification">Fellowship Trained, Surgery</p>
-              <a href="#" class="doctor-cta">View Profile</a>
-            </div>
-          </div>
-          <div class="doctor-card">
-            <div class="doctor-image">👩‍⚕️</div>
-            <div class="doctor-info">
-              <h3 class="doctor-name">Dr. Casey Rivera</h3>
-              <p class="doctor-specialty">Consultant Pediatrician</p>
-              <p class="doctor-qualification">Board Certified, Pediatrics</p>
-              <a href="#" class="doctor-cta">View Profile</a>
-            </div>
+          <div class="tag-list">
+            {diagnosticsList.map((item) => (
+              <span class="tag">{item}</span>
+            ))}
           </div>
         </div>
       </section>
+    )}
 
+    {((showInsurance && insuranceList.length > 0) || (showAccreditations && accreditationList.length > 0)) && (
       <section class="section">
-        <div class="section-header">
-          <h2 class="section-title">Our Locations</h2>
-          <p class="section-subtitle">Convenient care centers across the region</p>
-        </div>
-        <div class="branches-grid">
-          <div class="branch-card">
-            <div class="branch-header">
-              <div>
-                <h3 class="branch-name">{title} - Main Campus</h3>
-                <span class="branch-type">Primary Location</span>
+        <div class="container grid-2">
+          {showInsurance && insuranceList.length > 0 && (
+            <div class="card reveal">
+              <h2 class="section-title">Insurance and billing</h2>
+              <p class="section-subtitle">Accepted plans and billing support.</p>
+              <div class="tag-list" style="margin-top: 1.25rem;">
+                {insuranceList.map((item) => (
+                  <span class="tag">{item}</span>
+                ))}
               </div>
             </div>
-            <p class="branch-address">{location}</p>
-            <div class="branch-contact">
-              <div class="contact-row">
-                <div class="contact-icon">☎</div>
-                <span class="contact-text">{phone}</span>
-              </div>
-              <div class="contact-row">
-                <div class="contact-icon">✉</div>
-                <span class="contact-text">{email}</span>
+          )}
+          {showAccreditations && accreditationList.length > 0 && (
+            <div class="card reveal" style="animation-delay: 120ms;">
+              <h2 class="section-title">Accreditations</h2>
+              <p class="section-subtitle">Recognitions that reflect our safety and care standards.</p>
+              <div class="tag-list" style="margin-top: 1.25rem;">
+                {accreditationList.map((item) => (
+                  <span class="tag">{item}</span>
+                ))}
               </div>
             </div>
+          )}
+        </div>
+      </section>
+    )}
+
+    {showDoctors && featuredDoctors?.length > 0 && (
+      <section class="section" id="doctors">
+        <div class="container stack">
+          <div>
+            <h2 class="section-title">Meet our doctors</h2>
+            <p class="section-subtitle">Experienced specialists delivering coordinated care.</p>
+          </div>
+          <div class="doctor-grid grid-3">
+            {featuredDoctors.map((doctor, index) => (
+              <div class="doctor-card reveal" style={`animation-delay: ${index * 120}ms`}>
+                <div class="doctor-photo">
+                  {doctor.photo ? (
+                    <img src={doctor.photo} alt={doctor.name} loading="lazy" style="width:100%;height:100%;object-fit:cover;" />
+                  ) : (
+                    <span>👩‍⚕️</span>
+                  )}
+                </div>
+                <div class="doctor-details">
+                  <h3>{doctor.name}</h3>
+                  <div class="doctor-specialty">{doctor.specialty}</div>
+                  {doctor.credentials && <div class="doctor-credentials">{doctor.credentials}</div>}
+                  {doctor.profileUrl && (
+                    <a class="doctor-link" href={doctor.profileUrl}>
+                      View profile
+                      <span aria-hidden="true">→</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
+    )}
 
-      <section class="section" id="appointment">
-        <div class="cta-block">
-          <h2>Ready to Experience World-Class Healthcare?</h2>
-          <p>Book your appointment today and take the first step towards better health.</p>
-          <div class="cta-buttons">
-            <a href="#contact" class="btn-primary">Book Appointment Online</a>
-            <a href="#contact" class="btn-secondary">Call {phone}</a>
-          </div>
-        </div>
-      </section>
-
+    {showContact && (
       <section class="section" id="contact">
-        <div class="section-header">
-          <h2 class="section-title">Contact Information</h2>
-        </div>
-        <div class="contact-card">
-          <div class="contact-grid">
-            <div class="contact-item">
-              <div class="contact-label">Main Hotline</div>
-              <div class="contact-value">{phone}</div>
+        <div class="container stack">
+          <div>
+            <h2 class="section-title">Contact and visiting</h2>
+            <p class="section-subtitle">All the essential details in one place.</p>
+          </div>
+          <div class="info-grid">
+            <div class="info-card reveal">
+              <h3>Main phone</h3>
+              <p>{displayPhone}</p>
             </div>
-            <div class="contact-item">
-              <div class="contact-label">Email</div>
-              <div class="contact-value">{email}</div>
+            <div class="info-card reveal" style="animation-delay: 120ms;">
+              <h3>Email</h3>
+              <p>{displayEmail}</p>
             </div>
-            <div class="contact-item">
-              <div class="contact-label">Location</div>
-              <div class="contact-value">{location}</div>
+            <div class="info-card reveal" style="animation-delay: 240ms;">
+              <h3>Visiting hours</h3>
+              <p>{hoursValue}</p>
             </div>
-            <div class="contact-item">
-              <div class="contact-label">Working Hours</div>
-              <div class="contact-value">24/7 Services Available</div>
+            <div class="info-card reveal" style="animation-delay: 360ms;">
+              <h3>Address</h3>
+              <p>{location}</p>
             </div>
           </div>
         </div>
       </section>
+    )}
 
-      <section class="section">
-        <div class="section-header">
-          <h2 class="section-title">Find Us</h2>
-          <p class="section-subtitle">Conveniently located in {location}</p>
+    {showMap && (
+      <section class="section" id="find-us">
+        <div class="container stack">
+          <div>
+            <h2 class="section-title">Find us</h2>
+            <p class="section-subtitle">Plan your visit with clear directions.</p>
+          </div>
+          {mapEmbed ? (
+            <div class="map-frame">
+              <iframe
+                src={mapEmbed}
+                width="100%"
+                height="360"
+                loading="lazy"
+                style="border:0;"
+                allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          ) : (
+            <div class="map-frame">
+              <div>
+                <p>{title}</p>
+                <p>{location}</p>
+                <a class="btn btn-secondary" href={mapCtaHref} style="margin-top: 1rem;">Get directions</a>
+              </div>
+            </div>
+          )}
         </div>
-        <div class="map-container">
-          <div class="map-placeholder">
-            <div class="map-placeholder-icon">📍</div>
-            <div class="map-placeholder-text">{title}</div>
-            <a href="#contact" class="directions-link">Get Directions</a>
+      </section>
+    )}
+
+    {showCta && (
+      <section class="section">
+        <div class="container">
+          <div class="cta">
+            <h2>Plan your visit today</h2>
+            <p>Call our appointment desk or book online for faster scheduling.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href={primaryCtaHref}>Book Appointment</a>
+              <a class="btn btn-secondary" href="#contact">Call {displayPhone}</a>
+            </div>
           </div>
         </div>
       </section>
-    </div>
+    )}
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>Quick Links</h3>
-          <div class="footer-links">
-            <a href="#" class="footer-link">About Us</a>
-            <a href="#departments" class="footer-link">Departments</a>
-            <a href="#contact" class="footer-link">Find a Doctor</a>
-            <a href="#appointment" class="footer-link">Appointments</a>
+  {showFooter && (
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div>
+          <h4>{title}</h4>
+          <p>{heroTagline}</p>
+        </div>
+        <div>
+          <h4>Quick links</h4>
+          <div class="stack" style="gap: 0.5rem;">
+            <a href="#departments">Departments</a>
+            <a href="#contact">Contact</a>
+            <a href="#find-us">Directions</a>
           </div>
         </div>
-        <div class="footer-section">
-          <h3>Patient Services</h3>
-          <div class="footer-links">
-            <a href="#appointment" class="footer-link">Book Appointment</a>
-            <a href="#contact" class="footer-link">Patient Portal</a>
-            <a href="#contact" class="footer-link">Medical Records</a>
-            <a href="#contact" class="footer-link">Insurance & Billing</a>
-          </div>
-        </div>
-        <div class="footer-section">
-          <h3>Resources</h3>
-          <div class="footer-links">
-            <a href="#" class="footer-link">Health Library</a>
-            <a href="#" class="footer-link">News & Events</a>
-            <a href="#" class="footer-link">Careers</a>
-            <a href="#contact" class="footer-link">Contact Us</a>
-          </div>
-        </div>
-        <div class="footer-section">
-          <h3>Connect With Us</h3>
-          <div class="footer-links">
-            <a href="#" class="footer-link">Facebook</a>
-            <a href="#" class="footer-link">Twitter</a>
-            <a href="#" class="footer-link">LinkedIn</a>
-            <a href="#" class="footer-link">YouTube</a>
+        <div>
+          <h4>Connect</h4>
+          <div class="stack" style="gap: 0.5rem;">
+            {socialList.length > 0 ? (
+              socialList.map((item) => (
+                <a href={item.url}>{item.label}</a>
+              ))
+            ) : (
+              <span>Social links coming soon.</span>
+            )}
           </div>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} {title}. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+    </footer>
+  )}
 </BaseLayout>

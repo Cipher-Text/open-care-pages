@@ -195,7 +195,74 @@ const doctors = defineCollection({
 
 const hospitals = defineCollection({
   type: 'content',
-  schema: baseSchema.extend({ type: z.literal('hospital') })
+  schema: baseSchema.extend({
+    type: z.literal('hospital'),
+    tagline: optionalString,
+    phone: optionalString,
+    email: optionalString,
+    appointmentPhone: optionalString,
+    emergencyPhone: optionalString,
+    visitingHours: optionalString,
+    bookingUrl: optionalUrl,
+    mapUrl: optionalUrl,
+    mapEmbed: optionalString,
+    departments: z
+      .array(
+        z.object({
+          name: z.string(),
+          summary: optionalString
+        })
+      )
+      .optional(),
+    facilities: z.array(z.string()).optional(),
+    diagnostics: z.array(z.string()).optional(),
+    insurance: z.array(z.string()).optional(),
+    accreditations: z.array(z.string()).optional(),
+    stats: z
+      .array(
+        z.object({
+          label: z.string(),
+          value: z.string()
+        })
+      )
+      .optional(),
+    featuredDoctors: z
+      .array(
+        z.object({
+          name: z.string(),
+          specialty: z.string(),
+          credentials: optionalString,
+          profileUrl: optionalString,
+          photo: optionalString
+        })
+      )
+      .optional(),
+    show: z
+      .object({
+        hero: optionalBool,
+        emergency: optionalBool,
+        overview: optionalBool,
+        departments: optionalBool,
+        facilities: optionalBool,
+        diagnostics: optionalBool,
+        insurance: optionalBool,
+        accreditations: optionalBool,
+        doctors: optionalBool,
+        contact: optionalBool,
+        map: optionalBool,
+        cta: optionalBool,
+        footer: optionalBool
+      })
+      .optional(),
+    socialLinks: z
+      .array(
+        z.object({
+          label: z.string(),
+          url: z.union([z.string().url(), empty])
+        })
+      )
+      .optional()
+  })
 });
 
 const institutes = defineCollection({

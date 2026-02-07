@@ -1,0 +1,233 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const plans = [
+  {
+    name: 'Essential',
+    tier: 'Foundation',
+    price: 'BDT 3,000',
+    description: 'Modern hospital landing page with core trust signals.',
+    bestFor: 'Community hospitals and multi-specialty centers',
+    sellPoint: 'Launch a credible, patient-friendly hospital presence fast.',
+    highlight: false,
+    exampleUrl: '/h/sunrise-medical-center',
+    exampleLabel: 'View Essential demo (Sunrise)',
+    features: [
+      'Hospital hero, overview, and contact blocks',
+      'Departments and services listing',
+      'Facilities and diagnostics highlights',
+      'Map + directions CTA',
+      'Basic SEO (title + description)'
+    ],
+    updates: 'Quarterly content updates',
+    sharing: 'Shareable hospital URL'
+  },
+  {
+    name: 'Advance',
+    tier: 'Growth',
+    price: 'BDT 5,000',
+    description: 'Expanded trust, specialty, and access information.',
+    bestFor: 'Regional hospitals and referral centers',
+    sellPoint: 'More clarity for patients, stronger referral conversion.',
+    highlight: true,
+    exampleUrl: '/h/harborview-medical',
+    exampleLabel: 'View Advance demo (Harborview)',
+    features: [
+      'Everything in Essential',
+      'Featured doctors section',
+      'Insurance and accreditation badges',
+      'Hospital stats and performance highlights',
+      'Priority CTA blocks for bookings'
+    ],
+    updates: 'Monthly content updates',
+    sharing: 'Shareable hospital URL + promo assets'
+  },
+  {
+    name: 'Premier',
+    tier: 'Signature',
+    price: 'BDT 8,000',
+    description: 'Flagship hospital profile with premium storytelling.',
+    bestFor: 'Large systems and flagship campuses',
+    sellPoint: 'Brand-grade presence for outreach and partnerships.',
+    highlight: false,
+    exampleUrl: '',
+    exampleLabel: 'Request Premier demo',
+    features: [
+      'Everything in Advance',
+      'Custom brand styling pass',
+      'Departmental campaign sections',
+      'Priority support for quarterly refreshes',
+      'Hospital network landing support'
+    ],
+    updates: 'Bi-weekly content updates',
+    sharing: 'Custom assets + multi-channel launch kit'
+  }
+];
+
+const comparison = [
+  { label: 'Hospital landing page', essential: 'Yes', advance: 'Yes', premier: 'Yes' },
+  { label: 'Departments and services', essential: 'Yes', advance: 'Yes', premier: 'Yes' },
+  { label: 'Facilities and diagnostics', essential: 'Yes', advance: 'Yes', premier: 'Yes' },
+  { label: 'Map + directions CTA', essential: 'Yes', advance: 'Yes', premier: 'Yes' },
+  { label: 'Featured doctors', essential: '—', advance: 'Yes', premier: 'Yes' },
+  { label: 'Insurance and accreditations', essential: '—', advance: 'Yes', premier: 'Yes' },
+  { label: 'Hospital stats highlights', essential: '—', advance: 'Yes', premier: 'Yes' },
+  { label: 'Brand styling support', essential: '—', advance: '—', premier: 'Yes' },
+  { label: 'Update frequency', essential: 'Quarterly', advance: 'Monthly', premier: 'Bi-weekly' },
+  { label: 'Live demo', essential: 'Sunrise', advance: 'Harborview', premier: 'On request' }
+];
+---
+<BaseLayout title="Hospital Pricing" description="Flexible plans for Open Care hospital pages.">
+  <main class="relative overflow-hidden">
+    <div class="absolute -top-32 right-0 h-72 w-72 rounded-full bg-sun/40 blur-3xl"></div>
+    <div class="absolute -bottom-20 left-10 h-72 w-72 rounded-full bg-moss/20 blur-3xl"></div>
+
+    <section class="mx-auto w-full max-w-6xl px-6 pb-12 pt-16">
+      <div class="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div class="space-y-6">
+          <p class="text-sm font-semibold uppercase tracking-[0.25em] text-moss">Hospital Pricing</p>
+          <h1 class="text-4xl font-serif font-semibold text-ink sm:text-5xl">
+            Pricing for hospital pages built to earn patient confidence.
+          </h1>
+          <p class="text-lg text-ink/70">
+            Choose a plan based on the depth of service detail, featured specialists, and ongoing content support
+            you need.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <a
+              href="mailto:hello@opencare.com"
+              class="rounded-full bg-moss px-5 py-2 text-sm font-semibold text-white shadow-sm"
+            >
+              Request pricing
+            </a>
+            <a
+              href="/pricing/doctor"
+              class="rounded-full border border-ink/15 px-5 py-2 text-sm font-semibold text-ink/80"
+            >
+              Doctor pricing
+            </a>
+          </div>
+        </div>
+        <div class="rounded-3xl border border-ink/10 bg-white/80 p-6 shadow-sm">
+          <h2 class="text-lg font-semibold text-ink">Included in every hospital plan</h2>
+          <ul class="mt-4 space-y-3 text-sm text-ink/70">
+            <li>Astro-powered performance and SEO-ready markup</li>
+            <li>No backend dependency (low maintenance)</li>
+            <li>Editable via Markdown content</li>
+            <li>Mobile-first, trust-forward design</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto w-full max-w-6xl px-6 pb-16">
+      <div class="grid gap-6 lg:grid-cols-3">
+        {plans.map((plan) => (
+          <article
+            class={[
+              'rounded-3xl border p-6 shadow-sm',
+              plan.highlight
+                ? 'border-moss/40 bg-white'
+                : 'border-ink/10 bg-white/70'
+            ].join(' ')}
+          >
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm uppercase tracking-[0.2em] text-ink/50">{plan.tier}</p>
+                <h3 class="text-2xl font-semibold text-ink">{plan.name}</h3>
+              </div>
+              {plan.highlight && (
+                <span class="rounded-full bg-moss/10 px-3 py-1 text-xs font-semibold text-moss">
+                  Most popular
+                </span>
+              )}
+            </div>
+            <p class="mt-4 text-sm text-ink/70">{plan.description}</p>
+            <p class="mt-4 text-2xl font-semibold text-ink">{plan.price}</p>
+            <div class="mt-4 text-sm text-ink/60">
+              <p><span class="font-semibold text-ink">Best for:</span> {plan.bestFor}</p>
+              <p><span class="font-semibold text-ink">Sellable point:</span> {plan.sellPoint}</p>
+            </div>
+            <div class="mt-5 space-y-2 text-sm text-ink/70">
+              <p><span class="font-semibold text-ink">Update frequency:</span> {plan.updates}</p>
+              <p><span class="font-semibold text-ink">Sharing:</span> {plan.sharing}</p>
+            </div>
+            <ul class="mt-5 space-y-2 text-sm text-ink/70">
+              {plan.features.map((item) => (
+                <li class="flex gap-2">
+                  <span class="mt-1 h-2 w-2 rounded-full bg-moss/60"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <div class="mt-6 grid gap-3">
+              {plan.exampleUrl ? (
+                <a
+                  href={plan.exampleUrl}
+                  class="inline-flex w-full items-center justify-center rounded-full border border-ink/15 px-4 py-2 text-sm font-semibold text-ink"
+                >
+                  {plan.exampleLabel}
+                </a>
+              ) : (
+                <a
+                  href="mailto:hello@opencare.com"
+                  class="inline-flex w-full items-center justify-center rounded-full border border-ink/15 px-4 py-2 text-sm font-semibold text-ink"
+                >
+                  {plan.exampleLabel}
+                </a>
+              )}
+              <a
+                href="mailto:hello@opencare.com"
+                class={[
+                  'inline-flex w-full items-center justify-center rounded-full px-4 py-2 text-sm font-semibold',
+                  plan.highlight ? 'bg-moss text-white' : 'border border-ink/15 text-ink'
+                ].join(' ')}
+              >
+                Talk to sales
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="mx-auto w-full max-w-6xl px-6 pb-16">
+      <div class="rounded-3xl border border-ink/10 bg-white/80 p-6 shadow-sm">
+        <h2 class="text-2xl font-serif font-semibold text-ink">Feature comparison</h2>
+        <div class="mt-6 overflow-x-auto">
+          <table class="w-full text-left text-sm text-ink/70">
+            <thead>
+              <tr class="border-b border-ink/10 text-xs uppercase tracking-[0.2em] text-ink/50">
+                <th class="py-3">Feature</th>
+                <th class="py-3">Essential</th>
+                <th class="py-3">Advance</th>
+                <th class="py-3">Premier</th>
+              </tr>
+            </thead>
+            <tbody>
+              {comparison.map((row) => (
+                <tr class="border-b border-ink/5">
+                  <td class="py-3 font-medium text-ink">{row.label}</td>
+                  <td class="py-3">
+                    {row.label === 'Live demo' ? (
+                      <a class="underline underline-offset-4" href="/h/sunrise-medical-center">Sunrise</a>
+                    ) : row.essential}
+                  </td>
+                  <td class="py-3">
+                    {row.label === 'Live demo' ? (
+                      <a class="underline underline-offset-4" href="/h/harborview-medical">Harborview</a>
+                    ) : row.advance}
+                  </td>
+                  <td class="py-3">{row.premier}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-4 text-xs text-ink/50">
+          Roadmap items are planned for upcoming releases. We will notify you before they go live.
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

@@ -10,15 +10,6 @@ Priority is based on:
 
 ---
 
-## ✅ Implemented (Astro-only)
-
-- QR Code Generation (see `docs/FEATURES_IMPLEMENTED.md`)
-- Digital Visiting Card (vCard) (see `docs/FEATURES_IMPLEMENTED.md`)
-- WhatsApp Pre-filled Message (see `docs/FEATURES_IMPLEMENTED.md`)
-- Language Toggle (EN / BN) (see `docs/FEATURES_IMPLEMENTED.md`)
-
----
-
 ## ⭐ Priority 2 – Sales Booster Features
 
 ### 1. Printable Visiting Card (PDF)
