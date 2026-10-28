@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Every Open Care audience uses the same three plans: Free, Plus and Pro.
+// Items marked "roadmap" are planned, not live yet.
+const plans = [
+  {
+    name: 'Free',
+    tier: 'Everyday care',
+    price: 'BDT 0',
+    description: 'Find care and keep your health information in one place.',
+    bestFor: 'Everyone',
+    highlight: false,
+    cta: 'Get started free',
+    features: [
+      'Search doctors, hospitals, ambulances and blood services',
+      'Emergency contacts and nearby facilities',
+      'Approve or decline a doctor’s request to write your prescription, and take your consent back at any time',
+      'Health vitals tracking'
+    ]
+  },
+  {
+    name: 'Plus',
+    tier: 'Reports and family',
+    price: 'BDT 250',
+    description: 'Keep your reports safe, understand them, and share them with family.',
+    bestFor: 'People managing long-term or family health',
+    highlight: true,
+    cta: 'Join the Plus waitlist',
+    features: [
+      'Everything in Free',
+      'Blood donor list access',
+      'Secure storage for your reports — roadmap',
+      'Free report analysis — roadmap',
+      'Custom health dashboard widgets and insights — roadmap',
+      'Share prescriptions and reports with family, with your consent — roadmap'
+    ]
+  },
+  {
+    name: 'Pro',
+    tier: 'See a doctor on video',
+    price: 'BDT 500',
+    description: 'Plus, with a member rate when you want to see a doctor on video.',
+    bestFor: 'People who consult doctors often',
+    highlight: false,
+    cta: 'Join the Pro waitlist',
+    features: [
+      'Everything in Plus',
+      'Member rate on per-visit video consultation (rate to be set) — roadmap'
+    ]
+  }
+];
+
+const comparison = [
+  { label: 'Search doctors, hospitals, ambulances, blood', free: 'Yes', plus: 'Yes', pro: 'Yes' },
+  { label: 'Consent for prescriptions', free: 'Yes', plus: 'Yes', pro: 'Yes' },
+  { label: 'Blood donor list access', free: '—', plus: 'Yes', pro: 'Yes' },
+  { label: 'Health vitals tracking', free: 'Yes', plus: 'Yes', pro: 'Yes' },
+  { label: 'Secure report storage', free: '—', plus: 'Roadmap', pro: 'Roadmap' },
+  { label: 'Free report analysis', free: '—', plus: 'Roadmap', pro: 'Roadmap' },
+  { label: 'Custom dashboard widgets', free: '—', plus: 'Roadmap', pro: 'Roadmap' },
+  { label: 'Family sharing of prescriptions and reports', free: '—', plus: 'Roadmap', pro: 'Roadmap' },
+  { label: 'Member rate on video consultation', free: '—', plus: '—', pro: 'Roadmap' }
+];
+---
+<BaseLayout title="Patient Pricing" description="Free, Plus and Pro plans for patients on Open Care.">
+  <main class="mx-auto w-full max-w-6xl px-6 py-16 text-ink">
+    <section class="space-y-4">
+      <p class="text-sm font-semibold uppercase tracking-[0.25em] text-moss">Patient Pricing</p>
+      <h1 class="text-4xl font-serif font-semibold sm:text-5xl">Care that stays free. Extras when you want them.</h1>
+      <p class="max-w-3xl text-lg text-ink/70">
+        Finding care and controlling who sees your health information is free for everyone.
+        Plus adds report storage, report analysis and family sharing as they launch, and Pro adds a member rate on video consultation, which is paid per visit.
+      </p>
+    </section>
+
+    <section class="mt-10 grid gap-6 lg:grid-cols-3">
+      {plans.map((plan) => (
+        <article
+          class={[
+            'rounded-3xl border p-6 shadow-sm',
+            plan.highlight ? 'border-moss/40 bg-white' : 'border-ink/10 bg-white/70'
+          ].join(' ')}
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm uppercase tracking-[0.2em] text-ink/50">{plan.tier}</p>
+              <h2 class="text-2xl font-semibold">{plan.name}</h2>
+            </div>
+            {plan.highlight && (
+              <span class="rounded-full bg-moss/10 px-3 py-1 text-xs font-semibold text-moss">Most popular</span>
+            )}
+          </div>
+          <p class="mt-4 text-sm text-ink/70">{plan.description}</p>
+          <p class="mt-4 text-2xl font-semibold">{plan.price}<span class="text-sm font-normal text-ink/60"> / month</span></p>
+          <p class="mt-4 text-sm text-ink/60"><span class="font-semibold text-ink">Best for:</span> {plan.bestFor}</p>
+          <ul class="mt-5 space-y-2 text-sm text-ink/70">
+            {plan.features.map((item) => (
+              <li class="flex gap-2">
+                <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-moss/60"></span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <a
+            href="mailto:hello@opencare.com"
+            class={[
+              'mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2 text-sm font-semibold',
+              plan.highlight ? 'bg-moss text-white' : 'border border-ink/15 text-ink'
+            ].join(' ')}
+          >
+            {plan.cta}
+          </a>
+        </article>
+      ))}
+    </section>
+
+    <section class="mt-12 rounded-3xl border border-ink/10 bg-white/80 p-6 shadow-sm">
+      <h2 class="text-2xl font-serif font-semibold">Feature comparison</h2>
+      <div class="mt-6 overflow-x-auto">
+        <table class="w-full text-left text-sm text-ink/70">
+          <thead>
+            <tr class="border-b border-ink/10 text-xs uppercase tracking-[0.2em] text-ink/50">
+              <th class="py-3">Feature</th>
+              <th class="py-3">Free</th>
+              <th class="py-3">Plus</th>
+              <th class="py-3">Pro</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparison.map((row) => (
+              <tr class="border-b border-ink/5">
+                <td class="py-3 font-medium text-ink">{row.label}</td>
+                <td class="py-3">{row.free}</td>
+                <td class="py-3">{row.plus}</td>
+                <td class="py-3">{row.pro}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-4 text-xs text-ink/50">
+        Roadmap items are planned for upcoming releases and are not available yet. Paid plans are not open for payment;
+        join a waitlist and we will tell you before anything is charged. Prices are monthly, in BDT.
+      </p>
+    </section>
+  </main>
+</BaseLayout>
