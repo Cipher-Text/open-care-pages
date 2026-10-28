@@ -1,85 +1,105 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
+// Every Open Care audience uses the same three plans: Free, Plus and Pro.
 const plans = [
   {
-    name: 'Silver',
+    name: 'Free',
+    tier: 'Directory',
+    price: 'BDT 0',
+    description: 'Be found in the Open Care directory and prescribe at no cost.',
+    bestFor: 'Every registered doctor',
+    sellPoint: 'A verified-ready listing patients can search and trust.',
+    highlight: false,
+    exampleUrl: '',
+    exampleLabel: '',
+    cta: 'Get started free',
+    features: [
+      'Listing in the Open Care doctor directory',
+      'Name, degrees, workplace and contact details',
+      'Appears in directory search and filters',
+      'Edit your own profile in the Open Care console',
+      'Write prescriptions for patients who consent',
+      'Your own practice dashboard: prescriptions, patients and follow-ups'
+    ],
+    updates: 'Self-service updates',
+    sharing: 'Open Care directory link'
+  },
+  {
+    name: 'Plus',
     tier: 'Starter',
     price: 'BDT 1,000',
-    description: 'Launch fast with a clean, credible profile.',
+    description: 'Launch fast with a clean, credible profile page.',
     bestFor: 'New practices and solo doctors',
     sellPoint: 'Fastest time-to-publish with a professional footprint.',
     highlight: false,
     exampleUrl: '/d/dr-silver',
-    exampleLabel: 'View Silver demo (Dr. Silver)',
+    exampleLabel: 'View Plus demo (Dr. Silver)',
+    cta: 'Talk to sales',
     features: [
+      'Everything in Free',
+      'Blood donor list access',
       'Doctor landing page (hero, about, contact)',
       'WhatsApp pre-filled booking link',
       'Trust chips + verification badges',
       'Single primary practice location',
-      'Basic SEO (title + description)'
+      'Basic SEO (title + description)',
+      'SMS and email notifications (follow-up reminders) — roadmap'
     ],
     updates: 'Quarterly content updates',
     sharing: 'Shareable page URL'
   },
   {
-    name: 'Gold',
+    name: 'Pro',
     tier: 'Growth',
     price: 'BDT 2,000',
     description: 'Conversion-focused features that book more patients.',
-    bestFor: 'Busy clinics that need steady bookings',
-    sellPoint: 'Highest conversion mix without backend complexity.',
+    bestFor: 'Busy clinics and high-volume specialists',
+    sellPoint: 'Highest conversion mix, plus brand-grade sharing assets as they ship.',
     highlight: true,
     exampleUrl: '/d/dr-gold',
-    exampleLabel: 'View Gold demo (Dr. Gold)',
+    exampleLabel: 'View Pro demo (Dr. Gold)',
+    cta: 'Talk to sales',
     features: [
-      'Everything in Silver',
+      'Everything in Plus',
       'QR code download + vCard download',
       'Quick booking block (CTA cluster)',
       'Multiple practice locations & schedules',
       'Reviews + FAQ sections',
-      'Language toggle (EN/BN)'
-    ],
-    updates: 'Monthly content updates',
-    sharing: 'QR + vCard + WhatsApp'
-  },
-  {
-    name: 'Diamond',
-    tier: 'Signature',
-    price: 'BDT 3,000',
-    description: 'Premium trust and distribution assets.',
-    bestFor: 'High-volume specialists and flagship clinics',
-    sellPoint: 'Brand-grade assets for referral and outreach.',
-    highlight: false,
-    exampleUrl: '',
-    exampleLabel: 'Request Diamond demo',
-    features: [
-      'Everything in Gold',
+      'Language toggle (EN/BN)',
+      'Priority placement in public search, labelled as featured — roadmap',
+      'Highlighted on the Open Care Facebook page, marked as a featured doctor — roadmap',
       'Printable visiting card (PDF) — roadmap',
       'Shareable profile poster — roadmap',
       'Downloadable profile one-pager — roadmap',
       'Structured data (JSON-LD) — roadmap'
     ],
-    updates: 'Bi-weekly content updates',
-    sharing: 'Poster + PDF + QR assets (roadmap)'
+    updates: 'Monthly content updates',
+    sharing: 'QR + vCard + WhatsApp; poster + PDF (roadmap)'
   }
 ];
 
 const comparison = [
-  { label: 'Profile page', silver: 'Yes', gold: 'Yes', diamond: 'Yes' },
-  { label: 'WhatsApp pre-filled CTA', silver: 'Yes', gold: 'Yes', diamond: 'Yes' },
-  { label: 'QR code & vCard', silver: '—', gold: 'Yes', diamond: 'Yes' },
-  { label: 'Multiple locations', silver: '1 location', gold: 'Unlimited', diamond: 'Unlimited' },
-  { label: 'Reviews & FAQs', silver: '—', gold: 'Yes', diamond: 'Yes' },
-  { label: 'Language toggle (EN/BN)', silver: '—', gold: 'Yes', diamond: 'Yes' },
-  { label: 'Shareable poster', silver: '—', gold: '—', diamond: 'Roadmap' },
-  { label: 'Printable visiting card', silver: '—', gold: '—', diamond: 'Roadmap' },
-  { label: 'Profile PDF one-pager', silver: '—', gold: '—', diamond: 'Roadmap' },
-  { label: 'Update frequency', silver: 'Quarterly', gold: 'Monthly', diamond: 'Bi-weekly' },
-  { label: 'Live demo', silver: 'Silver: Dr. Silver', gold: 'Gold: Dr. Gold', diamond: 'On request' }
+  { label: 'Directory listing', free: 'Yes', plus: 'Yes', pro: 'Yes' },
+  { label: 'Blood donor list access', free: '—', plus: 'Yes', pro: 'Yes' },
+  { label: 'Prescriptions and practice dashboard', free: 'Yes', plus: 'Yes', pro: 'Yes' },
+  { label: 'Profile page', free: '—', plus: 'Yes', pro: 'Yes' },
+  { label: 'WhatsApp pre-filled CTA', free: '—', plus: 'Yes', pro: 'Yes' },
+  { label: 'QR code & vCard', free: '—', plus: '—', pro: 'Yes' },
+  { label: 'Multiple locations', free: '—', plus: '1 location', pro: 'Unlimited' },
+  { label: 'Reviews & FAQs', free: '—', plus: '—', pro: 'Yes' },
+  { label: 'Language toggle (EN/BN)', free: '—', plus: '—', pro: 'Yes' },
+  { label: 'SMS and email notifications', free: '—', plus: 'Roadmap', pro: 'Roadmap' },
+  { label: 'Priority placement in public search (labelled)', free: '—', plus: '—', pro: 'Roadmap' },
+  { label: 'Highlight on the Open Care Facebook page', free: '—', plus: '—', pro: 'Roadmap' },
+  { label: 'Shareable poster', free: '—', plus: '—', pro: 'Roadmap' },
+  { label: 'Printable visiting card', free: '—', plus: '—', pro: 'Roadmap' },
+  { label: 'Profile PDF one-pager', free: '—', plus: '—', pro: 'Roadmap' },
+  { label: 'Update frequency', free: 'Self-service', plus: 'Quarterly', pro: 'Monthly' },
+  { label: 'Live demo', free: '—', plus: 'Plus: Dr. Silver', pro: 'Pro: Dr. Gold' }
 ];
 ---
-<BaseLayout title="Doctor Pricing" description="Flexible plans for Open Care doctor pages.">
+<BaseLayout title="Doctor Pricing" description="Free, Plus and Pro plans for Open Care doctors.">
   <main class="relative overflow-hidden">
     <div class="absolute -top-32 right-0 h-72 w-72 rounded-full bg-sun/40 blur-3xl"></div>
     <div class="absolute -bottom-20 left-10 h-72 w-72 rounded-full bg-moss/20 blur-3xl"></div>
@@ -163,16 +183,9 @@ const comparison = [
               ))}
             </ul>
             <div class="mt-6 grid gap-3">
-              {plan.exampleUrl ? (
+              {plan.exampleUrl && (
                 <a
                   href={plan.exampleUrl}
-                  class="inline-flex w-full items-center justify-center rounded-full border border-ink/15 px-4 py-2 text-sm font-semibold text-ink"
-                >
-                  {plan.exampleLabel}
-                </a>
-              ) : (
-                <a
-                  href="mailto:hello@opencare.com"
                   class="inline-flex w-full items-center justify-center rounded-full border border-ink/15 px-4 py-2 text-sm font-semibold text-ink"
                 >
                   {plan.exampleLabel}
@@ -185,7 +198,7 @@ const comparison = [
                   plan.highlight ? 'bg-moss text-white' : 'border border-ink/15 text-ink'
                 ].join(' ')}
               >
-                Talk to sales
+                {plan.cta}
               </a>
             </div>
           </article>
@@ -201,33 +214,34 @@ const comparison = [
             <thead>
               <tr class="border-b border-ink/10 text-xs uppercase tracking-[0.2em] text-ink/50">
                 <th class="py-3">Feature</th>
-                <th class="py-3">Silver</th>
-                <th class="py-3">Gold</th>
-                <th class="py-3">Diamond</th>
+                <th class="py-3">Free</th>
+                <th class="py-3">Plus</th>
+                <th class="py-3">Pro</th>
               </tr>
             </thead>
             <tbody>
               {comparison.map((row) => (
                 <tr class="border-b border-ink/5">
                   <td class="py-3 font-medium text-ink">{row.label}</td>
+                  <td class="py-3">{row.free}</td>
                   <td class="py-3">
                     {row.label === 'Live demo' ? (
-                      <a class="underline underline-offset-4" href="/d/dr-silver">Silver: Dr. Silver</a>
-                    ) : row.silver}
+                      <a class="underline underline-offset-4" href="/d/dr-silver">{row.plus}</a>
+                    ) : row.plus}
                   </td>
                   <td class="py-3">
                     {row.label === 'Live demo' ? (
-                      <a class="underline underline-offset-4" href="/d/dr-gold">Gold: Dr. Gold</a>
-                    ) : row.gold}
+                      <a class="underline underline-offset-4" href="/d/dr-gold">{row.pro}</a>
+                    ) : row.pro}
                   </td>
-                  <td class="py-3">{row.diamond}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
         <p class="mt-4 text-xs text-ink/50">
-          Roadmap items are planned for upcoming releases. We will notify you before they go live.
+          Roadmap items are planned for upcoming releases. We will notify you before they go live. Video consultation will be
+          priced per visit once it is built, not as part of a monthly plan.
         </p>
       </div>
     </section>

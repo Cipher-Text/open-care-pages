@@ -26,7 +26,7 @@ Priority is based on:
 
 **Tier**
 
-- Diamond plan feature
+- Pro plan feature
 
 ---
 
@@ -53,7 +53,7 @@ Includes:
 
 **Purpose**
 
-- Monetization control (Free / Silver / Gold / Diamond)
+- Monetization control (Free / Plus / Pro)
 
 **Astro scope**
 

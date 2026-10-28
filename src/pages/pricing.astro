@@ -8,10 +8,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="text-sm font-semibold uppercase tracking-[0.2em] text-moss">Pricing</p>
         <h1 class="text-4xl font-serif font-semibold">Choose your pricing track.</h1>
         <p class="text-lg text-ink/70">
-          Separate plans for doctor and hospital pages so you can match the right features to the right provider.
+          Free, Plus and Pro plans for patients, doctors and hospitals.
         </p>
       </div>
-      <div class="grid gap-4 sm:grid-cols-2">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <a class="rounded-3xl border border-ink/10 bg-white/80 p-6 shadow-sm transition hover:border-ink/30" href="/pricing/patient">
+          <p class="text-sm uppercase tracking-[0.2em] text-ink/60">Patient pricing</p>
+          <p class="mt-2 text-xl font-semibold">Plans for patients</p>
+          <p class="mt-2 text-sm text-ink/70">Free care access, with report storage, report analysis and video consultation to come.</p>
+        </a>
         <a class="rounded-3xl border border-ink/10 bg-white/80 p-6 shadow-sm transition hover:border-ink/30" href="/pricing/doctor">
           <p class="text-sm uppercase tracking-[0.2em] text-ink/60">Doctor pricing</p>
           <p class="mt-2 text-xl font-semibold">Plans for doctors</p>
